@@ -11,7 +11,7 @@ const OfficialPortal = () => {
   return (
     <SafeAreaView style={styles.container}>
      <View>
-        <Text>This is Official Portal</Text>
+        <Text style={{color:'black'}} >This is Official Portal</Text>
      </View>
     </SafeAreaView>
   );
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     fontSize:30,
-    textAlign:'center',
+    textAlign:'center',    
   },
 
 });

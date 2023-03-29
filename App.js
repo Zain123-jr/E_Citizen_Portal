@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BottomNavigator from './src/components/navigation/BottomNavigator';
+import ComplaintsBottomNavigator from './src/components/navigation/ComplaintsBottomNavigator';
 import Splash from './src/components/screens/Splash';
 import Welcome from './src/components/screens/Welcome';
 import CitizenSignup from './src/components/screens/CitizenModule/CitizenSignup';
@@ -21,6 +22,7 @@ const App = () => {
         <Stack.Screen name="CitizenSignup" component={CitizenSignup} />
         <Stack.Screen name="CitizenLogin" component={CitizenLogin} />
         <Stack.Screen name="CitizenHome" component={DrawerNavigator} />
+        <Stack.Screen name="CitizenComplaints" component={ComplaintsBottomNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
   );

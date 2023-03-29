@@ -44,7 +44,7 @@ const BottomNavigator = () => {
           ),
         }}
       />
-
+    
     </Tab.Navigator>
   );
 };

@@ -7,7 +7,7 @@ const CitizenHome = ({ navigation }) => {
     return (
 
         <View>
-            <TouchableOpacity onPress={()=>navigation.navigate('CitizenLogin')} style={styles.card}>
+            <TouchableOpacity onPress={()=>navigation.navigate('CitizenComplaints')} style={styles.card}>
                 <View>
                     <Image source={require('../../../assets/complaint.png')} style={styles.Image} />
                     <Text style={styles.title}>Complaints</Text>                    
@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         margin: 8,
-        textAlign:'center'
+        textAlign:'center',
+        color:'black'
     },
 
     Image:{        
