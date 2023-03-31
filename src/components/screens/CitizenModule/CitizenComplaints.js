@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../consts/Colors';
@@ -11,10 +10,10 @@ const Complaints = ({ navigation }) => {
       <ScrollView>
 
         <View style={styles.head} >
-          <Text style={styles.heading} >Select Category</Text>
-          <TouchableOpacity>
-            <MaterialCommunityIcons name="arrow-left" size={30} color="#fff" style={styles.icon1} onPress={() => navigation.navigate('CitizenHome')} />
+          <TouchableOpacity onPress={() => navigation.navigate('CitizenHome')} >
+            <MaterialCommunityIcons name="arrow-left" size={30} color="#fff" style={styles.icon1} />
           </TouchableOpacity>
+          <Text style={styles.heading} >Select Category</Text>
         </View>
 
         <TouchableOpacity>
@@ -22,6 +21,76 @@ const Complaints = ({ navigation }) => {
             <TouchableOpacity style={{ flexDirection: 'row' }}>
               <Image source={require('../../../assets/svg_icons/torture.webp')} style={styles.image} />
               <Text style={styles.text} >Torture</Text>
+              <MaterialCommunityIcons name="arrow-right-circle" size={30} color="#000" style={styles.icon} />
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity>
+          <View style={styles.Listcontainer} >
+            <TouchableOpacity style={{ flexDirection: 'row' }}>
+              <Image source={require('../../../assets/svg_icons/kidnapping.png')} style={styles.image} />
+              <Text style={styles.text} >Kidnapping</Text>
+              <MaterialCommunityIcons name="arrow-right-circle" size={30} color="#000" style={styles.icon} />
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity>
+          <View style={styles.Listcontainer} >
+            <TouchableOpacity style={{ flexDirection: 'row' }}>
+              <Image source={require('../../../assets/svg_icons/killing.png')} style={styles.image} />
+              <Text style={styles.text} >Killing</Text>
+              <MaterialCommunityIcons name="arrow-right-circle" size={30} color="#000" style={styles.icon} />
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity>
+          <View style={styles.Listcontainer} >
+            <TouchableOpacity style={{ flexDirection: 'row' }}>
+              <Image source={require('../../../assets/svg_icons/robbery.png')} style={styles.image} />
+              <Text style={styles.text} >Robbery</Text>
+              <MaterialCommunityIcons name="arrow-right-circle" size={30} color="#000" style={styles.icon} />
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity>
+          <View style={styles.Listcontainer} >
+            <TouchableOpacity style={{ flexDirection: 'row' }}>
+              <Image source={require('../../../assets/svg_icons/theft.png')} style={styles.image} />
+              <Text style={styles.text} >Theft</Text>
+              <MaterialCommunityIcons name="arrow-right-circle" size={30} color="#000" style={styles.icon} />
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity>
+          <View style={styles.Listcontainer} >
+            <TouchableOpacity style={{ flexDirection: 'row' }}>
+              <Image source={require('../../../assets/svg_icons/rape.webp')} style={styles.image} />
+              <Text style={styles.text} >Rape</Text>
+              <MaterialCommunityIcons name="arrow-right-circle" size={30} color="#000" style={styles.icon} />
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity>
+          <View style={styles.Listcontainer} >
+            <TouchableOpacity style={{ flexDirection: 'row' }}>
+              <Image source={require('../../../assets/svg_icons/child_abuse.png')} style={styles.image} />
+              <Text style={styles.text} >Child Abuse</Text>
+              <MaterialCommunityIcons name="arrow-right-circle" size={30} color="#000" style={styles.icon} />
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity>
+          <View style={styles.Listcontainer} >
+            <TouchableOpacity style={{ flexDirection: 'row' }}>
+              <Image source={require('../../../assets/svg_icons/missing_person.png')} style={styles.image} />
+              <Text style={styles.text} >Missing Person</Text>
               <MaterialCommunityIcons name="arrow-right-circle" size={30} color="#000" style={styles.icon} />
             </TouchableOpacity>
           </View>
@@ -68,8 +137,7 @@ const styles = StyleSheet.create({
   },
 
   icon1: {
-    bottom: 5,
-    left: 10
+    top: 20,
   },
 
   head: {
@@ -82,6 +150,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: 'white',
     textAlign: 'center',
-    top: 15
+    top: -18
   }
 })
