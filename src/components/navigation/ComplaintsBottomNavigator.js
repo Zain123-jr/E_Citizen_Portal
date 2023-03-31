@@ -24,27 +24,16 @@ const BottomNavigator = () => {
         >
 
             <Tab.Screen
-                name="Add Complaints"
+                name="Complaints Categories"
                 component={CitizenComplaints}
                 options={{
-                    tabBarLabel: 'Add Complaints',
+                    tabBarLabel: 'Complaints Categories',
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons name="alert-box-outline" color={color} size={30} />
                     ),
                 }}
             />
-
-            <Tab.Screen
-                name="View Complaints"
-                component={CitizenComplaints}
-                options={{
-                    tabBarLabel: 'View Complaints',
-                    tabBarIcon: ({ color }) => (
-                        <MaterialCommunityIcons name="eye-outline" color={color} size={30} />
-                    ),
-                }}
-            />
-
+            
         </Tab.Navigator>
     );
 };
