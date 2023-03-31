@@ -47,7 +47,7 @@ const DrawerNavigator = () => {
                     ),
                     headerStyle: {
                         height: 100,
-                        borderBottomLeftRadius: 50,
+                        borderTopLeftRadius: 50,
                         borderBottomRightRadius: 50,
                         backgroundColor: COLORS.primary,
                         shadowColor: '#000',
@@ -78,7 +78,7 @@ const DrawerNavigator = () => {
                     ),
                     headerStyle: {
                         height: 100,
-                        borderBottomLeftRadius: 50,
+                        borderTopLeftRadius: 50,
                         borderBottomRightRadius: 50,
                         backgroundColor: COLORS.primary,
                         shadowColor: '#000',
@@ -109,7 +109,7 @@ const DrawerNavigator = () => {
                     ),
                     headerStyle: {
                         height: 100,
-                        borderBottomLeftRadius: 50,
+                        borderTopLeftRadius: 50,
                         borderBottomRightRadius: 50,
                         backgroundColor: COLORS.primary,
                         shadowColor: '#000',
@@ -140,7 +140,7 @@ const DrawerNavigator = () => {
                     ),
                     headerStyle: {
                         height: 100,
-                        borderBottomLeftRadius: 50,
+                        borderTopLeftRadius: 50,
                         borderBottomRightRadius: 50,
                         backgroundColor: COLORS.primary,
                         shadowColor: '#000',
@@ -171,7 +171,7 @@ const DrawerNavigator = () => {
                     ),
                     headerStyle: {
                         height: 100,
-                        borderBottomLeftRadius: 50,
+                        borderTopLeftRadius: 50,
                         borderBottomRightRadius: 50,
                         backgroundColor: COLORS.primary,
                         shadowColor: '#000',
