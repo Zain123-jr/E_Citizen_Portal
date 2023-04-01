@@ -99,9 +99,8 @@ const TortureForm = ({ navigation }) => {
                                                 onBlur={() => setFieldTouched('category')}
                                             >
                                                 <Picker.Item style={styles.item} label="Select category" value="" />
-                                                <Picker.Item style={styles.item} label="Psychological Torture in Homes" value="Psychological Torture in Homes" />
-                                                <Picker.Item style={styles.item} label="Psychological Torture in Schools" value="Psychological Torture in Schools" />
-                                                <Picker.Item style={styles.item} label="Psychological Torture in Madarssah" value="Psychological Torture in Madarssah" />
+                                                <Picker.Item style={styles.item} label="Kidnapping" value="Kidnapping" />
+                                                <Picker.Item style={styles.item} label="Kidnapping for Ransom" value="Kidnapping for Ransom" />
                                             </Picker>
 
                                             {touched.category && errors.category && (
