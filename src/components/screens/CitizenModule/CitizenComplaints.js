@@ -29,7 +29,7 @@ const CitizenComplaints = ({ navigation }) => {
 
           <TouchableOpacity>
             <View style={styles.Listcontainer} >
-              <TouchableOpacity style={{ flexDirection: 'row' }}>
+              <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.navigate('KidnappingForm')} >
                 <Image source={require('../../../assets/svg_icons/kidnapping.png')} style={styles.image} />
                 <Text style={styles.text} >Kidnapping</Text>
                 <MaterialCommunityIcons name="arrow-right-circle" size={30} color="#000" style={styles.icon} />

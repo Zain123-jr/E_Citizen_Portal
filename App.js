@@ -9,6 +9,7 @@ import CitizenSignup from './src/components/screens/CitizenModule/CitizenSignup'
 import CitizenLogin from './src/components/screens/CitizenModule/CitizenLogin';
 import DrawerNavigator from './src/components/navigation/DrawerNavigator';
 import TortureForm from './src/components/screens/CitizenModule/ComplaintForms/TortureForm';
+import KidnappingForm from './src/components/screens/CitizenModule/ComplaintForms/KidnappinForm';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,7 @@ const App = () => {
         <Stack.Screen name="CitizenHome" component={DrawerNavigator} />
         <Stack.Screen name="CitizenComplaints" component={ComplaintsBottomNavigator}/>      
         <Stack.Screen name="TortureForm" component={TortureForm}/>      
+        <Stack.Screen name="KidnappingForm" component={KidnappingForm}/>      
       </Stack.Navigator>
     </NavigationContainer>
   );
