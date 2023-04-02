@@ -8,7 +8,6 @@ const CitizenComplaints = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.maincontainer} >
       <ScrollView>
-
         <View style={styles.head} >
           <TouchableOpacity onPress={() => navigation.navigate('CitizenHome')} >
             <MaterialCommunityIcons name="arrow-left" size={30} color="#fff" style={styles.icon1} />

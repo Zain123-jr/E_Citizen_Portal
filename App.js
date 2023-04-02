@@ -30,6 +30,7 @@ const App = () => {
         <Stack.Screen name="CitizenLogin" component={CitizenLogin} />
         <Stack.Screen name="CitizenHome" component={DrawerNavigator} />
         <Stack.Screen name="CitizenComplaints" component={ComplaintsBottomNavigator}/>      
+        <Stack.Screen name="ViewComplaints" component={ComplaintsBottomNavigator}/>      
         <Stack.Screen name="Torture" component={TortureForm}/>      
         <Stack.Screen name="Kidnapping" component={KidnappingForm}/>      
         <Stack.Screen name="Killing" component={KillingForm}/>      

@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../consts/Colors';
 import CitizenComplaints from '../screens/CitizenModule/CitizenComplaints';
+import ViewComplaints from '../screens/CitizenModule/ViewComplaints';
 
 
 const Tab = createBottomTabNavigator();
@@ -30,6 +31,17 @@ const BottomNavigator = () => {
                     tabBarLabel: 'Complaints Categories',
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons name="alert-box-outline" color={color} size={30} />
+                    ),
+                }}
+            />
+
+            <Tab.Screen
+                name="View Complaints"
+                component={ViewComplaints}
+                options={{
+                    tabBarLabel: 'View Complaints',
+                    tabBarIcon: ({ color }) => (
+                        <MaterialCommunityIcons name="eye-outline" color={color} size={30} />
                     ),
                 }}
             />
