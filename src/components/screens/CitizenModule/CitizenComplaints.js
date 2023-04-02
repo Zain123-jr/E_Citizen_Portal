@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
     padding: 15,
     borderTopLeftRadius:50,
-    borderBottomRightRadius:50,
+    borderBottomRightRadius:50,    
   },
 
   heading: {
