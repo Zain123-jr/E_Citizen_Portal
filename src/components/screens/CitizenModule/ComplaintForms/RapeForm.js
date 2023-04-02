@@ -8,7 +8,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 
-const KidnappingFormSchema = Yup.object().shape({
+const RapeFormSchema = Yup.object().shape({
 
     subject: Yup.string()
         .min(5, 'Too Short!')
@@ -35,7 +35,7 @@ const KidnappingFormSchema = Yup.object().shape({
 });
 
 
-const KidnappingForm = ({ navigation }) => {
+const RapeForm = ({ navigation }) => {
 
     function Submit() {
         Alert.alert('Complaint Submit Successfully')
@@ -63,7 +63,7 @@ const KidnappingForm = ({ navigation }) => {
                         tehsil: '',
                     }}
 
-                        validationSchema={KidnappingFormSchema}
+                        validationSchema={RapeFormSchema}
 
                     >
 
@@ -99,10 +99,9 @@ const KidnappingForm = ({ navigation }) => {
                                                 onBlur={() => setFieldTouched('category')}
                                             >
                                                 <Picker.Item style={styles.item} label="Select category" value="" />
-                                                <Picker.Item style={styles.item} label="Traditional kidnapping" value="Traditional kidnapping" />
-                                                <Picker.Item style={styles.item} label="Kidnapping for Ransom" value="Kidnapping for Ransom" />
-                                                <Picker.Item style={styles.item} label="Custodial kidnapping" value="Custodial kidnapping" />
-                                                <Picker.Item style={styles.item} label="Gang kidnapping" value="Gang kidnapping" />
+                                                <Picker.Item style={styles.item} label="Rape" value="Rape" />
+                                                <Picker.Item style={styles.item} label="Gang Rape" value="Gang Rape" />
+                                                <Picker.Item style={styles.item} label="Custodial Rape" value="Custodial Rape" />
                                             </Picker>
 
                                             {touched.category && errors.category && (
@@ -144,7 +143,7 @@ const KidnappingForm = ({ navigation }) => {
                                             )}
                                         </View>
 
-                                        <View style={{ borderColor: '#ccc', top: -6, borderWidth: 2, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, marginBottom:20, marginTop:20 }} >
+                                        <View style={{ borderColor: '#ccc', top: -6, borderWidth: 2, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, marginBottom: 20, marginTop: 20 }} >
                                             <Picker
                                                 style={{
                                                     left: -10,
@@ -156,7 +155,7 @@ const KidnappingForm = ({ navigation }) => {
                                                 onBlur={() => setFieldTouched('province')}
                                             >
                                                 <Picker.Item style={styles.item} label="Select Province" value="" />
-                                                <Picker.Item style={styles.item} label="Punjab" value="Punjab" />                                    
+                                                <Picker.Item style={styles.item} label="Punjab" value="Punjab" />
                                             </Picker>
 
                                             {touched.province && errors.province && (
@@ -164,7 +163,7 @@ const KidnappingForm = ({ navigation }) => {
                                             )}
                                         </View>
 
-                                        <View style={{ borderColor: '#ccc', top: -6, borderWidth: 2, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, marginBottom:10, marginTop:20 }} >
+                                        <View style={{ borderColor: '#ccc', top: -6, borderWidth: 2, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, marginBottom: 10, marginTop: 20 }} >
                                             <Picker
                                                 style={{
                                                     left: -10,
@@ -176,7 +175,7 @@ const KidnappingForm = ({ navigation }) => {
                                                 onBlur={() => setFieldTouched('district')}
                                             >
                                                 <Picker.Item style={styles.item} label="Select District" value="" />
-                                                <Picker.Item style={styles.item} label="Sargodha" value="Sargodha" />                                        
+                                                <Picker.Item style={styles.item} label="Sargodha" value="Sargodha" />
                                             </Picker>
 
                                             {touched.district && errors.district && (
@@ -184,7 +183,7 @@ const KidnappingForm = ({ navigation }) => {
                                             )}
                                         </View>
 
-                                        <View style={{ borderColor: '#ccc', top: -6, borderWidth: 2, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, marginBottom:20, marginTop:20 }} >
+                                        <View style={{ borderColor: '#ccc', top: -6, borderWidth: 2, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, marginBottom: 20, marginTop: 20 }} >
                                             <Picker
                                                 style={{
                                                     left: -10,
@@ -207,7 +206,7 @@ const KidnappingForm = ({ navigation }) => {
                                             )}
                                         </View>
 
-                                        
+
 
                                         <TouchableOpacity
                                             onPress={() => Submit()}
@@ -233,7 +232,7 @@ const KidnappingForm = ({ navigation }) => {
     )
 }
 
-export default KidnappingForm
+export default RapeForm;
 
 const styles = StyleSheet.create({
     maincontainer: {
@@ -305,7 +304,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         alignItems: 'center',
         marginTop: 15,
-        marginBottom:20
+        marginBottom: 20
     },
 
     buttonText: {

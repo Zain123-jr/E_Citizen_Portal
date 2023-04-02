@@ -10,6 +10,11 @@ import CitizenLogin from './src/components/screens/CitizenModule/CitizenLogin';
 import DrawerNavigator from './src/components/navigation/DrawerNavigator';
 import TortureForm from './src/components/screens/CitizenModule/ComplaintForms/TortureForm';
 import KidnappingForm from './src/components/screens/CitizenModule/ComplaintForms/KidnappinForm';
+import KillingForm from './src/components/screens/CitizenModule/ComplaintForms/KillingForm';
+import RobberyForm from './src/components/screens/CitizenModule/ComplaintForms/RobberyForm';
+import RapeForm from './src/components/screens/CitizenModule/ComplaintForms/RapeForm';
+import ChildAbuseForm from './src/components/screens/CitizenModule/ComplaintForms/ChildAbuseForm';
+import MissingPersonForm from './src/components/screens/CitizenModule/ComplaintForms/MissingPersonForm';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,8 +30,13 @@ const App = () => {
         <Stack.Screen name="CitizenLogin" component={CitizenLogin} />
         <Stack.Screen name="CitizenHome" component={DrawerNavigator} />
         <Stack.Screen name="CitizenComplaints" component={ComplaintsBottomNavigator}/>      
-        <Stack.Screen name="TortureForm" component={TortureForm}/>      
-        <Stack.Screen name="KidnappingForm" component={KidnappingForm}/>      
+        <Stack.Screen name="Torture" component={TortureForm}/>      
+        <Stack.Screen name="Kidnapping" component={KidnappingForm}/>      
+        <Stack.Screen name="Killing" component={KillingForm}/>      
+        <Stack.Screen name="Robbery" component={RobberyForm}/>      
+        <Stack.Screen name="Rape" component={RapeForm}/>      
+        <Stack.Screen name="ChildAbuse" component={ChildAbuseForm}/>      
+        <Stack.Screen name="MissingPerson" component={MissingPersonForm}/>      
       </Stack.Navigator>
     </NavigationContainer>
   );

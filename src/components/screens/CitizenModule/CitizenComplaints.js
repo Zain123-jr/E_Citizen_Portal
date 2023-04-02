@@ -19,7 +19,7 @@ const CitizenComplaints = ({ navigation }) => {
         <View style={styles.categorycontainer} >
           <TouchableOpacity>
             <View style={styles.Listcontainer} >
-              <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.navigate('TortureForm')} >
+              <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.navigate('Torture')} >
                 <Image source={require('../../../assets/svg_icons/torture.webp')} style={styles.image} />
                 <Text style={styles.text} >Torture</Text>
                 <MaterialCommunityIcons name="arrow-right-circle" size={30} color="#000" style={styles.icon} />
@@ -29,7 +29,7 @@ const CitizenComplaints = ({ navigation }) => {
 
           <TouchableOpacity>
             <View style={styles.Listcontainer} >
-              <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.navigate('KidnappingForm')} >
+              <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.navigate('Kidnapping')} >
                 <Image source={require('../../../assets/svg_icons/kidnapping.png')} style={styles.image} />
                 <Text style={styles.text} >Kidnapping</Text>
                 <MaterialCommunityIcons name="arrow-right-circle" size={30} color="#000" style={styles.icon} />
@@ -39,7 +39,7 @@ const CitizenComplaints = ({ navigation }) => {
 
           <TouchableOpacity>
             <View style={styles.Listcontainer} >
-              <TouchableOpacity style={{ flexDirection: 'row' }}>
+              <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.navigate('Killing')} >
                 <Image source={require('../../../assets/svg_icons/killing.png')} style={styles.image} />
                 <Text style={styles.text} >Killing</Text>
                 <MaterialCommunityIcons name="arrow-right-circle" size={30} color="#000" style={styles.icon} />
@@ -49,27 +49,17 @@ const CitizenComplaints = ({ navigation }) => {
 
           <TouchableOpacity>
             <View style={styles.Listcontainer} >
-              <TouchableOpacity style={{ flexDirection: 'row' }}>
+              <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.navigate('Robbery')} >
                 <Image source={require('../../../assets/svg_icons/robbery.png')} style={styles.image} />
                 <Text style={styles.text} >Robbery</Text>
                 <MaterialCommunityIcons name="arrow-right-circle" size={30} color="#000" style={styles.icon} />
               </TouchableOpacity>
             </View>
           </TouchableOpacity>
-
+          
           <TouchableOpacity>
             <View style={styles.Listcontainer} >
-              <TouchableOpacity style={{ flexDirection: 'row' }}>
-                <Image source={require('../../../assets/svg_icons/theft.png')} style={styles.image} />
-                <Text style={styles.text} >Theft</Text>
-                <MaterialCommunityIcons name="arrow-right-circle" size={30} color="#000" style={styles.icon} />
-              </TouchableOpacity>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity>
-            <View style={styles.Listcontainer} >
-              <TouchableOpacity style={{ flexDirection: 'row' }}>
+              <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.navigate('Rape')} >
                 <Image source={require('../../../assets/svg_icons/rape.webp')} style={styles.image} />
                 <Text style={styles.text} >Rape</Text>
                 <MaterialCommunityIcons name="arrow-right-circle" size={30} color="#000" style={styles.icon} />
@@ -79,7 +69,7 @@ const CitizenComplaints = ({ navigation }) => {
 
           <TouchableOpacity>
             <View style={styles.Listcontainer} >
-              <TouchableOpacity style={{ flexDirection: 'row' }}>
+              <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.navigate('ChildAbuse')} >
                 <Image source={require('../../../assets/svg_icons/child_abuse.png')} style={styles.image} />
                 <Text style={styles.text} >Child Abuse</Text>
                 <MaterialCommunityIcons name="arrow-right-circle" size={30} color="#000" style={styles.icon} />
@@ -89,7 +79,7 @@ const CitizenComplaints = ({ navigation }) => {
 
           <TouchableOpacity>
             <View style={styles.Listcontainer} >
-              <TouchableOpacity style={{ flexDirection: 'row' }}>
+              <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.navigate('MissingPerson')} >
                 <Image source={require('../../../assets/svg_icons/missing_person.png')} style={styles.image} />
                 <Text style={styles.text} >Missing Person</Text>
                 <MaterialCommunityIcons name="arrow-right-circle" size={30} color="#000" style={styles.icon} />
