@@ -5,7 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import COLORS from '../../consts/Colors';
 
 const ViewComplaints = ({ navigation}) => {
-        
+
 
     return (
         <SafeAreaView style={styles.maincontainer} >

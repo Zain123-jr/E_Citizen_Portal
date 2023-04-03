@@ -205,7 +205,7 @@ const TortureForm = ({ navigation }) => {
                                             )}
                                         </View>
 
-                                        
+
 
                                         <TouchableOpacity
                                             onPress={()=>{Submit()}}
@@ -332,3 +332,5 @@ const styles = StyleSheet.create({
     }
 
 })
+
+
