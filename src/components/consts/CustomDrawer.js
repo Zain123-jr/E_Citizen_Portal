@@ -14,11 +14,11 @@ const CustomDrawer = (props) => {
                 </View>
             </DrawerContentScrollView>
 
-            <View style={{ padding: 20, borderTopColor: 'green', borderTopWidth: 2, flexDirection: 'row', alignItems: 'center' }} >
+            <View style={{ padding:28, borderTopColor: 'green', borderTopWidth: 2, flexDirection: 'row', alignItems: 'center' }} >
                 <TouchableOpacity>
                     <View style={{ flexDirection: 'row', }}>
-                        <MaterialCommunityIcons name="logout" size={22} />
-                        <Text style={{ fontWeight: '700' }}>Logout</Text>
+                        <MaterialCommunityIcons name="logout" size={22} color="grey" />
+                        <Text style={{ fontWeight: '700', color:"grey", fontSize:15, left:5, top:0 }}>Logout</Text>
                     </View>
                 </TouchableOpacity>
             </View>
