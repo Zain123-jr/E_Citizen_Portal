@@ -4,7 +4,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../consts/Colors';
 
-const ViewComplaints = ({navigation}) => {
+const ViewComplaints = ({ navigation}) => {
+        
+
     return (
         <SafeAreaView style={styles.maincontainer} >
             <ScrollView>
@@ -15,7 +17,7 @@ const ViewComplaints = ({navigation}) => {
                     <Text style={styles.heading} >View Complaints</Text>
                 </View>
 
-                <View style={{flex:1}} >
+                <View style={{ flex: 1 }} >
                     <Text style={{color:'#000', textAlign:'center', fontSize:30, marginTop:200}} >This is View Complaints Screen</Text>
                 </View>
             </ScrollView>

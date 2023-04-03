@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../../consts/Colors';
@@ -37,8 +37,8 @@ const TortureFormSchema = Yup.object().shape({
 
 const TortureForm = ({ navigation }) => {
 
-    function Submit() {
-        Alert.alert('Complaint Submit Successfully')
+    function Submit(){
+        alert("Complaint Added Successfully")
     }
 
     return (
@@ -63,8 +63,7 @@ const TortureForm = ({ navigation }) => {
                         tehsil: '',
                     }}
 
-                        validationSchema={TortureFormSchema}
-
+                        validationSchema={TortureFormSchema}                       
                     >
 
                         {({ values, errors, touched, handleChange, setFieldTouched, isValid }) => (
@@ -209,7 +208,7 @@ const TortureForm = ({ navigation }) => {
                                         
 
                                         <TouchableOpacity
-                                            onPress={() => Submit()}
+                                            onPress={()=>{Submit()}}
                                             disabled={!isValid}
                                             style={[
                                                 styles.button,
