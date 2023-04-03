@@ -333,5 +333,3 @@ const styles = StyleSheet.create({
     }
 
 })
-
-
