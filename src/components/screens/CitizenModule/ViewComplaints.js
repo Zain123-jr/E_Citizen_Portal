@@ -1,11 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../consts/Colors';
 
-const ViewComplaints = ({ navigation}) => {
+const ViewComplaints = ({ navigation }) => {
 
+    const complaints = [
+        { id: 1, title: 'Complaint 1' },
+        { id: 2, title: 'Complaint 2' },
+        { id: 3, title: 'Complaint 3' },
+    ];
 
     return (
         <SafeAreaView style={styles.maincontainer} >
@@ -17,9 +22,21 @@ const ViewComplaints = ({ navigation}) => {
                     <Text style={styles.heading} >View Complaints</Text>
                 </View>
 
-                <View style={{ flex: 1 }} >
+                {/* <View style={{ flex: 1 }} >
                     <Text style={{color:'#000', textAlign:'center', fontSize:30, marginTop:200}} >This is View Complaints Screen</Text>
-                </View>
+                </View> */}
+
+                <FlatList
+                    data={complaints}
+                    renderItem={({ item }) => (
+                        <View style={styles.item}>
+                            <Text style={styles.title}>{item.title}</Text>
+                        </View>
+                    )}
+                    keyExtractor={(item) => item.id.toString()}
+                    style={styles.container}
+                />
+
             </ScrollView>
         </SafeAreaView>
     )
@@ -50,8 +67,21 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
         top: -18
-    }
+    },
+
+    item: {
+        padding: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+    },
+
+    title: {
+        fontSize: 16,
+    },
 })
+
+
+
 
 
 
