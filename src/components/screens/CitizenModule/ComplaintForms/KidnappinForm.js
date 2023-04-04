@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../../consts/Colors';
 import { Picker } from "@react-native-picker/picker";
+import DocumentPicker from 'react-native-document-picker';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -32,10 +33,50 @@ const KidnappingFormSchema = Yup.object().shape({
 
     tehsil: Yup.string()
         .required('Tehsil Required'),
+
+    attachment: Yup.object()
+        .nullable()
+        .required('Please select an attachment')
+        .test('fileSize', 'File size too large', (value) => {
+            if (!value) {
+                return true;
+            }
+
+            // Use React Native File System (RNFS) to get the file size
+            return RNFS.stat(value.uri).then((stats) => stats.size <= 5242880); // 5 MB
+        })
+        .test('fileType', 'Invalid file type', (value) => {
+            if (!value) {
+                return true;
+            }
+
+            // Define the allowed file types
+            const allowedTypes = ['image/jpeg', 'application/pdf', 'video/mp4', 'audio/mp3'];
+
+            // Check if the selected file type is in the allowed types array
+            return allowedTypes.includes(value.type);
+        }),
 });
 
 
 const KidnappingForm = ({ navigation }) => {
+
+    const [attachment, setAttachment] = useState(null);
+
+    const handleSelectFile = async () => {
+        try {
+            const result = await DocumentPicker.pick({
+                type: [DocumentPicker.types.images, DocumentPicker.types.audio, DocumentPicker.types.video],
+
+                presentationStyle: 'fullScreen',
+                allowMultiSelection: true,
+            });
+            setAttachment(result);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
 
     function Submit() {
         Alert.alert('Complaint Submit Successfully')
@@ -61,6 +102,7 @@ const KidnappingForm = ({ navigation }) => {
                         province: '',
                         district: '',
                         tehsil: '',
+                        attachment: null,
                     }}
 
                         validationSchema={KidnappingFormSchema}
@@ -144,7 +186,7 @@ const KidnappingForm = ({ navigation }) => {
                                             )}
                                         </View>
 
-                                        <View style={{ borderColor: '#ccc', top: -6, borderWidth: 2, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, marginBottom:20, marginTop:20 }} >
+                                        <View style={{ borderColor: '#ccc', top: -6, borderWidth: 2, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, marginBottom: 20, marginTop: 20 }} >
                                             <Picker
                                                 style={{
                                                     left: -10,
@@ -156,7 +198,7 @@ const KidnappingForm = ({ navigation }) => {
                                                 onBlur={() => setFieldTouched('province')}
                                             >
                                                 <Picker.Item style={styles.item} label="Select Province" value="" />
-                                                <Picker.Item style={styles.item} label="Punjab" value="Punjab" />                                    
+                                                <Picker.Item style={styles.item} label="Punjab" value="Punjab" />
                                             </Picker>
 
                                             {touched.province && errors.province && (
@@ -164,7 +206,7 @@ const KidnappingForm = ({ navigation }) => {
                                             )}
                                         </View>
 
-                                        <View style={{ borderColor: '#ccc', top: -6, borderWidth: 2, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, marginBottom:10, marginTop:20 }} >
+                                        <View style={{ borderColor: '#ccc', top: -6, borderWidth: 2, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, marginBottom: 10, marginTop: 20 }} >
                                             <Picker
                                                 style={{
                                                     left: -10,
@@ -176,7 +218,7 @@ const KidnappingForm = ({ navigation }) => {
                                                 onBlur={() => setFieldTouched('district')}
                                             >
                                                 <Picker.Item style={styles.item} label="Select District" value="" />
-                                                <Picker.Item style={styles.item} label="Sargodha" value="Sargodha" />                                        
+                                                <Picker.Item style={styles.item} label="Sargodha" value="Sargodha" />
                                             </Picker>
 
                                             {touched.district && errors.district && (
@@ -184,7 +226,7 @@ const KidnappingForm = ({ navigation }) => {
                                             )}
                                         </View>
 
-                                        <View style={{ borderColor: '#ccc', top: -6, borderWidth: 2, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, marginBottom:20, marginTop:20 }} >
+                                        <View style={{ borderColor: '#ccc', top: -6, borderWidth: 2, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, marginBottom: 20, marginTop: 20 }} >
                                             <Picker
                                                 style={{
                                                     left: -10,
@@ -207,7 +249,36 @@ const KidnappingForm = ({ navigation }) => {
                                             )}
                                         </View>
 
-                                        
+
+                                        <View value={values.attachment}
+                                            onChangeText={handleChange('attachment')}
+                                            onBlur={() => setFieldTouched('attachment')} >
+                                            <Text style={styles.primary}>Attachment</Text>
+                                            <TouchableOpacity style={styles.secondary} onPress={handleSelectFile}
+                                            >
+                                                <Text style={styles.secondarytext}>Choose File</Text>
+                                            </TouchableOpacity>
+
+                                            <View style={{ flex: 1 }} >
+                                                <Text style={{ fontSize: 18, color: '#000', fontWeight: '600', paddingTop: 20, paddingBottom: 10 }} >Attachment Size Limit</Text>
+                                                <Text style={{ fontSize: 16, color: 'red', fontWeight: '600' }} >-images 3MB</Text>
+                                                <Text style={{ fontSize: 16, color: 'red', fontWeight: '600' }} >-Video 20MB</Text>
+                                                <Text style={{ fontSize: 16, color: 'red', fontWeight: '600' }} >-Audio 2MB</Text>
+                                                <Text style={{ fontSize: 16, color: 'red', fontWeight: '600' }} >-File 5MB</Text>
+                                            </View>
+
+                                            {attachment && (
+                                                <Text style={styles.fileName}>
+                                                    {attachment.name} ({attachment.type})
+                                                </Text>
+                                            )}
+                                            {errors.attachment && touched.attachment && (
+                                                <Text style={styles.errorText}>{errors.attachment}</Text>
+                                            )}
+                                        </View>
+
+
+
 
                                         <TouchableOpacity
                                             onPress={() => Submit()}
@@ -305,7 +376,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         alignItems: 'center',
         marginTop: 15,
-        marginBottom:20
+        marginBottom: 20
     },
 
     buttonText: {
@@ -331,6 +402,31 @@ const styles = StyleSheet.create({
 
     item: {
         fontSize: 18,
+    },
+
+    primary: {
+        fontSize: 28,
+        fontWeight: "700",
+        color: '#000',
+        left: 5,
+        paddingBottom: 10,
+    },
+
+    secondary: {
+        borderColor: COLORS.primary,
+        borderWidth: 2,
+        width: '55%',
+        padding: 18,
+        textAlign: 'center',
+        backgroundColor: 'green',
+        borderRadius: 50
+    },
+
+    secondarytext: {
+        fontSize: 19,
+        color: '#fff',
+        fontWeight: '700',
+        textAlign: 'center'
     }
 
 })
