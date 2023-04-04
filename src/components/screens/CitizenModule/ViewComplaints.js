@@ -22,10 +22,6 @@ const ViewComplaints = ({ navigation }) => {
                     <Text style={styles.heading} >View Complaints</Text>
                 </View>
 
-                {/* <View style={{ flex: 1 }} >
-                    <Text style={{color:'#000', textAlign:'center', fontSize:30, marginTop:200}} >This is View Complaints Screen</Text>
-                </View> */}
-
                 <FlatList
                     data={complaints}
                     renderItem={({ item }) => (
@@ -63,10 +59,10 @@ const styles = StyleSheet.create({
     },
 
     heading: {
-        fontSize: 30,
+        fontSize: 22,
         color: 'white',
         textAlign: 'center',
-        top: -18
+        top: -12
     },
 
     item: {
@@ -77,6 +73,7 @@ const styles = StyleSheet.create({
 
     title: {
         fontSize: 16,
+        color:'#000'
     },
 })
 

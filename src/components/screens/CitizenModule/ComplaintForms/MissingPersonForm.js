@@ -32,7 +32,7 @@ const MissingPersonFormSchema = Yup.object().shape({
 
     tehsil: Yup.string()
         .required('Tehsil Required'),
-    
+
 });
 
 
@@ -206,7 +206,7 @@ const MissingPersonForm = ({ navigation }) => {
                                                 <Text style={styles.errorText}>{errors.tehsil}</Text>
                                             )}
                                         </View>
-                                    
+
                                         <TouchableOpacity
                                             onPress={() => Submit()}
                                             disabled={!isValid}
@@ -252,10 +252,10 @@ const styles = StyleSheet.create({
     },
 
     heading: {
-        fontSize: 30,
+        fontSize: 22,
         color: 'white',
         textAlign: 'center',
-        top: -18
+        top: -12
     },
 
     formContainer: {

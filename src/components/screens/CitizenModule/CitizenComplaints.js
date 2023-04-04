@@ -107,24 +107,26 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    color: '#000',
-    fontSize: 22,
+    color: COLORS.primary,
+    fontSize: 18,
     fontWeight: '700',
-    top: 10,
+    top: 12,
     left: 30
   },
 
   image: {
     resizeMode: 'contain',
-    width: 50,
-    height: 50,
-    left: 15
+    width: 35,
+    height: 35,
+    left: 15,
+    top:4
   },
 
   icon: {
     position: 'absolute',
-    left: 350,
+    left: 300,
     top: 12,
+    color:COLORS.dark
   },
 
   icon1: {
@@ -140,9 +142,9 @@ const styles = StyleSheet.create({
   },
 
   heading: {
-    fontSize: 30,
+    fontSize: 22,
     color: 'white',
     textAlign: 'center',
-    top: -18
+    top: -12
   }
 })
