@@ -8,11 +8,11 @@ const CitizenComplaints = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.maincontainer} >
       <ScrollView>
-        <View style={styles.head} >
+        <View style={styles.head}>
           <TouchableOpacity onPress={() => navigation.navigate('CitizenHome')} >
-            <MaterialCommunityIcons name="arrow-left" size={30} color="#fff" style={styles.icon1} />
+            <MaterialCommunityIcons name="arrow-left" size={30} color="#fff" />
           </TouchableOpacity>
-          <Text style={styles.heading} >Select Category</Text>
+          <Text style={styles.heading}>Select Category</Text>
         </View>
 
         <View style={styles.categorycontainer} >
@@ -55,7 +55,7 @@ const CitizenComplaints = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           </TouchableOpacity>
-          
+
           <TouchableOpacity>
             <View style={styles.Listcontainer} >
               <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.navigate('Rape')} >
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'grey',
     borderBottomWidth: 2,
     paddingTop: 20,
-    paddingBottom: 25,    
+    paddingBottom: 25,
   },
 
   text: {
@@ -119,32 +119,30 @@ const styles = StyleSheet.create({
     width: 35,
     height: 35,
     left: 15,
-    top:4
+    top: 4
   },
 
   icon: {
     position: 'absolute',
     left: 300,
     top: 12,
-    color:COLORS.dark
+    color: COLORS.dark
   },
 
-  icon1: {
-    top: 20,
-  },
-
-  head: {
-    flex: 1,
-    backgroundColor: COLORS.primary,
-    padding: 15,
+  head:{
+    flex:1,
+    flexDirection:'row',
+    backgroundColor:COLORS.primary,
     borderTopLeftRadius:50,
-    borderBottomRightRadius:50,    
+    borderBottomRightRadius:50,
+    padding:30,
   },
 
-  heading: {
-    fontSize: 22,
-    color: 'white',
-    textAlign: 'center',
-    top: -12
+  heading:{
+    flex:1,
+    textAlign:'center',
+    color:'#fff',
+    fontSize:22,
   }
+
 })

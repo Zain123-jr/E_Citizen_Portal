@@ -46,11 +46,11 @@ const ChildAbuseForm = ({ navigation }) => {
         <SafeAreaView style={styles.maincontainer} >
             <ScrollView>
 
-                <View style={styles.head} >
+                <View style={styles.head}>
                     <TouchableOpacity onPress={() => navigation.navigate('CitizenComplaints')} >
-                        <MaterialCommunityIcons name="arrow-left" size={30} color="#fff" style={styles.icon1} />
+                        <MaterialCommunityIcons name="arrow-left" size={30} color="#fff" />
                     </TouchableOpacity>
-                    <Text style={styles.heading} >New Complaint</Text>
+                    <Text style={styles.heading}>New Compalaint</Text>
                 </View>
 
                 <View>
@@ -240,23 +240,20 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
 
-    icon1: {
-        top: 20,
-    },
-
     head: {
         flex: 1,
+        flexDirection: 'row',
         backgroundColor: COLORS.primary,
         borderTopLeftRadius: 50,
-        borderBottomEndRadius: 50,
-        padding: 15,
+        borderBottomRightRadius: 50,
+        padding: 30,
     },
 
     heading: {
-        fontSize: 22,
-        color: 'white',
+        flex: 1,
         textAlign: 'center',
-        top: -12
+        color: '#fff',
+        fontSize: 22,
     },
 
     formContainer: {
