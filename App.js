@@ -29,15 +29,15 @@ const App = () => {
         <Stack.Screen name="CitizenSignup" component={CitizenSignup} />
         <Stack.Screen name="CitizenLogin" component={CitizenLogin} />
         <Stack.Screen name="CitizenHome" component={DrawerNavigator} />
-        <Stack.Screen name="CitizenComplaints" component={ComplaintsBottomNavigator}/>      
-        <Stack.Screen name="ViewComplaints" component={ComplaintsBottomNavigator}/>      
-        <Stack.Screen name="Torture" component={TortureForm}/>      
-        <Stack.Screen name="Kidnapping" component={KidnappingForm}/>      
-        <Stack.Screen name="Killing" component={KillingForm}/>      
-        <Stack.Screen name="Robbery" component={RobberyForm}/>      
-        <Stack.Screen name="Rape" component={RapeForm}/>      
-        <Stack.Screen name="ChildAbuse" component={ChildAbuseForm}/>      
-        <Stack.Screen name="MissingPerson" component={MissingPersonForm}/>      
+        <Stack.Screen name="CitizenComplaints" component={ComplaintsBottomNavigator} />
+        <Stack.Screen name="ViewComplaints" component={ComplaintsBottomNavigator} />
+        <Stack.Screen name="Torture" component={TortureForm} />
+        <Stack.Screen name="Kidnapping" component={KidnappingForm} />
+        <Stack.Screen name="Killing" component={KillingForm} />
+        <Stack.Screen name="Robbery" component={RobberyForm} />
+        <Stack.Screen name="Rape" component={RapeForm} />
+        <Stack.Screen name="ChildAbuse" component={ChildAbuseForm} />
+        <Stack.Screen name="MissingPerson" component={MissingPersonForm} />
       </Stack.Navigator>
     </NavigationContainer>
   );
