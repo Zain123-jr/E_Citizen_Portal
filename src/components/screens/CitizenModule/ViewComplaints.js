@@ -15,19 +15,22 @@ const ViewComplaints = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.maincontainer} >
             <ScrollView>
-                <View style={styles.head} >
+                <View style={styles.head}>
                     <TouchableOpacity onPress={() => navigation.navigate('CitizenHome')} >
-                        <MaterialCommunityIcons name="arrow-left" size={30} color="#fff" style={styles.icon} />
+                        <MaterialCommunityIcons name="arrow-left" size={30} color="#fff" />
                     </TouchableOpacity>
-                    <Text style={styles.heading} >View Complaints</Text>
+                    <Text style={styles.heading}>View Complaints</Text>
                 </View>
 
                 <FlatList
                     data={complaints}
                     renderItem={({ item }) => (
-                        <View style={styles.item}>
-                            <Text style={styles.title}>{item.title}</Text>
-                        </View>
+                        <TouchableOpacity>
+                            <View style={styles.item}>
+                                <Text style={styles.title}>{item.title}</Text>
+                            </View>
+                        </TouchableOpacity>
+
                     )}
                     keyExtractor={(item) => item.id.toString()}
                     style={styles.container}
@@ -46,23 +49,20 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
 
-    icon: {
-        top: 20,
-    },
-
     head: {
         flex: 1,
+        flexDirection: 'row',
         backgroundColor: COLORS.primary,
-        padding: 15,
         borderTopLeftRadius: 50,
         borderBottomRightRadius: 50,
+        padding: 30,
     },
 
     heading: {
-        fontSize: 22,
-        color: 'white',
+        flex: 1,
         textAlign: 'center',
-        top: -12
+        color: '#fff',
+        fontSize: 22,
     },
 
     item: {
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
 
     title: {
         fontSize: 16,
-        color:'#000'
+        color: '#000'
     },
 })
 
