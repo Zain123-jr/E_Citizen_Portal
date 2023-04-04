@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../../consts/Colors';
 import { Picker } from "@react-native-picker/picker";
 import DocumentPicker from 'react-native-document-picker';
-import RNFS from 'react-native-fs';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -37,48 +36,10 @@ const TortureFormSchema = Yup.object().shape({
     tehsil: Yup.string()
         .required('Tehsil Required'),
 
-    attachment: Yup.object()
-        .nullable()
-        .required('Please select an attachment')
-        .test('fileSize', 'File size too large', (value) => {
-            if (!value) {
-                return true;
-            }
-
-            // Use React Native File System (RNFS) to get the file size
-            return RNFS.stat(value.uri).then((stats) => stats.size <= 5242880); // 5 MB
-        })
-        .test('fileType', 'Invalid file type', (value) => {
-            if (!value) {
-                return true;
-            }
-
-            // Define the allowed file types
-            const allowedTypes = ['image/jpeg', 'application/pdf', 'video/mp4', 'audio/mp3'];
-
-            // Check if the selected file type is in the allowed types array
-            return allowedTypes.includes(value.type);
-        }),
 });
 
 
 const TortureForm = ({ navigation }) => {
-
-    const [attachment, setAttachment] = useState(null);
-
-    const handleSelectFile = async () => {
-        try {
-            const result = await DocumentPicker.pick({
-                type: [DocumentPicker.types.images, DocumentPicker.types.audio, DocumentPicker.types.video],                 
-                              
-                presentationStyle: 'fullScreen',
-                allowMultiSelection: true,
-            });
-            setAttachment(result);
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     function Submit() {
         alert("Complaint Added Successfully")
@@ -104,7 +65,6 @@ const TortureForm = ({ navigation }) => {
                         province: '',
                         district: '',
                         tehsil: '',
-                        attachment: null,
                     }}
 
                         validationSchema={TortureFormSchema}
@@ -248,34 +208,7 @@ const TortureForm = ({ navigation }) => {
                                                 <Text style={styles.errorText}>{errors.tehsil}</Text>
                                             )}
                                         </View>
-
-                                        <View value={values.attachment}
-                                            onChangeText={handleChange('attachment')}
-                                            onBlur={() => setFieldTouched('attachment')} >
-                                            <Text style={styles.primary}>Attachment</Text>
-                                            <TouchableOpacity style={styles.secondary} onPress={handleSelectFile}
-                                            >
-                                                <Text style={styles.secondarytext}>Choose File</Text>
-                                            </TouchableOpacity>
-
-                                            <View style={{ flex: 1 }} >
-                                                <Text style={{ fontSize: 18, color: '#000', fontWeight: '600', paddingTop: 20, paddingBottom: 10 }} >Attachment Size Limit</Text>
-                                                <Text style={{ fontSize: 16, color: 'red', fontWeight: '600' }} >-images 3MB</Text>
-                                                <Text style={{ fontSize: 16, color: 'red', fontWeight: '600' }} >-Video 20MB</Text>
-                                                <Text style={{ fontSize: 16, color: 'red', fontWeight: '600' }} >-Audio 2MB</Text>
-                                                <Text style={{ fontSize: 16, color: 'red', fontWeight: '600' }} >-File 5MB</Text>
-                                            </View>
-
-                                            {attachment && (
-                                                <Text style={styles.fileName}>
-                                                    {attachment.name} ({attachment.type})
-                                                </Text>
-                                            )}
-                                            {errors.attachment && touched.attachment && (
-                                                <Text style={styles.errorText}>{errors.attachment}</Text>
-                                            )}
-                                        </View>
-
+                                       
                                         <TouchableOpacity
                                             onPress={() => { Submit() }}
                                             disabled={!isValid}
