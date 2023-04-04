@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../../consts/Colors';
 import { Picker } from "@react-native-picker/picker";
-import DocumentPicker from 'react-native-document-picker';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
