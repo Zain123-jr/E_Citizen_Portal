@@ -137,7 +137,7 @@ const ChangePassword = () => {
                                     styles.button,
                                     { backgroundColor: isValid ? '#539165' : '#A5C9CA' },
                                 ]} >
-                                <Text style={styles.buttonText}>Submit</Text>
+                                <Text style={styles.buttonText}>Update Password</Text>
                             </TouchableOpacity>                            
 
                         </View>
