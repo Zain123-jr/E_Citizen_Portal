@@ -20,8 +20,7 @@ const Profile = ({ navigation, route }) => {
             width: 400,
             height: 400,
             cropping: true
-        }).then(image => {
-            console.log(image);
+        }).then(image => {            
             setProfile(image.path)
         });
     }
