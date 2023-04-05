@@ -1,7 +1,6 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native'
+import { View, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native'
 import imgPlaceHolder from '../../../assets/defualt-Avatar.png'
-import { Caption, Paragraph, Surface, Title } from 'react-native-paper'
 import ImagePicker, { openPicker } from 'react-native-image-crop-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useState } from 'react'
@@ -11,13 +10,6 @@ import * as Yup from 'yup';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-gesture-handler';
 
-
-const UpdateProfileSchema = Yup.object().shape({
-    fullName: Yup.string()
-        .min(2, 'Too Short!')
-        .max(15, 'Too Long!')
-        .required('Full Name Required'),
-});
 
 const Profile = ({ navigation, route }) => {
 
