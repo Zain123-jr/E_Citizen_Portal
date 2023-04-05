@@ -35,18 +35,22 @@ const Profile = ({ navigation, route }) => {
     }
 
     return (
-
-        <View style={styles.primarycontainer}>
-            <View style={styles.profileContainer}>
-                <View style={styles.imgContainer}>
-                    <Image style={styles.image} source={profile ? { uri: profile } : imgPlaceHolder} />
-                    <TouchableOpacity onPress={imagePick}
-                        style={{ alignItems: 'flex-end', top: -10 }}>
-                        <MaterialCommunityIcons name="plus-circle" size={30} color={COLORS.primary} />
-                    </TouchableOpacity>
+        <SafeAreaView>
+            <ScrollView>
+                <View style={styles.primarycontainer}>
+                    <View style={styles.profileContainer}>
+                        <View style={styles.imgContainer}>
+                            <Image style={styles.image} source={profile ? { uri: profile } : imgPlaceHolder} />
+                            <TouchableOpacity onPress={imagePick}
+                                style={{ alignItems: 'flex-end', top: -10 }}>
+                                <MaterialCommunityIcons name="plus-circle" size={30} color={COLORS.primary} />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 </View>
-            </View>
-        </View>
+            </ScrollView>
+        </SafeAreaView>
+
 
     )
 }
