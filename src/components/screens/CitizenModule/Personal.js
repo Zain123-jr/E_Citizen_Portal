@@ -48,7 +48,7 @@ const Profile = ({ navigation, route }) => {
     const [profile, setProfile] = useState(null)
 
     const imagePick = () => {
-        ImagePicker.openPicker({
+        ImagePicker.openPicker({            
             width: 400,
             height: 400,
             cropping: true
