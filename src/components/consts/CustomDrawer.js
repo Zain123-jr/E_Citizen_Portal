@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
+import { DrawerContentScrollView, DrawerItemList, Button } from "@react-navigation/drawer";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import imgPlaceHolder from '../../assets/defualt-Avatar.png'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -30,7 +30,7 @@ const CustomDrawer = (props) => {
             </DrawerContentScrollView>
 
             <View style={{ padding: 28, borderTopColor: 'green', borderTopWidth: 2, flexDirection: 'row', alignItems: 'center' }} >
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('CitizenLogin')} >
                     <View style={{ flexDirection: 'row', }}>
                         <MaterialCommunityIcons name="logout" size={22} color="grey" />
                         <Text style={{ fontWeight: '700', color: "grey", fontSize: 15, left: 5, top: 0 }}>Logout</Text>
