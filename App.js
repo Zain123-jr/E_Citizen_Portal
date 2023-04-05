@@ -15,8 +15,12 @@ import RobberyForm from './src/components/screens/CitizenModule/ComplaintForms/R
 import RapeForm from './src/components/screens/CitizenModule/ComplaintForms/RapeForm';
 import ChildAbuseForm from './src/components/screens/CitizenModule/ComplaintForms/ChildAbuseForm';
 import MissingPersonForm from './src/components/screens/CitizenModule/ComplaintForms/MissingPersonForm';
+import Profile from './src/components/screens/CitizenModule/Profile';
+
 
 const Stack = createNativeStackNavigator();
+
+
 
 const App = () => {
 
@@ -29,6 +33,7 @@ const App = () => {
         <Stack.Screen name="CitizenSignup" component={CitizenSignup} />
         <Stack.Screen name="CitizenLogin" component={CitizenLogin} />
         <Stack.Screen name="CitizenHome" component={DrawerNavigator} />
+        <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="CitizenComplaints" component={ComplaintsBottomNavigator} />
         <Stack.Screen name="ViewComplaints" component={ComplaintsBottomNavigator} />
         <Stack.Screen name="Torture" component={TortureForm} />

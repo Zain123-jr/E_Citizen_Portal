@@ -7,7 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import COLORS from '../consts/Colors';
 import Tutorials from '../screens/CitizenModule/Tutorials';
 import Profile from '../screens/CitizenModule/Profile';
-import Contact from '../screens/CitizenModule/Contact';
+import Contact from '../screens/CitizenModule/ContactUs';
 import ChangePassword from '../screens/CitizenModule/ChangePassword';
 
 
