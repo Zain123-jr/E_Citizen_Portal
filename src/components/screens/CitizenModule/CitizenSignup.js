@@ -23,7 +23,7 @@ const SignupSchema = Yup.object().shape({
     .min(2, 'Too Short!')
     .max(15, 'Too Long!')
     .required('Full Name Required'),
- 
+
   email: Yup.string()
     .email('Invalid email')
     .required('Valid Email Required'),
@@ -49,6 +49,9 @@ const SignupSchema = Yup.object().shape({
   mobile: Yup.string()
     .required('Mobile Number Required'),
 
+  addressline: Yup.string()
+    .required('Address line is required'),
+
   cnic: Yup.string()
     .min(13)
     .matches(/^\d{5}-\d{7}-\d{1}$/, 'Invalid CNIC format')
@@ -63,13 +66,14 @@ const CitizenSignup = ({ navigation }) => {
   return (
 
     <Formik initialValues={{
-      fullName: '',      
+      fullName: '',
       email: '',
       password: '',
       confirmPassword: '',
       dateofBirth: '',
       gender: '',
       mobile: '',
+      addressline: '',
       cnic: '',
     }}
 
@@ -104,7 +108,7 @@ const CitizenSignup = ({ navigation }) => {
                     <Text style={styles.errorText} >{errors.fullName}</Text>
                   )}
                 </View>
-                
+
                 <View style={{ flexDirection: "row" }} >
                   <TextInput
                     style={styles.input}
@@ -190,12 +194,12 @@ const CitizenSignup = ({ navigation }) => {
                   )}
                 </View>
 
-                <View style={{ borderColor:'#ccc' ,top: -6, borderWidth: 2, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0 }} >
+                <View style={{ borderColor: '#ccc', top: -6, borderWidth: 2, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0 }} >
                   <Picker
                     style={{
                       left: 18,
                       top: 8,
-                      color: 'white',                       
+                      color: 'white',
                     }}
                     selectedValue={values.gender}
                     onValueChange={handleChange('gender')}
@@ -226,6 +230,20 @@ const CitizenSignup = ({ navigation }) => {
                   {touched.mobile && errors.mobile && (
                     <Text style={styles.errorText} >{errors.mobile}</Text>
                   )}
+                </View>
+
+                <View style={{ flexDirection: 'row' }} >
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Address Line"
+                    placeholderTextColor='white'
+                    onChangeText={handleChange('addressline')}
+                    onBlur={() => setFieldTouched('addressline')}
+                    value={values.addressline}
+                  />
+                  <MaterialCommunityIcons name="map-marker-outline" size={30} style={styles.icon} />
+                  {touched.addressline && errors.addressline && (
+                    <Text style={styles.errorText} >{errors.addressline}</Text>)}
                 </View>
 
 
@@ -399,8 +417,8 @@ const styles = StyleSheet.create({
     padding: 5,
   },
 
-  item:{
-    fontSize:14,    
+  item: {
+    fontSize: 14,
   }
 });
 

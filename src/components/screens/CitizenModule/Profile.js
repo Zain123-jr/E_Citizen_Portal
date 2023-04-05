@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import Personal from './Personal'
-import Contact from './Contact'
+import Personal from './UpdateForms/Personal'
+import Contact from './UpdateForms/Contact'
 import COLORS from '../../consts/Colors';
 
 

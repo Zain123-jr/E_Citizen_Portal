@@ -1,10 +1,10 @@
 import React from 'react'
 import { View, StyleSheet, Image, TouchableOpacity, TextInput, Text } from 'react-native'
-import imgPlaceHolder from '../../../assets/defualt-Avatar.png'
+import imgPlaceHolder from '../../../../assets/defualt-Avatar.png'
 import ImagePicker, { openPicker } from 'react-native-image-crop-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useState } from 'react'
-import COLORS from '../../consts/Colors'
+import COLORS from '../../../consts/Colors'
 import { Formik } from "formik";
 import * as Yup from 'yup';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -15,8 +15,7 @@ import { Picker } from "@react-native-picker/picker";
 
 const UpdateProfileSchema = Yup.object().shape({
 
-    fullName: Yup
-        .string()
+    fullName: Yup.string()
         .min(2, 'Too Short!')
         .max(15, 'Too Long!')
         .required('Full Name Required'),
@@ -26,8 +25,7 @@ const UpdateProfileSchema = Yup.object().shape({
         .matches(/^\d{5}-\d{7}-\d{1}$/, 'Invalid CNIC format')
         .required('Enter CNIC Required'),
 
-    phoneNumber: Yup
-        .string()
+    phoneNumber: Yup.string()
         .matches(/^[0-9]{10}$/, 'Please enter a valid phone number')
         .required('Please enter your phone number'),
 
@@ -48,7 +46,7 @@ const Profile = ({ navigation, route }) => {
     const [profile, setProfile] = useState(null)
 
     const imagePick = () => {
-        ImagePicker.openPicker({            
+        ImagePicker.openPicker({
             width: 400,
             height: 400,
             cropping: true
