@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { DrawerContentScrollView, DrawerItemList, Button } from "@react-navigation/drawer";
+import React, { useEffect, useState } from "react";
+import { DrawerContentScrollView, DrawerItemList, Alert } from "@react-navigation/drawer";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import imgPlaceHolder from '../../assets/defualt-Avatar.png'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -11,6 +11,14 @@ const CustomDrawer = (props) => {
 
     const [profile, setProfile] = useState(null)
     const navigation = useNavigation();
+
+    function Logout(){
+        alert('Logout Successfully')
+        navigation.navigate('CitizenLogin')
+    }
+
+
+
 
     return (
         <View style={{ flex: 1 }} >
@@ -30,12 +38,12 @@ const CustomDrawer = (props) => {
             </DrawerContentScrollView>
 
             <View style={{ padding: 28, borderTopColor: 'green', borderTopWidth: 2, flexDirection: 'row', alignItems: 'center' }} >
-                <TouchableOpacity onPress={() => navigation.navigate('CitizenLogin')} >
+                <TouchableOpacity onPress={()=>Logout()}>
                     <View style={{ flexDirection: 'row', }}>
                         <MaterialCommunityIcons name="logout" size={22} color="grey" />
                         <Text style={{ fontWeight: '700', color: "grey", fontSize: 15, left: 5, top: 0 }}>Logout</Text>
                     </View>
-                </TouchableOpacity>
+                </TouchableOpacity>               
             </View>
         </View>
 
