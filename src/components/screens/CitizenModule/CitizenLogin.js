@@ -224,8 +224,8 @@ const styles = StyleSheet.create({
 
     extra: {
         fontSize: 15,
-        color: '#9DC08B',
-        fontWeight: '700',
+        color: '#fff',
+        fontWeight: '600',
         paddingRight: 5,
         top: 10
     },

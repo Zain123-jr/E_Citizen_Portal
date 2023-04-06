@@ -17,9 +17,6 @@ const CustomDrawer = (props) => {
         navigation.navigate('CitizenLogin')
     }
 
-
-
-
     return (
         <View style={{ flex: 1 }} >
             <DrawerContentScrollView contentContainerStyle={{ backgroundColor: COLORS.primary }} >
