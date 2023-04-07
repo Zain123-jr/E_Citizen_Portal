@@ -47,7 +47,7 @@ const CitizenLogin = ({ navigation }) => {
         >
 
             {({ values, errors, touched, handleChange, setFieldTouched, isValid }) => (
-                <SafeAreaView style={styles.container}>
+                <SafeAreaView style={styles.container}>                   
                     <ImageBackground
                         style={styles.image}
                         source={require("../../../assets/login_bg.jpg")}
@@ -56,6 +56,7 @@ const CitizenLogin = ({ navigation }) => {
                             <View style={styles.formContainer}>
                                 <Text style={styles.heading}>Login</Text>
                                 <Text style={styles.description}>Please Login To Continue</Text>
+
 
                                 <View style={{ flexDirection: "row" }} >
                                     <TextInput
