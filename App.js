@@ -22,7 +22,6 @@ import Personal from './src/components/screens/CitizenModule/UpdateForms/Persona
 const Stack = createNativeStackNavigator();
 
 
-
 const App = () => {
 
   return (
