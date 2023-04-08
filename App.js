@@ -18,7 +18,6 @@ import MissingPersonForm from './src/components/screens/CitizenModule/ComplaintF
 import Profile from './src/components/screens/CitizenModule/Profile';
 import Personal from './src/components/screens/CitizenModule/UpdateForms/Personal';
 
-
 const Stack = createNativeStackNavigator();
 
 const App = () => {
