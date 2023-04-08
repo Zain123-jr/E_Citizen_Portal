@@ -24,7 +24,7 @@ const ViewComplaints = ({ navigation }) => {
 
                 <FlatList
                     data={complaints}
-                    renderItem={({ item }) => (
+                    renderItem={({ item }) => (                       
                         <TouchableOpacity>
                             <View style={styles.item}>
                                 <Text style={styles.title}>{item.title}</Text>
@@ -76,9 +76,3 @@ const styles = StyleSheet.create({
         color: '#000'
     },
 })
-
-
-
-
-
-
