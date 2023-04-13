@@ -101,7 +101,7 @@ const OICLogin = ({ navigation }) => {
                                 </View>
 
                                 <TouchableOpacity
-                                    onPress={() => navigation.navigate('OICHomepage')}
+                                    onPress={() => navigation.navigate('Drawe')}
                                     disabled={!isValid}
                                     style={[
                                         styles.button,

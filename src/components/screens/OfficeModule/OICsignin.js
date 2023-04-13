@@ -58,7 +58,7 @@ const SignupSchema = Yup.object().shape({
     .required('Enter Required'),
 });
 
-const OICSignup = ({ navigation }) => {
+const OicSignup = ({ navigation }) => {
 
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePassword1, setHidePassword1] = useState(true);
@@ -291,7 +291,7 @@ const OICSignup = ({ navigation }) => {
   );
 };
 
-export default OICSignup;
+export default OicSignup;
 
 const styles = StyleSheet.create({
   container: {

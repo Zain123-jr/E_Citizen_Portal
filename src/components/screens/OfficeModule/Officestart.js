@@ -10,12 +10,7 @@ import {
 } from "react-native";
 
 const Officer = ({navigation}) => {
-    const oic=()=>{
-        navigation.navigate('OICSignup');
-       }
-       const policemen=()=>{
-        navigation.navigate('Policemen');
-       }
+  
   return (
     <SafeAreaView style={styles.container}>
      <View>
@@ -29,7 +24,7 @@ const Officer = ({navigation}) => {
                   <Text style={styles.buttonText}>OIC</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('PolicemenSignup ')}
+                  onPress={() => navigation.navigate('PolicemenSignup')}
                   
                   style={[
                     styles.button

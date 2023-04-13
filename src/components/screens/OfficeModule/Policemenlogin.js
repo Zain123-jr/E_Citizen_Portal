@@ -101,7 +101,7 @@ const PolicemenLogin = ({ navigation }) => {
                                 </View>
 
                                 <TouchableOpacity
-                                    onPress={() => navigation.navigate('PolicemenHomepage')}
+                                    onPress={() => navigation.navigate('DrawerNav')}
                                     disabled={!isValid}
                                     style={[
                                         styles.button,
@@ -112,7 +112,7 @@ const PolicemenLogin = ({ navigation }) => {
 
                                 <View style={styles.extracontainer} >
                                     <Text style={styles.extra} >Did't have an account ?</Text>
-                                    <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('PolicemenSignup ')} >
+                                    <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('PolicemenSignup')} >
                                         <Text style={styles.btntext} >Signup</Text>
                                     </TouchableOpacity>
                                 </View>
