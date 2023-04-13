@@ -5,64 +5,68 @@ import {
   Text,
   StyleSheet,
   SafeAreaView,
-  Pressable,
-  TouchableOpacity
+  ImageBackground,
 } from "react-native";
 
-const Officer = ({navigation}) => {
-  
+
+import COLORS from "../../consts/Colors";
+import One from "../../button/1";
+import Two from "../../button/2";
+
+
+
+const Officer = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
-     <View>
-        <Text>select according to your rank</Text>
-        <TouchableOpacity
-                  onPress={() => navigation.navigate('OICSignup')}
-               
-                  style={[
-                    styles.button
-                  ]} >
-                  <Text style={styles.buttonText}>OIC</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('PolicemenSignup')}
-                  
-                  style={[
-                    styles.button
-                  ]} >
-                  <Text style={styles.buttonText}>Policemen</Text>
-                </TouchableOpacity>
-                
-     </View>
+      <ImageBackground
+        style={styles.image}
+        source={require("../../../assets/bg.jpg")}
+      >
+        <View style={{flex:1, marginTop:185}} >
+          <Text style={styles.heading} >Welcome to</Text>
+          <Text style={styles.subheading}>E-Citizen Portal</Text>
+          <Text style={styles.description} >Please select your rank</Text>
+          <One title={"OIC"} onPress={() => navigation.navigate('OICSignup')} />
+          <Two title={"Policemen"} onPress={() => navigation.navigate('PolicemenSignup')} />
+        </View>
+      </ImageBackground>
     </SafeAreaView>
   );
 };
+
 export default Officer;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 25,
-        alignItems: "center",
-        textAlign: 'center',
-    },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 
+  heading: {
+    textAlign: 'center',
+    fontSize: 25,
+    color:COLORS.secondary,
+  },
 
-    button: {
-        padding: 10,
-        borderRadius: 5,
-        alignItems: 'center',
-        marginTop: 15,
-        backgroundColor:'green'
-    },
+  subheading: {
+    textAlign: 'center',
+    fontSize: 45,
+    color:COLORS.primary,
+  },
 
-    buttonText: {
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: 18
-    },
+  description: {
+    textAlign: 'center',
+    top:5,
+    fontSize: 18,
+    color: 'grey'
+  },
 
-  
-
+  image: {
+    flex: 1,
+    width: "100%",
+    resizeMode:'cover',
+  },
 
 });
 
