@@ -12,7 +12,7 @@ import Officer from "./OfficeModule/Officestart";
 import OICLogin from "./OfficeModule/OIClogin";
 import OICHomepage from "./OfficeModule/OICHomepage";
 import PolicemenSignup from "./OfficeModule/Policemensignin";
-import PolicemenLogin from "./OfficeModule/Policemenlogin";
+import PolicemenLogin from "./OfficeModule/Policemenlogin"
 import PolicemenHomepage from "./OfficeModule/PolicemenHomepage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -30,7 +30,10 @@ const OfficialPortal = () => {
         <sta.Screen name="OICHomepage" component={OICHomepage}></sta.Screen>
         <sta.Screen name="PolicemenSignup " component={PolicemenSignup }></sta.Screen>
         <sta.Screen name="PolicemenLogin " component={PolicemenLogin }></sta.Screen>
-        <sta.Screen name="PolicemenHomepage " component={PolicemenHomepage }></sta.Screen>
+        <sta.Screen name="PolicemenHomepage" component={PolicemenHomepage }></sta.Screen>
+        
+      
+       
       </sta.Navigator>
 
    
