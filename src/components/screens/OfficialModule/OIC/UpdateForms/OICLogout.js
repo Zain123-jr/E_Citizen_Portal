@@ -7,7 +7,7 @@ import COLORS from "../../../../consts/Colors";
 import { useNavigation } from "@react-navigation/native";
 
 
-const OIClogout = (props) => {
+const OICLogout = (props) => {
 
     const [profile, setProfile] = useState(null)
     const navigation = useNavigation();
@@ -23,7 +23,7 @@ const OIClogout = (props) => {
                 <View style={styles.header} >
                     <View style={styles.profileContainer}>
                         <View style={styles.imgContainer}>
-                            <TouchableOpacity onPress={() => navigation.navigate("OICPersonal" )}>
+                            <TouchableOpacity onPress={() => navigation.navigate("OICPersonal")}>
                                 <Image style={styles.image} source={profile ? { uri: profile } : imgPlaceHolder} />
                             </TouchableOpacity>
                         </View>
@@ -47,7 +47,7 @@ const OIClogout = (props) => {
     )
 }
 
-export default OIClogout;
+export default OICLogout;
 
 
 const styles = StyleSheet.create({

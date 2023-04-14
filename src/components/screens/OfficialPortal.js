@@ -10,6 +10,10 @@ import PoliceStationSignup from './OfficialModule/PoliceStation/PoliceStationSig
 import PoliceStationLogin from './OfficialModule/PoliceStation/PoliceStationLogin';
 import PoliceStationDrawer from './OfficialModule/PoliceStation/PoliceStationDrawer';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import PoliceStationPersonal from './OfficialModule/PoliceStation/PoliceStationPersonal';
+import OICPersonal from './OfficialModule/OIC/UpdateForms/OICPersonal';
+import PoliceStationContact from './OfficialModule/PoliceStation/PoliceStationContact';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -25,7 +29,10 @@ const OfficialPortal = () => {
       <Stack.Screen name="PoliceStationDrawer" component={PoliceStationDrawer}></Stack.Screen>
       <Stack.Screen name="OICDrawer" component={OICDrawer}></Stack.Screen>
       <Stack.Screen name="OICViewComplaints" component={OICViewComplaints}></Stack.Screen>
-      <Stack.Screen name="PoliceViewComplaints" component={PoliceViewComplaints}></Stack.Screen>
+      <Stack.Screen name="PoliceViewComplaints" component={PoliceViewComplaints}></Stack.Screen>            
+      <Stack.Screen name='OICPersonal' component={OICPersonal} />
+      <Stack.Screen name='PoliceStationPersonal' component={PoliceStationPersonal} />
+      <Stack.Screen name='PoliceStationContact' component={PoliceStationContact} />
     </Stack.Navigator>
   );
 };

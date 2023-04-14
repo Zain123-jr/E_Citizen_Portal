@@ -2,8 +2,8 @@ import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import COLORS from '../../../consts/Colors';
-import PoliceStationContact from './PoliceStationContact';
 import PoliceStationPersonal from '../PoliceStation/PoliceStationPersonal';
+import PoliceStationContact from '../PoliceStation/PoliceStationContact';
 
 const Tab = createMaterialTopTabNavigator();
 

@@ -39,7 +39,7 @@ const ContactSchema = Yup.object().shape({
 
 });
 
-const PoliceContactUs = ({ navigation }) => {
+const PoliceStationContactUs = ({ navigation }) => {
 
     return (
 
@@ -165,7 +165,7 @@ const PoliceContactUs = ({ navigation }) => {
     );
 };
 
-export default PoliceContactUs;
+export default PoliceStationContactUs;
 
 const styles = StyleSheet.create({
     container: {

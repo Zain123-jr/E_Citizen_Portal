@@ -30,7 +30,8 @@ const OICProfile = () => {
         }}>
 
         <Tab.Screen name="Personal" component={OICPersonal} />
-        <Tab.Screen name="Contact " component={OICContact} />
+        <Tab.Screen name="Contact" component={OICContact} />
+
       </Tab.Navigator>
     </View>
   );

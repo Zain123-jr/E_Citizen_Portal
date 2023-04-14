@@ -7,7 +7,7 @@ import COLORS from "../../../../consts/Colors";
 import { useNavigation } from "@react-navigation/native";
 
 
-const Policelogout = (props) => {
+const PoliceStationlogout = (props) => {
 
     const [profile, setProfile] = useState(null)
     const navigation = useNavigation();
@@ -23,7 +23,7 @@ const Policelogout = (props) => {
                 <View style={styles.header} >
                     <View style={styles.profileContainer}>
                         <View style={styles.imgContainer}>
-                            <TouchableOpacity onPress={() => navigation.navigate('personal')}>
+                            <TouchableOpacity onPress={() => navigation.navigate('PoliceStationPersonal')}>
                                 <Image style={styles.image} source={profile ? { uri: profile } : imgPlaceHolder} />
                             </TouchableOpacity>
                         </View>
@@ -47,7 +47,7 @@ const Policelogout = (props) => {
     )
 }
 
-export default Policelogout;
+export default PoliceStationlogout;
 
 
 const styles = StyleSheet.create({
