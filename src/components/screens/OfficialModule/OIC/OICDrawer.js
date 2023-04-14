@@ -2,25 +2,27 @@ import React from 'react';
 import {View, TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../../consts/Colors';
-import PolicemenHomepage from '../PolicemenHomepage';
-import PolicemenProfile from './policemenprofile';
-import PolicemenChangePassword from './policeupdate/Policemenchangepassword';
-import PoliceContactUs from './policeupdate/Policecontactus';
-import Policelogout from './policeupdate/Policelogout';
+import OICHomepage from './OICHomepage';
+import OICChangePassword from './UpdateForms/OICChangePassword';
+import OICProfile from './UpdateForms/OICProfile';
+import OICContactUs from './UpdateForms/OICContactUs';
+import OICLogout from './UpdateForms/OICLogout';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
-const dra = createDrawerNavigator();
-const DrawerNav = () => {
+const Drawer = createDrawerNavigator();
+
+const OICDrawer = () => {
+
   return (
-    <dra.Navigator
-      drawerContent={props => <Policelogout {...props} />}
+    <Drawer.Navigator
+      drawerContent={props => <OICLogout {...props} />}
       screenOptions={{
         drawerActiveBackgroundColor: COLORS.primary,
         drawerActiveTintColor: '#fff',
       }}>
-      <dra.Screen
+      <Drawer.Screen
         name="Home"
-        component={PolicemenHomepage}
+        component={OICHomepage}
         options={{
           drawerIcon: ({color}) => (
             <MaterialCommunityIcons
@@ -61,9 +63,9 @@ const DrawerNav = () => {
         }}
       />
 
-      <dra.Screen
+      <Drawer.Screen
         name="Profile"
-        component={PolicemenProfile}
+        component={OICProfile}
         options={{
           drawerIcon: ({color}) => (
             <MaterialCommunityIcons
@@ -103,9 +105,10 @@ const DrawerNav = () => {
           },
         }}
       />
-      <dra.Screen
+
+      <Drawer.Screen
         name="ChangePassword"
-        component={PolicemenChangePassword}
+        component={OICChangePassword}
         options={{
           drawerIcon: ({color}) => (
             <MaterialCommunityIcons
@@ -145,9 +148,10 @@ const DrawerNav = () => {
           },
         }}
       />
-      <dra.Screen
+
+      <Drawer.Screen
         name="Contact Us"
-        component={PoliceContactUs}
+        component={OICContactUs}
         options={{
           drawerIcon: ({color}) => (
             <MaterialCommunityIcons
@@ -187,7 +191,7 @@ const DrawerNav = () => {
           },
         }}
       />
-    </dra.Navigator>
+    </Drawer.Navigator>
   );
 };
-export default DrawerNav;
+export default OICDrawer;

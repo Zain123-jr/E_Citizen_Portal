@@ -14,7 +14,7 @@ const Policelogout = (props) => {
 
     function Logout(){
         alert('Logout Successfully')
-        navigation.navigate('PolicemenLogin')
+        navigation.navigate('PoliceStationLogin')
     }
 
     return (

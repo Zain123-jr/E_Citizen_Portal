@@ -1,35 +1,32 @@
 import React from 'react';
-
-import {View, Text, StyleSheet, SafeAreaView} from 'react-native';
-import Officer from './OfficeModule/Officestart';
-import OicSignup from './OfficeModule/OICsignin';
-import OICLogin from './OfficeModule/OIClogin';
-import OICHomepage from './OfficeModule/OICHomepage';
-import PolicemenSignup from './OfficeModule/Policemensignin';
-import PolicemenLogin from './OfficeModule/Policemenlogin';
-import DrawerNav from './OfficeModule/policemenfiles/drawerfiles';
-import PolicemenHomepage from './OfficeModule/PolicemenHomepage';
-import Drawe from './OfficeModule/OICfiles/OICdrawer';
-import OICViewComplaints from './OfficeModule/OICfiles/OICviewcomplains';
-import PoliceViewComplaints from './OfficeModule/OICfiles/Policeviewcomplains';
-import {NavigationContainer} from '@react-navigation/native';
+import Officer from './OfficialModule/OfficialStart';
+import OICSignup from '../screens/OfficialModule/OIC/OICSigup';
+import OICLogin from '../screens/OfficialModule/OIC/OICLogin';
+import OICHomepage from './OfficialModule/OIC/OICHomepage';
+import OICDrawer from '../screens/OfficialModule/OIC/OICDrawer';
+import OICViewComplaints from '../screens/OfficialModule/OIC/OICViewComplains';
+import PoliceViewComplaints from '../screens/OfficialModule/OIC/PoliceViewComplains';
+import PoliceStationSignup from './OfficialModule/PoliceStation/PoliceStationSignup';
+import PoliceStationLogin from './OfficialModule/PoliceStation/PoliceStationLogin';
+import PoliceStationDrawer from './OfficialModule/PoliceStation/PoliceStationDrawer';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-const sta = createNativeStackNavigator();
+
+const Stack = createNativeStackNavigator();
+
 const OfficialPortal = () => {
   return (
-    <sta.Navigator>
-      <sta.Screen name="Officer" component={Officer}></sta.Screen>
-      <sta.Screen name="OICSignup" component={OicSignup}></sta.Screen>
-      <sta.Screen name="OICLogin" component={OICLogin}></sta.Screen>
-      <sta.Screen name="OICHomepage" component={OICHomepage}></sta.Screen>
-      <sta.Screen name="PolicemenSignup" component={PolicemenSignup}></sta.Screen>
-      <sta.Screen name="PolicemenLogin" component={PolicemenLogin}></sta.Screen>
-      <sta.Screen name="DrawerNav" component={DrawerNav}></sta.Screen>
-      <sta.Screen name="Drawe" component={Drawe}></sta.Screen>
-      <sta.Screen name="OICViewComplaints" component={OICViewComplaints}></sta.Screen>
-      <sta.Screen name="PoliceViewComplaints" component={PoliceViewComplaints}></sta.Screen>
-    
-    </sta.Navigator>
+    <Stack.Navigator>
+      <Stack.Screen name="Officer" component={Officer}></Stack.Screen>
+      <Stack.Screen name="OICSignup" component={OICSignup}></Stack.Screen>
+      <Stack.Screen name="OICLogin" component={OICLogin}></Stack.Screen>
+      <Stack.Screen name="OICHomepage" component={OICHomepage}></Stack.Screen>
+      <Stack.Screen name="PoliceStationSignup" component={PoliceStationSignup}></Stack.Screen>
+      <Stack.Screen name="PoliceStationLogin" component={PoliceStationLogin}></Stack.Screen>
+      <Stack.Screen name="PoliceStationDrawer" component={PoliceStationDrawer}></Stack.Screen>
+      <Stack.Screen name="OICDrawer" component={OICDrawer}></Stack.Screen>
+      <Stack.Screen name="OICViewComplaints" component={OICViewComplaints}></Stack.Screen>
+      <Stack.Screen name="PoliceViewComplaints" component={PoliceViewComplaints}></Stack.Screen>
+    </Stack.Navigator>
   );
 };
 export default OfficialPortal;

@@ -10,8 +10,8 @@ import {
 
 
 import COLORS from "../../consts/Colors";
-import One from "../../button/1";
-import Two from "../../button/2";
+import PrimaryButton from "../../button/PrimaryButton";
+import SecondaryButton from "../../button/SecondaryButton";
 
 
 
@@ -26,8 +26,8 @@ const Officer = ({ navigation }) => {
           <Text style={styles.heading} >Welcome to</Text>
           <Text style={styles.subheading}>E-Citizen Portal</Text>
           <Text style={styles.description} >Please select your rank</Text>
-          <One title={"OIC"} onPress={() => navigation.navigate('OICSignup')} />
-          <Two title={"Policemen"} onPress={() => navigation.navigate('PolicemenSignup')} />
+          <PrimaryButton title={"OIC"} onPress={() => navigation.navigate('OICSignup')} />
+          <SecondaryButton title={"Police HQ"} onPress={() => navigation.navigate('PoliceStationSignup')} />
         </View>
       </ImageBackground>
     </SafeAreaView>

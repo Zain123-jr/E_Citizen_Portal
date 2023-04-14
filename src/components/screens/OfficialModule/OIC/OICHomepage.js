@@ -2,14 +2,14 @@ import React from "react";
 import { Image } from "react-native";
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-const PolicemenHomepage = ({ navigation }) => {
+const OICHomepage = ({ navigation }) => {
 
     return (
 
         <View>
-            <TouchableOpacity onPress={()=>navigation.navigate('PoliceViewComplaints')} style={styles.card}>
+            <TouchableOpacity onPress={()=>navigation.navigate('OICViewComplaints')} style={styles.card}>
                 <View>
-                    <Image source={require('../../../assets/complaint.png')} style={styles.Image} />
+                    <Image source={require('../../../../assets/complaint.png')} style={styles.Image} />
                     <Text style={styles.title}>Complaints</Text>                    
                 </View>
             </TouchableOpacity>
@@ -18,7 +18,7 @@ const PolicemenHomepage = ({ navigation }) => {
     )
 }
 
-export default PolicemenHomepage;
+export default OICHomepage;
 
 
 const styles = StyleSheet.create({

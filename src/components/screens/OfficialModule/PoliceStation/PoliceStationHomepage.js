@@ -1,17 +1,15 @@
-
-
 import React from "react";
 import { Image } from "react-native";
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-const OICHomepage = ({ navigation }) => {
+const PoliceStationHomepage = ({ navigation }) => {
 
     return (
 
         <View>
-            <TouchableOpacity onPress={()=>navigation.navigate('OICViewComplaints')} style={styles.card}>
+            <TouchableOpacity onPress={()=>navigation.navigate('PoliceViewComplaints')} style={styles.card}>
                 <View>
-                    <Image source={require('../../../assets/complaint.png')} style={styles.Image} />
+                    <Image source={require('../../../../assets/complaint.png')} style={styles.Image} />
                     <Text style={styles.title}>Complaints</Text>                    
                 </View>
             </TouchableOpacity>
@@ -20,7 +18,7 @@ const OICHomepage = ({ navigation }) => {
     )
 }
 
-export default OICHomepage;
+export default PoliceStationHomepage;
 
 
 const styles = StyleSheet.create({

@@ -65,11 +65,17 @@ const SignupSchema = Yup.object().shape({
     .required('Enter Required'),
 });
 
-const OicSignup = ({ navigation }) => {
+const OICSignup = ({ navigation }) => {
 
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePassword1, setHidePassword1] = useState(true);
   const [hideBadge, setHideBadge] = useState(true);
+  
+  function Submit(){
+    alert('Officer Incharge Registered Successfully')
+    navigation.navigate('OICLogin')
+  }
+
   return (
 
     <Formik initialValues={{
@@ -93,7 +99,7 @@ const OicSignup = ({ navigation }) => {
         <SafeAreaView style={styles.container}>
           <ImageBackground
             style={styles.image}
-            source={require("../../../assets/signup_bg.jpeg")}
+            source={require("../../../../assets/signup_bg.jpeg")}
           >
             <ScrollView>
               <View style={styles.formContainer}>
@@ -299,7 +305,7 @@ const OicSignup = ({ navigation }) => {
 
 
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('OICLogin')}
+                  onPress={() => Submit()}
                   disabled={!isValid}
                   style={[
                     styles.button,
@@ -325,7 +331,7 @@ const OicSignup = ({ navigation }) => {
   );
 };
 
-export default OicSignup;
+export default OICSignup;
 
 const styles = StyleSheet.create({
   container: {
