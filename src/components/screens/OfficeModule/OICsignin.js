@@ -24,6 +24,13 @@ const SignupSchema = Yup.object().shape({
     .max(15, 'Too Long!')
     .required('Full Name Required'),
 
+    badge: Yup.string()
+    .min(8)
+    .required('Badge Number Required')
+    .matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+      'Must contain minimum 8 characters'),
+
+
   email: Yup.string()
     .email('Invalid email')
     .required('Valid Email Required'),
@@ -62,11 +69,12 @@ const OicSignup = ({ navigation }) => {
 
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePassword1, setHidePassword1] = useState(true);
-
+  const [hideBadge, setHideBadge] = useState(true);
   return (
 
     <Formik initialValues={{
       fullName: '',
+      budget:'',
       email: '',
       password: '',
       confirmPassword: '',
@@ -107,7 +115,33 @@ const OicSignup = ({ navigation }) => {
                   {touched.fullName && errors.fullName && (
                     <Text style={styles.errorText} >{errors.fullName}</Text>
                   )}
+               
                 </View>
+                <View style={{ flexDirection: "row" }} >
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Badge No"
+                    placeholderTextColor='white'
+                    secureTextEntry={hideBadge}
+                    value={values.badge}
+                    onChangeText={handleChange('badge')}
+                    onBlur={() => setFieldTouched('badge')}
+                  />
+                  <View style={styles.eyeIconContainer}>
+                    <TouchableOpacity onPress={() => setHideBadge(!hideBadge)}>
+                      <MaterialCommunityIcons
+                        name={hideBadge ? 'eye-off-outline' : 'eye-outline'}
+                        size={25}
+                        color={hideBadge ? 'white' : 'white'}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  <MaterialCommunityIcons name="police-badge-outline" size={30} style={styles.icon} />
+                  {touched.badge && errors.badge && (
+                    <Text style={styles.errorText} >{errors.badge}</Text>
+                  )}
+                </View>
+
 
                 <View style={{ flexDirection: "row" }} >
                   <TextInput
