@@ -29,8 +29,9 @@ const OICProfile = () => {
                         paddingBottom: 10,
                     },
                 }}>
-                <Tab.Screen name="OICContact " component={OICContact } />
-                <Tab.Screen name="OICpersonal" component={OICpersonal} />
+                    <Tab.Screen name="personal" component={OICpersonal} />
+                <Tab.Screen name="Contact " component={OICContact } />
+                
                 
             </Tab.Navigator>
         </View>

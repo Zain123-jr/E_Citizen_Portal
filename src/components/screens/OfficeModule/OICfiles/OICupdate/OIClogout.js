@@ -23,7 +23,7 @@ const OIClogout = (props) => {
                 <View style={styles.header} >
                     <View style={styles.profileContainer}>
                         <View style={styles.imgContainer}>
-                            <TouchableOpacity onPress={() => navigation.navigate('Personal')}>
+                            <TouchableOpacity onPress={() => navigation.navigate("personal" )}>
                                 <Image style={styles.image} source={profile ? { uri: profile } : imgPlaceHolder} />
                             </TouchableOpacity>
                         </View>

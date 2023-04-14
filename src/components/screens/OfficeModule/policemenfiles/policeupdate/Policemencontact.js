@@ -67,7 +67,7 @@ const PolicemenContact = ({ navigation }) => {
             </View>
 
             <TouchableOpacity
-              onPress={() => navigation.navigate('CitizenLogin')}
+              onPress={() => navigation.navigate('Home')}
               disabled={!isValid}
               style={[
                 styles.button,

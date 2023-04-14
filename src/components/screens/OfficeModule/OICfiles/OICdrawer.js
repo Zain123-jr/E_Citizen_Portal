@@ -19,7 +19,7 @@ const Drawe = () => {
            drawerActiveTintColor: '#fff',
        }}>
         <draw.Screen
-                name="OICHomepage"
+                name="Home"
                 component={OICHomepage}
                 options={{
                     drawerIcon: ({ color }) => (
@@ -50,7 +50,7 @@ const Drawe = () => {
             />
 
 <draw.Screen
-                name="OICProfile"
+                name="Profile"
                 component={OICProfile}
                 options={{
                     drawerIcon: ({ color }) => (
@@ -80,7 +80,7 @@ const Drawe = () => {
                 }}
             />
             <draw.Screen
-                name="OICChangePassword"
+                name="ChangePassword"
                 component={OICChangePassword}
                 options={{
                     drawerIcon: ({ color }) => (

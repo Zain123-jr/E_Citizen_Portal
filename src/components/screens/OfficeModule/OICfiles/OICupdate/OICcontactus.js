@@ -148,7 +148,7 @@ const OICContactUs = ({ navigation }) => {
                             </View>
 
                             <TouchableOpacity
-                                onPress={() => navigation.navigate('OICLogin')}
+                                onPress={() => navigation.navigate('Home')}
                                 disabled={!isValid}
                                 style={[
                                     styles.button,

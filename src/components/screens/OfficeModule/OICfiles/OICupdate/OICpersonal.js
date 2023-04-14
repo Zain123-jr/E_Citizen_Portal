@@ -172,7 +172,7 @@ const OICpersonal = ({ navigation, route }) => {
 
 
                                     <TouchableOpacity
-                                        onPress={() => navigation.navigate('PolicemenLogin')}
+                                        onPress={() => navigation.navigate('Home')}
                                         disabled={!isValid}
                                         style={[
                                             styles.button,

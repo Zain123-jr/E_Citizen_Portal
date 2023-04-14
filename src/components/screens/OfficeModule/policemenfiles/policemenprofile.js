@@ -29,8 +29,9 @@ const PolicemenProfile = () => {
                         paddingBottom: 10,
                     },
                 }}>
-                <Tab.Screen name="PolicemenContact" component={PolicemenContact} />
-                <Tab.Screen name="Policepersonal" component={Policepersonal} />
+                    <Tab.Screen name="personal" component={Policepersonal} />
+                <Tab.Screen name="Contact" component={PolicemenContact} />
+                
                 
             </Tab.Navigator>
         </View>

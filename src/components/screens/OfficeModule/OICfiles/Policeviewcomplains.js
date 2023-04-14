@@ -46,7 +46,7 @@ const PoliceViewComplaints = ({ navigation }) => {
         <SafeAreaView style={styles.maincontainer} >
             <ScrollView>
                 <View style={styles.head}>
-                    <TouchableOpacity onPress={() => navigation.navigate('PolicemenHomepage')} >
+                    <TouchableOpacity onPress={() => navigation.navigate('Home')} >
                         <MaterialCommunityIcons name="arrow-left" size={30} color="#fff" />
                     </TouchableOpacity>
                     <Text style={styles.heading}>View Complaints</Text>
