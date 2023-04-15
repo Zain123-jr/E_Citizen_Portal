@@ -1,6 +1,6 @@
 import React from 'react';
 import Officer from './OfficialModule/OfficialStart';
-import OICSignup from '../screens/OfficialModule/OIC/OICSigup';
+import OICSignup from './OfficialModule/OIC/OICSignup';
 import OICLogin from '../screens/OfficialModule/OIC/OICLogin';
 import OICHomepage from './OfficialModule/OIC/OICHomepage';
 import OICDrawer from '../screens/OfficialModule/OIC/OICDrawer';
