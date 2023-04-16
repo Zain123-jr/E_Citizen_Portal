@@ -21,7 +21,7 @@ const OICDrawer = () => {
         drawerActiveTintColor: '#fff',
       }}>
       <Drawer.Screen
-        name="Home"
+        name="OIC Home"
         component={OICHomepage}
         options={{
           drawerIcon: ({color}) => (
@@ -64,12 +64,12 @@ const OICDrawer = () => {
       />
 
       <Drawer.Screen
-        name="Profile"
+        name="OIC Profile"
         component={OICProfile}
         options={{
           drawerIcon: ({color}) => (
             <MaterialCommunityIcons
-              name="home-outline"
+              name="account-circle-outline"
               size={22}
               color={color}
             />
@@ -107,7 +107,7 @@ const OICDrawer = () => {
       />
 
       <Drawer.Screen
-        name="ChangePassword"
+        name="OIC ChangePassword"
         component={OICChangePassword}
         options={{
           drawerIcon: ({color}) => (
@@ -150,7 +150,7 @@ const OICDrawer = () => {
       />
 
       <Drawer.Screen
-        name="Contact Us"
+        name="OIC Contact Us"
         component={OICContactUs}
         options={{
           drawerIcon: ({color}) => (

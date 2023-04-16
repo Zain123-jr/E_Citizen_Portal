@@ -71,7 +71,7 @@ const PoliceStationSignup = ({navigation}) => {
             source={require('../../../../assets/signup_bg.jpeg')}>
             <ScrollView>
               <View style={styles.formContainer}>
-                <Text style={styles.heading}>Signup</Text>
+                <Text style={styles.heading}>Police HQ Signup</Text>
                 <Text style={styles.description}>
                   Please provide all required details to register
                 </Text>

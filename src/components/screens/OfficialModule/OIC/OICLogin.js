@@ -52,7 +52,7 @@ const OICLogin = ({navigation}) => {
             source={require('../../../../assets/login_bg.jpg')}>
             <ScrollView>
               <View style={styles.formContainer}>
-                <Text style={styles.heading}>Login</Text>
+                <Text style={styles.heading}>OIC Login</Text>
                 <Text style={styles.description}>Please Login To Continue</Text>
 
                 <View style={{flexDirection: 'row'}}>

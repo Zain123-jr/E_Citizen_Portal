@@ -21,7 +21,7 @@ const PoliceStationDrawer = () => {
       }}>
 
       <Drawer.Screen
-        name="Home"
+        name="Police HQ Home"
         component={PoliceStationHomepage}
         options={{
           drawerIcon: ({color}) => (
@@ -64,7 +64,7 @@ const PoliceStationDrawer = () => {
       />
 
       <Drawer.Screen
-        name="Profile"
+        name="Police HQ Profile"
         component={PoliceStationProfile}
         options={{
           drawerIcon: ({color}) => (
@@ -107,7 +107,7 @@ const PoliceStationDrawer = () => {
       />
 
       <Drawer.Screen
-        name="ChangePassword"
+        name="Police HQ ChangePassword"
         component={PoliceStationChangePassword}
         options={{
           drawerIcon: ({color}) => (
@@ -150,7 +150,7 @@ const PoliceStationDrawer = () => {
       />
       
       <Drawer.Screen
-        name="Contact Us"
+        name="Police HQ Contact Us"
         component={PoliceStationContactUs}
         options={{
           drawerIcon: ({color}) => (

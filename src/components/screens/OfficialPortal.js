@@ -19,7 +19,7 @@ const Stack = createNativeStackNavigator();
 
 const OfficialPortal = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }} >
       <Stack.Screen name="Officer" component={Officer}></Stack.Screen>
       <Stack.Screen name="OICSignup" component={OICSignup}></Stack.Screen>
       <Stack.Screen name="OICLogin" component={OICLogin}></Stack.Screen>

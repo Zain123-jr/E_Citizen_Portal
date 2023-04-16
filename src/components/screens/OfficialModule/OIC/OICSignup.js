@@ -103,7 +103,7 @@ const OICSignup = ({ navigation }) => {
           >
             <ScrollView>
               <View style={styles.formContainer}>
-                <Text style={styles.heading}>Signup</Text>
+                <Text style={styles.heading}>OIC Signup</Text>
                 <Text style={styles.description}>Please provide all required details to register</Text>
 
 
