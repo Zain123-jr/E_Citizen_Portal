@@ -3,7 +3,7 @@ import {StyleSheet, TouchableOpacity, View, Text} from 'react-native';
 import COLORS from '../consts/Colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Two = ({title, onPress = () => {}}) => {
+const SecondaryButton = ({title, onPress = () => {}}) => {
     return (
       <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
         <View style={style.btnContainer}>
@@ -30,5 +30,5 @@ const Two = ({title, onPress = () => {}}) => {
     },
   });
   
-  export default Two;
+  export default SecondaryButton;
   

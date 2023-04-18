@@ -1,24 +1,30 @@
+<<<<<<< HEAD:src/components/screens/OfficeModule/OICHomepage.js
+import React,{useEffect} from "react";
+=======
 import React from "react";
+>>>>>>> d73a6637beaf1e259dda9dc8b3371d4b5f4458cd:src/components/screens/OfficialModule/OIC/OICHomepage.js
 import { Image } from "react-native";
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-const PolicemenHomepage = ({ navigation }) => {
+
+const OICHomepage = ({ navigation }) => {
 
     return (
 
         <View>
-            <TouchableOpacity onPress={()=>navigation.navigate('PoliceViewComplaints')} style={styles.card}>
+            <TouchableOpacity onPress={()=>navigation.navigate('OICViewComplaints')} style={styles.card}>
                 <View>
-                    <Image source={require('../../../assets/complaint.png')} style={styles.Image} />
+                    <Image source={require('../../../../assets/complaint.png')} style={styles.Image} />
                     <Text style={styles.title}>Complaints</Text>                    
                 </View>
             </TouchableOpacity>
+            
         </View>
 
     )
 }
 
-export default PolicemenHomepage;
+export default OICHomepage;
 
 
 const styles = StyleSheet.create({

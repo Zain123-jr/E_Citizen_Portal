@@ -41,7 +41,7 @@ const UpdateProfileSchema = Yup.object().shape({
 
 
 
-const OICpersonal = ({ navigation, route }) => {
+const OICPersonal = ({ navigation }) => {
 
     const [profile, setProfile] = useState(null)
 
@@ -195,7 +195,7 @@ const OICpersonal = ({ navigation, route }) => {
     )
 }
 
-export default OICpersonal;
+export default OICPersonal;
 
 const styles = StyleSheet.create({
     primarycontainer: {

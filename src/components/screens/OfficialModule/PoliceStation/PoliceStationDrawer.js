@@ -2,25 +2,27 @@ import React from 'react';
 import {View, TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../../consts/Colors';
-import PolicemenHomepage from '../PolicemenHomepage';
-import PolicemenProfile from './policemenprofile';
-import PolicemenChangePassword from './policeupdate/Policemenchangepassword';
-import PoliceContactUs from './policeupdate/Policecontactus';
-import Policelogout from './policeupdate/Policelogout';
+import PoliceStationHomepage from './PoliceStationHomepage';
+import PoliceStationProfile from './PoliceStationProfile';
+import PoliceStationChangePassword from './UpdateForms/PoliceStationChangePassword';
+import PoliceStationContactUs from './UpdateForms/PoliceStationContactUs';
+import PoliceStationLogout from './UpdateForms/PoliceStationLogout';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
-const dra = createDrawerNavigator();
-const DrawerNav = () => {
+const Drawer = createDrawerNavigator();
+
+const PoliceStationDrawer = () => {
   return (
-    <dra.Navigator
-      drawerContent={props => <Policelogout {...props} />}
+    <Drawer.Navigator
+      drawerContent={props => <PoliceStationLogout {...props} />}
       screenOptions={{
         drawerActiveBackgroundColor: COLORS.primary,
         drawerActiveTintColor: '#fff',
       }}>
-      <dra.Screen
-        name="Home"
-        component={PolicemenHomepage}
+
+      <Drawer.Screen
+        name="Police HQ Home"
+        component={PoliceStationHomepage}
         options={{
           drawerIcon: ({color}) => (
             <MaterialCommunityIcons
@@ -61,13 +63,13 @@ const DrawerNav = () => {
         }}
       />
 
-      <dra.Screen
-        name="Profile"
-        component={PolicemenProfile}
+      <Drawer.Screen
+        name="Police HQ Profile"
+        component={PoliceStationProfile}
         options={{
           drawerIcon: ({color}) => (
             <MaterialCommunityIcons
-              name="home-outline"
+              name="account-circle-outline"
               size={22}
               color={color}
             />
@@ -103,9 +105,10 @@ const DrawerNav = () => {
           },
         }}
       />
-      <dra.Screen
-        name="ChangePassword"
-        component={PolicemenChangePassword}
+
+      <Drawer.Screen
+        name="Police HQ ChangePassword"
+        component={PoliceStationChangePassword}
         options={{
           drawerIcon: ({color}) => (
             <MaterialCommunityIcons
@@ -145,9 +148,10 @@ const DrawerNav = () => {
           },
         }}
       />
-      <dra.Screen
-        name="Contact Us"
-        component={PoliceContactUs}
+      
+      <Drawer.Screen
+        name="Police HQ Contact Us"
+        component={PoliceStationContactUs}
         options={{
           drawerIcon: ({color}) => (
             <MaterialCommunityIcons
@@ -187,7 +191,7 @@ const DrawerNav = () => {
           },
         }}
       />
-    </dra.Navigator>
+    </Drawer.Navigator>
   );
 };
-export default DrawerNav;
+export default PoliceStationDrawer;

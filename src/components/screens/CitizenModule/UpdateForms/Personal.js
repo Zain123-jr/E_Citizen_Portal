@@ -41,7 +41,7 @@ const UpdateProfileSchema = Yup.object().shape({
 
 
 
-const Profile = ({ navigation, route }) => {
+const Personal = ({ navigation, route }) => {
 
     const [profile, setProfile] = useState(null)
 
@@ -195,7 +195,7 @@ const Profile = ({ navigation, route }) => {
     )
 }
 
-export default Profile
+export default Personal
 
 const styles = StyleSheet.create({
     primarycontainer: {

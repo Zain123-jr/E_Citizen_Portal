@@ -41,6 +41,10 @@ const ContactSchema = Yup.object().shape({
 
 const ContactUs = ({ navigation }) => {
 
+    const handleSubmit = () => {
+        alert('Form Submit Successfully')        
+    }
+
     return (
 
         <Formik initialValues={{
@@ -148,7 +152,7 @@ const ContactUs = ({ navigation }) => {
                             </View>
 
                             <TouchableOpacity
-                                onPress={() => navigation.navigate('CitizenLogin')}
+                                onPress={handleSubmit}
                                 disabled={!isValid}
                                 style={[
                                     styles.button,

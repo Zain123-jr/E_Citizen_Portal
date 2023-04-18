@@ -3,7 +3,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import CitizenPortal from '../screens/CitizenModule/CitizenPortal';
-import OfficialPortal from '../screens/OfficialPortal';
+import OfficialPortal from '../screens/OfficialModule/OfficialPortal';
 import COLORS from '../consts/Colors';
 
 const Tab = createBottomTabNavigator();

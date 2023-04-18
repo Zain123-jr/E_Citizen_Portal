@@ -28,7 +28,7 @@ const ChangePasswordSchema = Yup.object().shape({
         .required('Confirm password is required'),
 });
 
-const PolicemenChangePassword = () => {
+const PoliceStationChangePassword = () => {
 
     const [hidePassword, setHidePassword] = useState(true);
     const [hidePassword1, setHidePassword1] = useState(true);
@@ -149,7 +149,7 @@ const PolicemenChangePassword = () => {
     );
 };
 
-export default PolicemenChangePassword;
+export default PoliceStationChangePassword;
 
 const styles = StyleSheet.create({
     container: {

@@ -26,7 +26,7 @@ const DrawerNavigator = () => {
                 drawerActiveTintColor: '#fff',
             }} >
             <Drawer.Screen
-                name="Home"
+                name="Citizen Home"
                 component={CitizenHome}
                 options={{
                     drawerIcon: ({ color }) => (
@@ -57,7 +57,7 @@ const DrawerNavigator = () => {
             />
 
             <Drawer.Screen
-                name="Tutorials"
+                name="Citizen Tutorials"
                 component={Tutorials}
                 options={{
                     drawerIcon: ({ color }) => (
@@ -88,7 +88,7 @@ const DrawerNavigator = () => {
             />
 
             <Drawer.Screen
-                name="Profile"
+                name="Citizen Profile"
                 component={Profile}
                 options={{
                     drawerIcon: ({ color }) => (
@@ -119,7 +119,7 @@ const DrawerNavigator = () => {
             />
 
             <Drawer.Screen
-                name="Contact Us"
+                name="Citizen Contact Us"
                 component={Contact}
                 options={{
                     drawerIcon: ({ color }) => (
@@ -150,7 +150,7 @@ const DrawerNavigator = () => {
             />
 
             <Drawer.Screen
-                name="Change Password"
+                name="Citizen Change Password"
                 component={ChangePassword}
                 options={{
                     drawerIcon: ({ color }) => (

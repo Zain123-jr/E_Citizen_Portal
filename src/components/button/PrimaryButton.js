@@ -4,7 +4,7 @@ import COLORS from '../consts/Colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
-const One = ({title, onPress = () => {}}) => {
+const PrimaryButton = ({title, onPress = () => {}}) => {
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
       <View style={style.btnContainer}>
@@ -31,4 +31,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default One;
+export default PrimaryButton;

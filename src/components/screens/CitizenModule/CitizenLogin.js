@@ -54,7 +54,7 @@ const CitizenLogin = ({ navigation }) => {
                     >
                         <ScrollView>
                             <View style={styles.formContainer}>
-                                <Text style={styles.heading}>Login</Text>
+                                <Text style={styles.heading}>Citizen Login</Text>
                                 <Text style={styles.description}>Please Login To Continue</Text>
 
 
