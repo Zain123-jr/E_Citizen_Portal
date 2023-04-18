@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "233826844392",
+    "project_id": "crime-reporting-system-9fa03",
+    "storage_bucket": "crime-reporting-system-9fa03.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:233826844392:android:8468dff7cede6c8a48135d",
+        "android_client_info": {
+          "package_name": "com.e_citizen_portal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "233826844392-1sqdsom7sr9qa0s5l7pkuua3ooorkqoo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzNIXcXm98f3z3UDLYeUasxDWfVcbmRGI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "233826844392-1sqdsom7sr9qa0s5l7pkuua3ooorkqoo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

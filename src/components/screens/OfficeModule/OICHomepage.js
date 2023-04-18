@@ -1,8 +1,7 @@
-
-
-import React from "react";
+import React,{useEffect} from "react";
 import { Image } from "react-native";
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+
 
 const OICHomepage = ({ navigation }) => {
 
@@ -15,6 +14,7 @@ const OICHomepage = ({ navigation }) => {
                     <Text style={styles.title}>Complaints</Text>                    
                 </View>
             </TouchableOpacity>
+            
         </View>
 
     )
