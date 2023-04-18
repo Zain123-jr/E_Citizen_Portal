@@ -1,8 +1,4 @@
-<<<<<<< HEAD:src/components/screens/OfficeModule/OICHomepage.js
-import React,{useEffect} from "react";
-=======
 import React from "react";
->>>>>>> d73a6637beaf1e259dda9dc8b3371d4b5f4458cd:src/components/screens/OfficialModule/OIC/OICHomepage.js
 import { Image } from "react-native";
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
