@@ -207,7 +207,7 @@ const TortureForm = ({ navigation }) => {
                                                 <Text style={styles.errorText}>{errors.tehsil}</Text>
                                             )}
                                         </View>
-
+                                        
                                         <TouchableOpacity
                                             onPress={() => { Submit() }}
                                             disabled={!isValid}
