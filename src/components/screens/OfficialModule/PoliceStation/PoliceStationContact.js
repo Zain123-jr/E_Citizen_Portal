@@ -7,84 +7,50 @@ import {
   Text,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Formik} from 'formik';
-import * as Yup from 'yup';
 import COLORS from '../../../consts/Colors';
 
-const UpdateContactSchema = Yup.object().shape({
-  stationAddress: Yup.string().required('Station Address line is required'),
-  stationPhoneNo: Yup.string().required('Phone/Landline Number Required'),
-});
-
 const PoliceStationContact = ({navigation}) => {
+
+  function Submit(){
+    alert('Contact Update Successfully')
+  }
+
   return (
     <View>
-      <Formik
-        initialValues={{
-          stationAddress: '',
-          stationPhoneNumber: '',
-        }}
-        validationSchema={UpdateContactSchema}>
-        {({
-          handleChange,
-          values,
-          errors,
-          isValid,
-          setFieldTouched,
-          touched,
-        }) => (
-          <View style={styles.formContainer}>
-            <View style={{flexDirection: 'row'}}>
-              <TextInput
-                style={styles.input}
-                placeholder="Station Address"
-                placeholderTextColor="black"
-                onChangeText={handleChange('stationAddress')}
-                onBlur={() => setFieldTouched('stationAddress')}
-                value={values.stationAddress}
-              />
-              <MaterialCommunityIcons
-                name="map-marker-outline"
-                size={30}
-                style={styles.icon}
-              />
-              {touched.stationAddress && errors.stationAddress && (
-                <Text style={styles.errorText}>{errors.stationAddress}</Text>
-              )}
-            </View>
+      <View style={styles.formContainer}>
+        <View style={{flexDirection: 'row'}}>
+          <TextInput
+            style={styles.input}
+            placeholder="Station Address"
+            placeholderTextColor="black"
+          />
+          <MaterialCommunityIcons
+            name="map-marker-outline"
+            size={30}
+            style={styles.icon}
+          />
+        </View>
 
-            <View style={{flexDirection: 'row'}}>
-              <TextInput
-                style={styles.input}
-                placeholder="Station Phone/Landline Number:"
-                placeholderTextColor="black"
-                keyboardType="numeric"
-                value={values.s}
-                onChangeText={handleChange('stationPhoneNumber')}
-                onBlur={() => setFieldTouched('stationPhoneNumber')}
-              />
-              <MaterialCommunityIcons
-                name="phone-outline"
-                size={30}
-                style={styles.icon}
-              />
-              {touched.stationPhoneNo && errors.stationPhoneNo && (
-                <Text style={styles.errorText}>{errors.stationPhoneNo}</Text>
-              )}
-            </View>
+        <View style={{flexDirection: 'row'}}>
+          <TextInput
+            style={styles.input}
+            placeholder="Station Phone/Landline Number:"
+            placeholderTextColor="black"
+            keyboardType="numeric"
+          />
+          <MaterialCommunityIcons
+            name="phone-outline"
+            size={30}
+            style={styles.icon}
+          />
+        </View>
 
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Home')}
-              disabled={!isValid}
-              style={[
-                styles.button,
-                {backgroundColor: isValid ? '#539165' : '#A5C9CA'},
-              ]}>
-              <Text style={styles.buttonText}>Update</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      </Formik>
+        <TouchableOpacity
+          onPress={() => Submit()}
+          style={styles.button}>
+          <Text style={styles.buttonText}>Update</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -120,7 +86,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    // backgroundColor: '#2196F3',
+    backgroundColor: COLORS.primary,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
@@ -131,14 +97,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 18,
-  },
-
-  errorText: {
-    color: '#E0144C',
-    fontWeight: '600',
-    position: 'absolute',
-    top: 60,
-    fontSize: 12,
   },
 
   icon: {

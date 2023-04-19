@@ -12,24 +12,15 @@ import ImagePicker, {openPicker} from 'react-native-image-crop-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useState} from 'react';
 import COLORS from '../../../consts/Colors';
-import {Formik} from 'formik';
-import * as Yup from 'yup';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView} from 'react-native-gesture-handler';
 
-const UpdateProfileSchema = Yup.object().shape({
-  stationId: Yup.string().required('Valid ID Required'),
-
-  stationName: Yup.string()
-    .min(2, 'Too Short!')
-    .max(15, 'Too Long!')
-    .required('Station Name Required'),
-
-  stationAddress: Yup.string().required('Station Address is required'),
-});
-
 const PoliceStationPersonal = ({navigation}) => {
   const [profile, setProfile] = useState(null);
+
+  function Submit(){
+    alert('Profile Update Successfully')
+  }
 
   const imagePick = () => {
     ImagePicker.openPicker({
@@ -64,73 +55,41 @@ const PoliceStationPersonal = ({navigation}) => {
           </View>
 
           <View>
-            <Formik
-              initialValues={{
-                stationId: '',
-                stationName: '',
-              }}
-              validationSchema={UpdateProfileSchema}>
-              {({
-                handleChange,
-                values,
-                errors,
-                isValid,
-                setFieldTouched,
-                touched,
-              }) => (
-                <View style={styles.formContainer}>
-                  <View style={{flexDirection: 'row'}}>
-                    <TextInput
-                      style={styles.input}
-                      placeholder="Station ID"
-                      placeholderTextColor="black"
-                      autoCapitalize="none"
-                      value={values.stationId}
-                      onChangeText={handleChange('stationId')}
-                      onBlur={() => setFieldTouched('stationId')}
-                    />
-                    <MaterialCommunityIcons
-                      name="id-card"
-                      size={30}
-                      style={styles.icon}
-                    />
-                    {touched.stationId && errors.stationId && (
-                      <Text style={styles.errorText}>{errors.stationId}</Text>
-                    )}
-                  </View>
+            <View style={styles.formContainer}>
+              <View style={{flexDirection: 'row'}}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Station ID"
+                  placeholderTextColor="black"
+                  autoCapitalize="none"
+                />
+                <MaterialCommunityIcons
+                  name="id-card"
+                  size={30}
+                  style={styles.icon}
+                />
+              </View>
 
-                  <View style={{flexDirection: 'row'}}>
-                    <TextInput
-                      style={styles.input}
-                      placeholder="Station Name"
-                      placeholderTextColor="black"
-                      autoCapitalize="none"
-                      value={values.stationName}
-                      onChangeText={handleChange('stationName')}
-                      onBlur={() => setFieldTouched('stationName')}
-                    />
-                    <MaterialCommunityIcons
-                      name="account-circle-outline"
-                      size={30}
-                      style={styles.icon}
-                    />
-                    {touched.stationName && errors.stationName && (
-                      <Text style={styles.errorText}>{errors.stationName}</Text>
-                    )}
-                  </View>
-                  
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate('Home')}
-                    disabled={!isValid}
-                    style={[
-                      styles.button,
-                      {backgroundColor: isValid ? '#539165' : '#A5C9CA'},
-                    ]}>
-                    <Text style={styles.buttonText}>Update</Text>
-                  </TouchableOpacity>
-                </View>
-              )}
-            </Formik>
+              <View style={{flexDirection: 'row'}}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Station Name"
+                  placeholderTextColor="black"
+                  autoCapitalize="none"
+                />
+                <MaterialCommunityIcons
+                  name="account-circle-outline"
+                  size={30}
+                  style={styles.icon}
+                />
+              </View>
+
+              <TouchableOpacity
+                onPress={() => Submit()}
+                style={styles.button}>
+                <Text style={styles.buttonText}>Update</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -185,7 +144,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    // backgroundColor: '#2196F3',
+    backgroundColor: COLORS.primary,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
@@ -196,14 +155,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 18,
-  },
-
-  errorText: {
-    color: '#E0144C',
-    fontWeight: '600',
-    position: 'absolute',
-    top: 60,
-    fontSize: 12,
   },
 
   icon: {

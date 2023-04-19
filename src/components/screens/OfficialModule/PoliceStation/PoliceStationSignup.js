@@ -13,35 +13,7 @@ import {
 } from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
-import {Formik} from 'formik';
-import * as Yup from 'yup';
-
-const SignupSchema = Yup.object().shape({
-  stationId: Yup.string().required('Valid ID Required'),
-
-  stationName: Yup.string()
-    .min(2, 'Too Short!')
-    .max(15, 'Too Long!')
-    .required('Station Name Required'),
-
-  password: Yup.string()
-    .min(8)
-    .required('Password Required')
-    .matches(
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
-      'Must contain minimum 8 characters',
-    ),
-
-  confirmPassword: Yup.string()
-    .min(8)
-    .oneOf([Yup.ref('password')], 'Passwords did not Match')
-    .required('Confirm Password is Required'),
-
-  stationAddress: Yup.string().required('Station Address is required'),
-
-  stationPhoneNo: Yup.string().required('Phone/Landline Number Required'),
-});
+import COLORS from '../../../consts/Colors';
 
 const PoliceStationSignup = ({navigation}) => {
   const [hidePassword, setHidePassword] = useState(true);
@@ -54,39 +26,25 @@ const PoliceStationSignup = ({navigation}) => {
   }
 
   return (
-    <Formik
-      initialValues={{
-        stationId: '',
-        stationName: '',
-        password: '',
-        confirmPassword: '',
-        stationAddress: '',
-        stationPhoneNo: '',
-      }}
-      validationSchema={SignupSchema}>
-      {({values, errors, touched, handleChange, setFieldTouched, isValid}) => (
-        <SafeAreaView style={styles.container}>
-          <ImageBackground
-            style={styles.image}
-            source={require('../../../../assets/signup_bg.jpeg')}>
-            <ScrollView>
-              <View style={styles.formContainer}>
-                <Text style={styles.heading}>Police HQ Signup</Text>
-                <Text style={styles.description}>
-                  Please provide all required details to register
-                </Text>
+    <SafeAreaView style={styles.container}>
+      <ImageBackground
+        style={styles.image}
+        source={require('../../../../assets/signup_bg.jpeg')}>
+        <ScrollView>
+          <View style={styles.formContainer}>
+            <Text style={styles.heading}>Police HQ Signup</Text>
+            <Text style={styles.description}>
+              Please provide all required details to register
+            </Text>
 
-                <View style={{flexDirection: 'row'}}>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Station ID"
-                    placeholderTextColor="white"
-                    // secureTextEntry={hideBadge}
-                    value={values.badge}
-                    onChangeText={handleChange('stationId')}
-                    onBlur={() => setFieldTouched('sationId')}
-                  />
-                  {/* <View style={styles.eyeIconContainer}>
+            <View style={{flexDirection: 'row'}}>
+              <TextInput
+                style={styles.input}
+                placeholder="Station ID"
+                placeholderTextColor="white"
+                // secureTextEntry={hideBadge}
+              />
+              {/* <View style={styles.eyeIconContainer}>
                     <TouchableOpacity onPress={() => setHideBadge(!hideBadge)}>
                       <MaterialCommunityIcons
                         name={hideBadge ? 'eye-off-outline' : 'eye-outline'}
@@ -95,163 +53,118 @@ const PoliceStationSignup = ({navigation}) => {
                       />
                     </TouchableOpacity>
                   </View> */}
-                  <MaterialCommunityIcons
-                    name="id-card"
-                    size={30}
-                    style={styles.icon}
-                  />
-                  {touched.stationId && errors.stationId && (
-                    <Text style={styles.errorText}>{errors.stationId}</Text>
-                  )}
-                </View>
+              <MaterialCommunityIcons
+                name="id-card"
+                size={30}
+                style={styles.icon}
+              />
+            </View>
 
-                <View style={{flexDirection: 'row'}}>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Station Name"
-                    placeholderTextColor="white"
-                    autoCapitalize="none"
-                    value={values.stationName}
-                    onChangeText={handleChange('stationName')}
-                    onBlur={() => setFieldTouched('stationName')}
-                  />
-                  <MaterialCommunityIcons
-                    name="account-circle-outline"
-                    size={30}
-                    style={styles.icon}
-                  />
-                  {touched.stationName && errors.stationName && (
-                    <Text style={styles.errorText}>{errors.stationName}</Text>
-                  )}
-                </View>
+            <View style={{flexDirection: 'row'}}>
+              <TextInput
+                style={styles.input}
+                placeholder="Station Name"
+                placeholderTextColor="white"
+                autoCapitalize="none"
+              />
+              <MaterialCommunityIcons
+                name="account-circle-outline"
+                size={30}
+                style={styles.icon}
+              />
+            </View>
 
-                <View style={{flexDirection: 'row'}}>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Password: (Hello123#)"
-                    placeholderTextColor="white"
-                    secureTextEntry={hidePassword}
-                    value={values.password}
-                    onChangeText={handleChange('password')}
-                    onBlur={() => setFieldTouched('password')}
-                  />
-                  <View style={styles.eyeIconContainer}>
-                    <TouchableOpacity
-                      onPress={() => setHidePassword(!hidePassword)}>
-                      <MaterialCommunityIcons
-                        name={hidePassword ? 'eye-off-outline' : 'eye-outline'}
-                        size={25}
-                        color={hidePassword ? 'white' : 'white'}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  <MaterialCommunityIcons
-                    name="lock-outline"
-                    size={30}
-                    style={styles.icon}
-                  />
-                  {touched.password && errors.password && (
-                    <Text style={styles.errorText}>{errors.password}</Text>
-                  )}
-                </View>
-
-                <View style={{flexDirection: 'row'}}>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Confirm Password: (Hello123#)"
-                    placeholderTextColor="white"
-                    secureTextEntry={hidePassword1}
-                    value={values.confirmPassword}
-                    onChangeText={handleChange('confirmPassword')}
-                    onBlur={() => setFieldTouched('confirmPassword')}
-                  />
-                  <View style={styles.eyeIconContainer}>
-                    <TouchableOpacity
-                      onPress={() => setHidePassword1(!hidePassword1)}>
-                      <MaterialCommunityIcons
-                        name={hidePassword1 ? 'eye-off-outline' : 'eye-outline'}
-                        size={25}
-                        color={hidePassword1 ? 'white' : 'white'}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  <MaterialCommunityIcons
-                    name="lock-outline"
-                    size={30}
-                    style={styles.icon}
-                  />
-                  {touched.confirmPassword && errors.confirmPassword && (
-                    <Text style={styles.errorText}>
-                      {errors.confirmPassword}
-                    </Text>
-                  )}
-                </View>
-
-                <View style={{flexDirection: 'row'}}>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Station Address"
-                    placeholderTextColor="white"
-                    onChangeText={handleChange('stationAddress')}
-                    onBlur={() => setFieldTouched('stationAddress')}
-                    value={values.stationAddress}
-                  />
-                  <MaterialCommunityIcons
-                    name="map-marker-outline"
-                    size={30}
-                    style={styles.icon}
-                  />
-                  {touched.stationAddress && errors.stationAddress && (
-                    <Text style={styles.errorText}>
-                      {errors.stationAddress}
-                    </Text>
-                  )}
-                </View>
-
-                <View style={{flexDirection: 'row'}}>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Station Phone/Landline Number:"
-                    placeholderTextColor="white"
-                    keyboardType="numeric"
-                    value={values.s}
-                    onChangeText={handleChange('stationPhoneNumber')}
-                    onBlur={() => setFieldTouched('stationPhoneNumber')}
-                  />
-                  <MaterialCommunityIcons
-                    name="phone-outline"
-                    size={30}
-                    style={styles.icon}
-                  />
-                  {touched.stationPhoneNo && errors.stationPhoneNo && (
-                    <Text style={styles.errorText}>{errors.stationPhoneNo}</Text>
-                  )}
-                </View>
-
+            <View style={{flexDirection: 'row'}}>
+              <TextInput
+                style={styles.input}
+                placeholder="Password: (Hello123#)"
+                placeholderTextColor="white"
+                secureTextEntry={hidePassword}
+              />
+              <View style={styles.eyeIconContainer}>
                 <TouchableOpacity
-                  onPress={() => Submit()}
-                  disabled={!isValid}
-                  style={[
-                    styles.button,
-                    {backgroundColor: isValid ? '#539165' : '#A5C9CA'},
-                  ]}>
-                  <Text style={styles.buttonText}>Signup</Text>
+                  onPress={() => setHidePassword(!hidePassword)}>
+                  <MaterialCommunityIcons
+                    name={hidePassword ? 'eye-off-outline' : 'eye-outline'}
+                    size={25}
+                    color={hidePassword ? 'white' : 'white'}
+                  />
                 </TouchableOpacity>
-
-                <View style={styles.extracontainer}>
-                  <Text style={styles.extra}>Already have an account ?</Text>
-                  <TouchableOpacity
-                    style={styles.btn}
-                    onPress={() => navigation.navigate('PoliceStationLogin')}>
-                    <Text style={styles.btntext}>Login</Text>
-                  </TouchableOpacity>
-                </View>
               </View>
-            </ScrollView>
-          </ImageBackground>
-        </SafeAreaView>
-      )}
-    </Formik>
+              <MaterialCommunityIcons
+                name="lock-outline"
+                size={30}
+                style={styles.icon}
+              />
+            </View>
+
+            <View style={{flexDirection: 'row'}}>
+              <TextInput
+                style={styles.input}
+                placeholder="Confirm Password: (Hello123#)"
+                placeholderTextColor="white"
+                secureTextEntry={hidePassword1}
+              />
+              <View style={styles.eyeIconContainer}>
+                <TouchableOpacity
+                  onPress={() => setHidePassword1(!hidePassword1)}>
+                  <MaterialCommunityIcons
+                    name={hidePassword1 ? 'eye-off-outline' : 'eye-outline'}
+                    size={25}
+                    color={hidePassword1 ? 'white' : 'white'}
+                  />
+                </TouchableOpacity>
+              </View>
+              <MaterialCommunityIcons
+                name="lock-outline"
+                size={30}
+                style={styles.icon}
+              />
+            </View>
+
+            <View style={{flexDirection: 'row'}}>
+              <TextInput
+                style={styles.input}
+                placeholder="Station Address"
+                placeholderTextColor="white"
+              />
+              <MaterialCommunityIcons
+                name="map-marker-outline"
+                size={30}
+                style={styles.icon}
+              />
+            </View>
+
+            <View style={{flexDirection: 'row'}}>
+              <TextInput
+                style={styles.input}
+                placeholder="Station Phone/Landline Number:"
+                placeholderTextColor="white"
+                keyboardType="numeric"
+              />
+              <MaterialCommunityIcons
+                name="phone-outline"
+                size={30}
+                style={styles.icon}
+              />
+            </View>
+
+            <TouchableOpacity onPress={() => Submit()} style={styles.button}>
+              <Text style={styles.buttonText}>Signup</Text>
+            </TouchableOpacity>
+
+            <View style={styles.extracontainer}>
+              <Text style={styles.extra}>Already have an account ?</Text>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => navigation.navigate('PoliceStationLogin')}>
+                <Text style={styles.btntext}>Login</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
+      </ImageBackground>
+    </SafeAreaView>
   );
 };
 
@@ -317,7 +230,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    // backgroundColor: '#2196F3',
+    backgroundColor: COLORS.primary,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
@@ -328,13 +241,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 18,
-  },
-
-  errorText: {
-    color: '#E0144C',
-    fontWeight: '600',
-    position: 'absolute',
-    top: 60,
   },
 
   icon: {

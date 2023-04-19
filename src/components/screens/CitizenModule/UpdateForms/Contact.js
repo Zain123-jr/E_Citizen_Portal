@@ -1,88 +1,55 @@
-import React from 'react'
-import { View, StyleSheet, TouchableOpacity, TextInput, Text } from 'react-native'
+import React from 'react';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  Text,
+} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Formik } from "formik";
-import * as Yup from 'yup';
 import COLORS from '../../../consts/Colors';
 
-
-
-const UpdateContactSchema = Yup.object().shape({
-
-  email: Yup.string()
-    .email('Invalid email')
-    .required('Valid Email Required'),
-
-  addressline: Yup.string()
-    .required('Address line is required'),
-
-});
-
-
-
-const Contact = ({ navigation }) => {
-
+const Contact = ({navigation}) => {
   return (
     <View>
-      <Formik
-        initialValues={{
-          email: '',
-          addressline: '',
-        }}
+      <View style={styles.formContainer}>
+        <View style={{flexDirection: 'row'}}>
+          <TextInput
+            style={styles.input}
+            placeholder="Email: (Hello123@gmail.com)"
+            placeholderTextColor={COLORS.grey}
+          />
+          <MaterialCommunityIcons
+            name="email-outline"
+            size={30}
+            style={styles.icon}
+          />
+        </View>
 
-        validationSchema={UpdateContactSchema}
-      >
+        <View style={{flexDirection: 'row'}}>
+          <TextInput
+            style={styles.input}
+            placeholder="Address Line"
+            placeholderTextColor={COLORS.grey}
+          />
+          <MaterialCommunityIcons
+            name="map-marker-outline"
+            size={30}
+            style={styles.icon}
+          />
+        </View>
 
-        {({ handleChange, values, errors, isValid, setFieldTouched, touched }) => (
-          <View style={styles.formContainer} >
-
-            <View style={{ flexDirection: "row" }} >
-              <TextInput
-                style={styles.input}
-                placeholder="Email: (Hello123@gmail.com)"
-                placeholderTextColor={COLORS.grey}
-                value={values.email}
-                onChangeText={handleChange('email')}
-                onBlur={() => setFieldTouched('email')}
-              />
-              <MaterialCommunityIcons name="email-outline" size={30} style={styles.icon} />
-
-              {touched.email && errors.email && (
-                <Text style={styles.errorText} >{errors.email}</Text>
-              )}
-            </View>
-
-            <View style={{ flexDirection: 'row' }} >
-              <TextInput
-                style={styles.input}
-                placeholder="Address Line"
-                placeholderTextColor={COLORS.grey}
-                onChangeText={handleChange('addressline')}
-                onBlur={() => setFieldTouched('addressline')}
-                value={values.addressline}
-              />
-              <MaterialCommunityIcons name="map-marker-outline" size={30} style={styles.icon} />
-              {touched.addressline && errors.addressline && (
-                <Text style={styles.errorText} >{errors.addressline}</Text>)}
-            </View>
-
-            <TouchableOpacity
-              onPress={() => navigation.navigate('CitizenLogin')}
-              disabled={!isValid}
-              style={[
-                styles.button,
-                { backgroundColor: isValid ? '#539165' : '#A5C9CA' },
-              ]} >
-              <Text style={styles.buttonText}>Update</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      </Formik>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('CitizenHome')}
+          style={styles.button}>
+          <Text style={styles.buttonText}>Update</Text>
+        </TouchableOpacity>
+      </View>
     </View>
-  )
-}
+  );
+};
 
-export default Contact
+export default Contact;
 
 const styles = StyleSheet.create({
   primarycontainer: {
@@ -94,7 +61,7 @@ const styles = StyleSheet.create({
     padding: 20,
     marginTop: 10,
     width: '95%',
-    marginLeft: 10
+    marginLeft: 10,
   },
 
   input: {
@@ -109,11 +76,11 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
     borderLeftWidth: 0,
     borderRightWidth: 0,
-    width: '100%'
+    width: '100%',
   },
 
   button: {
-    // backgroundColor: '#2196F3',
+    backgroundColor: COLORS.primary,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
@@ -123,22 +90,12 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 18
-  },
-
-  errorText: {
-    color: '#E0144C',
-    fontWeight: '600',
-    position: 'absolute',
-    top: 60,
-    fontSize: 12
+    fontSize: 18,
   },
 
   icon: {
     position: 'absolute',
     top: 19,
-    color: '#000'
+    color: '#000',
   },
-})
-
-
+});
