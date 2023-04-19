@@ -13,122 +13,80 @@ import {
 } from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
-import {Formik} from 'formik';
-import * as Yup from 'yup';
-
-const LoginSchema = Yup.object().shape({
-  bagde: Yup.string()  
-  .required('Valid Badge Required'),
-
-  password: Yup.string()
-    .min(8)
-    .required('Password Required')
-    .matches(
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
-      'Must contain minimum 8 characters',
-    ),
-});
+import COLORS from '../../../consts/Colors';
 
 const OICLogin = ({navigation}) => {
   const [hidePassword, setHidePassword] = useState(true);
 
-  function Submit(){
-    alert('Login Successfully')
-    navigation.navigate('OICDrawer')
+  function Submit() {
+    alert('Login Successfully');
+    navigation.navigate('OICDrawer');
   }
 
   return (
-    <Formik
-      initialValues={{
-        bagde: '',
-        password: '',
-      }}
-      validationSchema={LoginSchema}>
-      {({values, errors, touched, handleChange, setFieldTouched, isValid}) => (
-        <SafeAreaView style={styles.container}>
-          <ImageBackground
-            style={styles.image}
-            source={require('../../../../assets/login_bg.jpg')}>
-            <ScrollView>
-              <View style={styles.formContainer}>
-                <Text style={styles.heading}>OIC Login</Text>
-                <Text style={styles.description}>Please Login To Continue</Text>
+    <SafeAreaView style={styles.container}>
+      <ImageBackground
+        style={styles.image}
+        source={require('../../../../assets/login_bg.jpg')}>
+        <ScrollView>
+          <View style={styles.formContainer}>
+            <Text style={styles.heading}>OIC Login</Text>
+            <Text style={styles.description}>Please Login To Continue</Text>
 
-                <View style={{flexDirection: 'row'}}>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Badge"
-                    placeholderTextColor="white"
-                    autoCapitalize="none"
-                    value={values.bagde}
-                    onChangeText={handleChange('badge')}
-                    onBlur={() => setFieldTouched('badge')}
-                  />
-                  <MaterialCommunityIcons
-                    name="police-badge-outline"
-                    size={30}
-                    style={styles.icon}
-                  />
-                  {touched.bagde && errors.bagde && (
-                    <Text style={styles.errorText}>{errors.bagde}</Text>
-                  )}
-                </View>
+            <View style={{flexDirection: 'row'}}>
+              <TextInput
+                style={styles.input}
+                placeholder="Badge"
+                placeholderTextColor="white"
+                autoCapitalize="none"
+              />
+              <MaterialCommunityIcons
+                name="police-badge-outline"
+                size={30}
+                style={styles.icon}
+              />
+            </View>
 
-                <View style={{flexDirection: 'row'}}>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Password"
-                    placeholderTextColor="white"
-                    secureTextEntry={hidePassword}
-                    onChangeText={handleChange('password')}
-                    value={values.password}
-                    onBlur={() => setFieldTouched('password')}
-                  />
-                  <View style={styles.eyeIconContainer}>
-                    <TouchableOpacity
-                      onPress={() => setHidePassword(!hidePassword)}>
-                      <MaterialCommunityIcons
-                        name={hidePassword ? 'eye-off-outline' : 'eye-outline'}
-                        size={25}
-                        color={hidePassword ? 'white' : 'white'}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  <MaterialCommunityIcons
-                    name="lock-outline"
-                    size={30}
-                    style={styles.icon}
-                  />
-                  {touched.password && errors.password && (
-                    <Text style={styles.errorText}>{errors.password}</Text>
-                  )}
-                </View>
-
+            <View style={{flexDirection: 'row'}}>
+              <TextInput
+                style={styles.input}
+                placeholder="Password"
+                placeholderTextColor="white"
+                secureTextEntry={hidePassword}
+              />
+              <View style={styles.eyeIconContainer}>
                 <TouchableOpacity
-                  onPress={() => Submit()}
-                  disabled={!isValid}
-                  style={[
-                    styles.button,
-                    {backgroundColor: isValid ? '#539165' : '#A5C9CA'},
-                  ]}>
-                  <Text style={styles.buttonText}>Login</Text>
+                  onPress={() => setHidePassword(!hidePassword)}>
+                  <MaterialCommunityIcons
+                    name={hidePassword ? 'eye-off-outline' : 'eye-outline'}
+                    size={25}
+                    color={hidePassword ? 'white' : 'white'}
+                  />
                 </TouchableOpacity>
-
-                <View style={styles.extracontainer}>
-                  <Text style={styles.extra}>Did't have an account ?</Text>
-                  <TouchableOpacity
-                    style={styles.btn}
-                    onPress={() => navigation.navigate('OICSignup')}>
-                    <Text style={styles.btntext}>Signup</Text>
-                  </TouchableOpacity>
-                </View>
               </View>
-            </ScrollView>
-          </ImageBackground>
-        </SafeAreaView>
-      )}
-    </Formik>
+              <MaterialCommunityIcons
+                name="lock-outline"
+                size={30}
+                style={styles.icon}
+              />
+            </View>
+
+            <TouchableOpacity onPress={() => Submit()} style={styles.button}>
+              <Text style={styles.buttonText}>Login</Text>
+            </TouchableOpacity>
+
+            <View style={styles.extracontainer}>
+              <Text style={styles.extra}>Did't have an account ?</Text>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => navigation.navigate('OICSignup')}>
+                <Text style={styles.btntext}>Signup</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
+      </ImageBackground>
+    </SafeAreaView>
   );
 };
 
@@ -198,19 +156,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     marginTop: 15,
+    backgroundColor: COLORS.primary,
   },
 
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
     fontSize: 18,
-  },
-
-  errorText: {
-    color: '#E0144C',
-    fontWeight: '600',
-    position: 'absolute',
-    top: 60,
   },
 
   icon: {

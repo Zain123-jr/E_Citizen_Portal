@@ -1,83 +1,44 @@
 import React from 'react'
 import { View, StyleSheet, TouchableOpacity, TextInput, Text } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Formik } from "formik";
-import * as Yup from 'yup';
 import COLORS from '../../../../consts/Colors';
-
-
-
-const UpdateContactSchema = Yup.object().shape({
-
-  email: Yup.string()
-    .email('Invalid email')
-    .required('Valid Email Required'),
-
-  addressline: Yup.string()
-    .required('Address line is required'),
-
-});
-
-
 
 const OICContact = ({ navigation }) => {
 
+  const handleSubmit = () => {
+    alert('Contact Update Successfully');
+  };
+
   return (
     <View>
-      <Formik
-        initialValues={{
-          email: '',
-          addressline: '',
-        }}
-
-        validationSchema={UpdateContactSchema}
-      >
-
-        {({ handleChange, values, errors, isValid, setFieldTouched, touched }) => (
           <View style={styles.formContainer} >
 
             <View style={{ flexDirection: "row" }} >
               <TextInput
                 style={styles.input}
                 placeholder="Email: (Hello123@gmail.com)"
-                placeholderTextColor={COLORS.grey}
-                value={values.email}
-                onChangeText={handleChange('email')}
-                onBlur={() => setFieldTouched('email')}
+                placeholderTextColor={COLORS.grey}                
               />
-              <MaterialCommunityIcons name="email-outline" size={30} style={styles.icon} />
-
-              {touched.email && errors.email && (
-                <Text style={styles.errorText} >{errors.email}</Text>
-              )}
+              <MaterialCommunityIcons name="email-outline" size={30} style={styles.icon} />             
             </View>
 
             <View style={{ flexDirection: 'row' }} >
               <TextInput
                 style={styles.input}
                 placeholder="Address Line"
-                placeholderTextColor={COLORS.grey}
-                onChangeText={handleChange('addressline')}
-                onBlur={() => setFieldTouched('addressline')}
-                value={values.addressline}
+                placeholderTextColor={COLORS.grey}               
               />
-              <MaterialCommunityIcons name="map-marker-outline" size={30} style={styles.icon} />
-              {touched.addressline && errors.addressline && (
-                <Text style={styles.errorText} >{errors.addressline}</Text>)}
+              <MaterialCommunityIcons name="map-marker-outline" size={30} style={styles.icon} />              
             </View>
 
             <TouchableOpacity
-              onPress={() => navigation.navigate('Home')}
-              disabled={!isValid}
-              style={[
-                styles.button,
-                { backgroundColor: isValid ? '#539165' : '#A5C9CA' },
-              ]} >
+              onPress={() => handleSubmit()}
+              style={
+                styles.button
+              } >
               <Text style={styles.buttonText}>Update</Text>
             </TouchableOpacity>
-          </View>
-        )}
-      </Formik>
+          </View>       
     </View>
   )
 }
@@ -113,7 +74,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    // backgroundColor: '#2196F3',
+    backgroundColor: COLORS.primary,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
@@ -124,14 +85,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 18
-  },
-
-  errorText: {
-    color: '#E0144C',
-    fontWeight: '600',
-    position: 'absolute',
-    top: 60,
-    fontSize: 12
   },
 
   icon: {

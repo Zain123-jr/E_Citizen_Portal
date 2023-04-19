@@ -10,171 +10,101 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-
-import {Formik} from 'formik';
-import * as Yup from 'yup';
-
-const ContactSchema = Yup.object().shape({
-  reason: Yup.string().required('Reason Required'),
-
-  mobile: Yup.string().required('Mobile Number Required'),
-
-  cnic: Yup.string()
-    .min(13)
-    .matches(/^\d{5}-\d{7}-\d{1}$/, 'Invalid CNIC format')
-    .required('Enter Required'),
-
-  email: Yup.string().email('Invalid email').required('Valid Email Required'),
-
-  message: Yup.string().required('Please enter your message'),
-});
+import COLORS from '../../../../consts/Colors';
 
 const OICContactUs = ({navigation}) => {
-    const handleSubmit = () => {
-        alert('Form Submit Successfully')              
-    }
+  const handleSubmit = () => {
+    alert('Form Submit Successfully');
+  };
 
   return (
-    <Formik
-      initialValues={{
-        reason: '',
-        mobile: '',
-        cnic: '',
-        email: '',
-        message: '',
-      }}
-      validationSchema={ContactSchema}>
-      {({values, errors, touched, handleChange, setFieldTouched, isValid}) => (
-        <SafeAreaView style={styles.container}>
-          <ScrollView>
-            <View style={styles.formContainer}>
-              <View
-                style={{
-                  borderColor: '#ccc',
-                  top: -6,
-                  borderWidth: 2,
-                  borderTopWidth: 0,
-                  borderLeftWidth: 0,
-                  borderRightWidth: 0,
-                }}>
-                <Picker
-                  style={{
-                    left: -18,
-                    top: 8,
-                    color: 'black',
-                  }}
-                  selectedValue={values.reason}
-                  onValueChange={handleChange('reason')}
-                  onBlur={() => setFieldTouched('reason')}>
-                  <Picker.Item
-                    style={styles.item}
-                    label="Pick a Reason"
-                    value=""
-                  />
-                  <Picker.Item
-                    style={styles.item}
-                    label="Password Reset Issue"
-                    value="Password Reset Issue"
-                  />
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <View style={styles.formContainer}>
+          <View
+            style={{
+              borderColor: '#ccc',
+              top: -6,
+              borderWidth: 2,
+              borderTopWidth: 0,
+              borderLeftWidth: 0,
+              borderRightWidth: 0,
+            }}>
+            <Picker
+              style={{
+                left: -18,
+                top: 8,
+                color: 'black',
+              }}>
+              <Picker.Item style={styles.item} label="Pick a Reason" value="" />
+              <Picker.Item
+                style={styles.item}
+                label="Password Reset Issue"
+                value="Password Reset Issue"
+              />
 
-                  <Picker.Item
-                    style={styles.item}
-                    label="Password Reset Code not Recieved"
-                    value="Password Reset Code not Recieved"
-                  />
+              <Picker.Item
+                style={styles.item}
+                label="Password Reset Code not Recieved"
+                value="Password Reset Code not Recieved"
+              />
 
-                  <Picker.Item
-                    style={styles.item}
-                    label="Change My CNIC"
-                    value="Password Change My CNIC"
-                  />
+              <Picker.Item
+                style={styles.item}
+                label="Change My CNIC"
+                value="Password Change My CNIC"
+              />
 
-                  <Picker.Item
-                    style={styles.item}
-                    label="Mobile App Bug Report"
-                    value="Mobile App Bug Report"
-                  />
-                </Picker>
-                {touched.reason && errors.reason && (
-                  <Text style={styles.errorText}>{errors.reason}</Text>
-                )}
-              </View>
+              <Picker.Item
+                style={styles.item}
+                label="Mobile App Bug Report"
+                value="Mobile App Bug Report"
+              />
+            </Picker>
+          </View>
 
-              <View style={{flexDirection: 'row'}}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Mobile:"
-                  placeholderTextColor="black"
-                  keyboardType="numeric"
-                  value={values.mobile}
-                  onChangeText={handleChange('mobile')}
-                  onBlur={() => setFieldTouched('mobile')}
-                />
-                {touched.mobile && errors.mobile && (
-                  <Text style={styles.errorText}>{errors.mobile}</Text>
-                )}
-              </View>
+          <View style={{flexDirection: 'row'}}>
+            <TextInput
+              style={styles.input}
+              placeholder="Mobile:"
+              placeholderTextColor="black"
+              keyboardType="numeric"
+            />
+          </View>
 
-              <View style={{flexDirection: 'row'}}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="CNIC"
-                  placeholderTextColor="black"
-                  keyboardType="numeric"
-                  value={values.cnic}
-                  onChangeText={handleChange('cnic')}
-                  onBlur={() => setFieldTouched('cnic')}
-                />
-                {touched.cnic && errors.cnic && (
-                  <Text style={styles.errorText}>{errors.cnic}</Text>
-                )}
-              </View>
+          <View style={{flexDirection: 'row'}}>
+            <TextInput
+              style={styles.input}
+              placeholder="CNIC"
+              placeholderTextColor="black"
+              keyboardType="numeric"
+            />
+          </View>
 
-              <View style={{flexDirection: 'row'}}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Email"
-                  placeholderTextColor="black"
-                  value={values.email}
-                  onChangeText={handleChange('email')}
-                  onBlur={() => setFieldTouched('email')}
-                />
-                {touched.email && errors.email && (
-                  <Text style={styles.errorText}>{errors.email}</Text>
-                )}
-              </View>
+          <View style={{flexDirection: 'row'}}>
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              placeholderTextColor="black"
+            />
+          </View>
 
-              <View style={{flexDirection: 'row'}}>
-                <TextInput
-                  style={styles.messagebox}
-                  placeholder="Enter Details Here!"
-                  placeholderTextColor="black"
-                  multiline={true}
-                  numberOfLines={6}
-                  value={values.message}
-                  onChangeText={handleChange('message')}
-                  onBlur={() => setFieldTouched('message')}
-                />
+          <View style={{flexDirection: 'row'}}>
+            <TextInput
+              style={styles.messagebox}
+              placeholder="Enter Details Here!"
+              placeholderTextColor="black"
+              multiline={true}
+              numberOfLines={6}
+            />
+          </View>
 
-                {touched.message && errors.message && (
-                  <Text style={styles.errormessage}>{errors.message}</Text>
-                )}
-              </View>
-
-              <TouchableOpacity
-                onPress={handleSubmit}
-                disabled={!isValid}
-                style={[
-                  styles.button,
-                  {backgroundColor: isValid ? '#539165' : '#A5C9CA'},
-                ]}>
-                <Text style={styles.buttonText}>Submit</Text>
-              </TouchableOpacity>
-            </View>
-          </ScrollView>
-        </SafeAreaView>
-      )}
-    </Formik>
+          <TouchableOpacity onPress={handleSubmit} style={styles.button}>
+            <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -236,26 +166,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     marginTop: 15,
+    backgroundColor: COLORS.primary,
   },
 
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
     fontSize: 18,
-  },
-
-  errorText: {
-    color: '#E0144C',
-    fontWeight: '600',
-    position: 'absolute',
-    top: 60,
-  },
-
-  errormessage: {
-    color: '#E0144C',
-    fontWeight: '600',
-    position: 'absolute',
-    top: 132,
   },
 
   btn: {
