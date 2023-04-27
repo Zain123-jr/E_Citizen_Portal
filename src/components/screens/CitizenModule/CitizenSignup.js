@@ -16,7 +16,9 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../consts/Colors';
 
+
 const CitizenSignup = ({navigation}) => {
+
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePassword1, setHidePassword1] = useState(true);
 
