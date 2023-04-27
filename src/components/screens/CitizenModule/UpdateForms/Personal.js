@@ -65,7 +65,7 @@ const Personal = ({navigation, route}) => {
                   style={styles.icon}
                 />
               </View>
-              
+
               <View style={{flexDirection: 'row'}}>
                 <TextInput
                   style={styles.input}
@@ -78,12 +78,10 @@ const Personal = ({navigation, route}) => {
                   style={styles.icon}
                 />
               </View>
-                          
+
               <TouchableOpacity
                 onPress={() => navigation.navigate('CitizenHome')}
-                style={
-                  styles.button
-                }>
+                style={styles.button}>
                 <Text style={styles.buttonText}>Update</Text>
               </TouchableOpacity>
             </View>
