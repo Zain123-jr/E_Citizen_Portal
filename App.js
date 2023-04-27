@@ -17,6 +17,7 @@ import ChildAbuseForm from './src/components/screens/CitizenModule/ComplaintForm
 import MissingPersonForm from './src/components/screens/CitizenModule/ComplaintForms/MissingPersonForm';
 import Profile from './src/components/screens/CitizenModule/Profile';
 import Personal from './src/components/screens/CitizenModule/UpdateForms/Personal';
+import OfficialPortal from './src/components/screens/OfficialModule/OfficialPortal';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,7 @@ const App = () => {
         <Stack.Screen name="Splash" component={Splash} />
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="CitizenPortal" component={BottomNavigator} />
+        <Stack.Screen name="OfficalPortal" component={OfficialPortal} />
         <Stack.Screen name="CitizenSignup" component={CitizenSignup} />
         <Stack.Screen name="CitizenLogin" component={CitizenLogin} />
         <Stack.Screen name="CitizenHome" component={DrawerNavigator} />

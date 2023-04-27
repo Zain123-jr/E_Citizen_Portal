@@ -65,21 +65,7 @@ const Personal = ({navigation, route}) => {
                   style={styles.icon}
                 />
               </View>
-
-              <View style={{flexDirection: 'row'}}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="CNIC: (XXXXX-XXXXXXX-X)"
-                  placeholderTextColor={COLORS.grey}
-                  keyboardType="numeric"
-                />
-                <MaterialCommunityIcons
-                  name="id-card"
-                  size={30}
-                  style={styles.icon}
-                />
-              </View>
-
+              
               <View style={{flexDirection: 'row'}}>
                 <TextInput
                   style={styles.input}
@@ -92,56 +78,7 @@ const Personal = ({navigation, route}) => {
                   style={styles.icon}
                 />
               </View>
-
-              <View style={{flexDirection: 'row'}}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Date of Birth: (DD-MM-YY)"
-                  placeholderTextColor={COLORS.grey}
-                  keyboardType="numeric"
-                />
-                <MaterialCommunityIcons
-                  name="calendar-outline"
-                  size={30}
-                  style={styles.icon}
-                />
-              </View>
-
-              <View
-                style={{
-                  borderColor: '#ccc',
-                  top: -6,
-                  borderWidth: 2,
-                  borderTopWidth: 0,
-                  borderLeftWidth: 0,
-                  borderRightWidth: 0,
-                }}>
-                <Picker
-                  style={{
-                    left: 25,
-                    top: 8,
-                    color: COLORS.grey,
-                  }}>
-                  <Picker.Item
-                    style={styles.item}
-                    label="Select gender"
-                    value=""
-                  />
-                  <Picker.Item style={styles.item} label="Male" value="male" />
-                  <Picker.Item
-                    style={styles.item}
-                    label="Female"
-                    value="female"
-                  />
-                </Picker>
-
-                <MaterialCommunityIcons
-                  name="gender-male"
-                  size={30}
-                  style={styles.icon}
-                />
-              </View>
-
+                          
               <TouchableOpacity
                 onPress={() => navigation.navigate('CitizenHome')}
                 style={

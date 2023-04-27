@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {ScrollView} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 
@@ -13,8 +13,15 @@ import {
 import COLORS from '../../consts/Colors';
 
 const ContactUs = ({navigation}) => {
+
+  const [reason, setReason] = useState('')
+  const [mobile, setMobile] = useState('')
+  const [cnic, setCnic] = useState('')
+  const [email, setEmail] = useState('')
+  const [message, setMessage] = useState('')
+
   const handleSubmit = () => {
-    alert('Form Submit Successfully');
+    alert('Thanks! Your Feedback is Submitted ');
   };
 
   return (
@@ -36,7 +43,8 @@ const ContactUs = ({navigation}) => {
                 top: 8,
                 color: 'black',
               }}
-              selectedValue={values.reason}>
+              selectedValue={reason}
+              onValueChange={setReason}>
               <Picker.Item style={styles.item} label="Pick a Reason" value="" />
               <Picker.Item
                 style={styles.item}
@@ -70,6 +78,8 @@ const ContactUs = ({navigation}) => {
               placeholder="Mobile:"
               placeholderTextColor="black"
               keyboardType="numeric"
+              value={mobile}
+              onChangeText={setMobile}
             />
           </View>
 
@@ -78,6 +88,8 @@ const ContactUs = ({navigation}) => {
               style={styles.input}
               placeholder="CNIC"
               placeholderTextColor="black"
+              value={cnic}
+              onChangeText={setCnic}
             />
           </View>
 
@@ -86,6 +98,8 @@ const ContactUs = ({navigation}) => {
               style={styles.input}
               placeholder="Email"
               placeholderTextColor="black"
+              value={email}
+              onChangeText={setEmail}
             />
           </View>
 
@@ -96,6 +110,9 @@ const ContactUs = ({navigation}) => {
               placeholderTextColor="black"
               multiline={true}
               numberOfLines={6}
+              value={message}
+              onChangeText={setMessage}
+              
             />
           </View>
 

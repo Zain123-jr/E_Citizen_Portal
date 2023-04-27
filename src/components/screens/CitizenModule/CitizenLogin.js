@@ -14,9 +14,32 @@ import {
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../consts/Colors';
+import '../../../../FirebaseConfig';
+import auth from '@react-native-firebase/auth';
 
 const CitizenLogin = ({navigation}) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [hidePassword, setHidePassword] = useState(true);
+
+  const handleLogin = async () => {
+    //to send citizen data into firestore
+    if (email == '') {
+      alert('Enter Email');
+    } else if (password == '') {
+      alert('Enter Password');
+    } else {
+      auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          alert('Login Successfull');
+          navigation.navigate('CitizenHome');
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -34,6 +57,8 @@ const CitizenLogin = ({navigation}) => {
                 placeholder="Email"
                 placeholderTextColor="white"
                 autoCapitalize="none"
+                value={email}
+                onChangeText={setEmail}
               />
               <MaterialCommunityIcons
                 name="account-circle-outline"
@@ -48,6 +73,8 @@ const CitizenLogin = ({navigation}) => {
                 placeholder="Password"
                 placeholderTextColor="white"
                 secureTextEntry={hidePassword}
+                value={password}
+                onChangeText={setPassword}
               />
               <View style={styles.eyeIconContainer}>
                 <TouchableOpacity
@@ -66,9 +93,7 @@ const CitizenLogin = ({navigation}) => {
               />
             </View>
 
-            <TouchableOpacity
-              onPress={() => navigation.navigate('CitizenHome')}
-              style={styles.button}>
+            <TouchableOpacity onPress={handleLogin} style={styles.button}>
               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
 
@@ -153,7 +178,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     marginTop: 15,
-    backgroundColor:COLORS.primary
+    backgroundColor: COLORS.primary,
   },
 
   buttonText: {
