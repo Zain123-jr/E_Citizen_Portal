@@ -55,7 +55,7 @@ const CitizenSignup = ({navigation}) => {
       alert('Enter CNIC');
     } else {
       firestore()
-        .collection('Citizen')
+        .collection('Citizen')        
         .add({
           fullname: fullname,
           email: email,
