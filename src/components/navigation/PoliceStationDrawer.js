@@ -1,12 +1,12 @@
 import React from 'react';
 import {View, TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import COLORS from '../../../consts/Colors';
-import PoliceStationHomepage from './PoliceStationHomepage';
-import PoliceStationProfile from './PoliceStationProfile';
-import PoliceStationChangePassword from './UpdateForms/PoliceStationChangePassword';
-import PoliceStationContactUs from './UpdateForms/PoliceStationContactUs';
-import PoliceStationLogout from './UpdateForms/PoliceStationLogout';
+import COLORS from '../consts/Colors';
+import PoliceStationHomepage from '../screens/OfficialModule/PoliceStation/PoliceStationHomepage';
+import PoliceStationProfile from '../screens/OfficialModule/PoliceStation/PoliceStationProfile';
+import PoliceStationChangePassword from '../screens/OfficialModule/PoliceStation/UpdateForms/PoliceStationChangePassword';
+import PoliceStationContactUs from '../screens/OfficialModule/PoliceStation/UpdateForms/PoliceStationContactUs';
+import PSCustomDrawer from '../consts/PSCustomDrawer';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
 const Drawer = createDrawerNavigator();
@@ -14,12 +14,11 @@ const Drawer = createDrawerNavigator();
 const PoliceStationDrawer = () => {
   return (
     <Drawer.Navigator
-      drawerContent={props => <PoliceStationLogout {...props} />}
+      drawerContent={props => <PSCustomDrawer {...props} />}
       screenOptions={{
         drawerActiveBackgroundColor: COLORS.primary,
         drawerActiveTintColor: '#fff',
       }}>
-
       <Drawer.Screen
         name="Police HQ Home"
         component={PoliceStationHomepage}
@@ -148,7 +147,7 @@ const PoliceStationDrawer = () => {
           },
         }}
       />
-      
+
       <Drawer.Screen
         name="Police HQ Contact Us"
         component={PoliceStationContactUs}

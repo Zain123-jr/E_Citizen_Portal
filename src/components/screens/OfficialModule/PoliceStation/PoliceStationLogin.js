@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     marginTop: 15,
-    backgroundColor:COLORS.primary
+    backgroundColor: COLORS.primary,
   },
 
   buttonText: {

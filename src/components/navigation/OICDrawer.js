@@ -1,21 +1,20 @@
 import React from 'react';
 import {View, TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import COLORS from '../../../consts/Colors';
-import OICHomepage from './OICHomepage';
-import OICChangePassword from './UpdateForms/OICChangePassword';
-import OICProfile from './UpdateForms/OICProfile';
-import OICContactUs from './UpdateForms/OICContactUs';
-import OICLogout from './UpdateForms/OICLogout';
+import COLORS from '../consts/Colors';
+import OICHomepage from '../screens/OfficialModule/OIC/OICHomepage';
+import OICChangePassword from '../screens/OfficialModule/OIC/UpdateForms/OICChangePassword';
+import OICProfile from '../screens/OfficialModule/OIC/UpdateForms/OICProfile';
+import OICContactUs from '../screens/OfficialModule/OIC/UpdateForms/OICContactUs';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import OICCustomDrawer from '../consts/OICCustomDrawer';
 
 const Drawer = createDrawerNavigator();
 
 const OICDrawer = () => {
-
   return (
     <Drawer.Navigator
-      drawerContent={props => <OICLogout {...props} />}
+      drawerContent={props => <OICCustomDrawer {...props} />}
       screenOptions={{
         drawerActiveBackgroundColor: COLORS.primary,
         drawerActiveTintColor: '#fff',

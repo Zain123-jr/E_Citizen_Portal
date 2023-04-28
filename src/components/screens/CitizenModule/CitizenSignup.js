@@ -69,7 +69,7 @@ const CitizenSignup = ({navigation}) => {
         })
         .then(() => {
           alert('Citizen Registered Successfully!');
-          navigation.navigate('CitizenHome');
+          navigation.navigate('CitizenLogin');
         })
         .catch(error => {
           console.error(error);
@@ -82,10 +82,10 @@ const CitizenSignup = ({navigation}) => {
         })
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
-            console.log('That email address is already in use!');
+            alert('That email address is already in use!');
           }
           if (error.code === 'auth/invalid-email') {
-            console.log('That email address is invalid!');
+            alert('That email address is invalid!');
           }
           console.error(error);
         });
@@ -287,7 +287,7 @@ const CitizenSignup = ({navigation}) => {
               />
             </View>
 
-            <TouchableOpacity onPress={Signup} style={styles.button}>
+            <TouchableOpacity onPress={()=>{Signup();}} style={styles.button}>
               <Text style={styles.buttonText}>Signup</Text>
             </TouchableOpacity>
 

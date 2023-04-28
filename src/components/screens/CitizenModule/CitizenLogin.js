@@ -23,7 +23,7 @@ const CitizenLogin = ({navigation}) => {
   const [hidePassword, setHidePassword] = useState(true);
 
   const handleLogin = async () => {
-    //to send citizen data into firestore
+    //to autheticate user
     if (email == '') {
       alert('Enter Email');
     } else if (password == '') {
@@ -36,7 +36,7 @@ const CitizenLogin = ({navigation}) => {
           navigation.navigate('CitizenHome');
         })
         .catch(error => {
-          console.error(error);
+          alert(error);
         });
     }
   };
@@ -93,7 +93,7 @@ const CitizenLogin = ({navigation}) => {
               />
             </View>
 
-            <TouchableOpacity onPress={handleLogin} style={styles.button}>
+            <TouchableOpacity onPress={()=>{handleLogin()}} style={styles.button}>
               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
 
