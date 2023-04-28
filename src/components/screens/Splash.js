@@ -9,8 +9,8 @@ const Splash = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
       Auth().onAuthStateChanged(function (user) {
-        const routeName = user !== null ? 'CitizenHome' : 'CitizenLogin';
-        navigation.navigate(routeName);      
+        const routeName = user !== null ? 'CitizenHome' : 'CitizenSignup';
+        navigation.navigate(routeName);
       });
     }, 2000);
   }, []);
