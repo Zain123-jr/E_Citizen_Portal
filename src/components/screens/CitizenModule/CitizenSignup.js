@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ScrollView} from 'react-native';
 import {useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
+import ImagePicker, {openPicker} from 'react-native-image-crop-picker';
 
 import {
   View,
@@ -11,9 +12,11 @@ import {
   ImageBackground,
   TextInput,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import imgPlaceHolder from '../../../assets/defualt-Avatar.png';
 import COLORS from '../../consts/Colors';
 import '../../../../FirebaseConfig';
 import '@react-native-firebase/firestore';
@@ -21,6 +24,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 const CitizenSignup = ({navigation}) => {
+  const [image, setImage] = useState(null);
   const [fullname, setFullname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -35,7 +39,9 @@ const CitizenSignup = ({navigation}) => {
 
   const Signup = async () => {
     //to send citizen data into firestore
-    if (fullname == '') {
+    if (image == null) {
+      alert('Select Image');
+    } else if (fullname == '') {
       alert('Enter Full Name');
     } else if (email == '') {
       alert('Enter Email');
@@ -78,7 +84,7 @@ const CitizenSignup = ({navigation}) => {
       auth()
         .createUserWithEmailAndPassword(email, password)
         .then(() => {
-          console.log('User is Added to Firebase!');
+          console.log('Citizen is Added to Firebase!');
         })
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
@@ -89,6 +95,19 @@ const CitizenSignup = ({navigation}) => {
           }
           console.error(error);
         });
+    }
+  };
+
+  const pickImage = async () => {
+    try {
+      const image = await ImagePicker.openPicker({
+        width: 300,
+        height: 400,
+        cropping: true,
+      });
+      setImage(image.path);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -103,6 +122,24 @@ const CitizenSignup = ({navigation}) => {
             <Text style={styles.description}>
               Please provide all required details to register
             </Text>
+
+            <View style={{flex: 1, alignItems: 'center'}}>
+              <View style={styles.imgContainer}>
+                <Image
+                  style={styles.img}
+                  source={image ? {uri: image} : imgPlaceHolder}
+                />
+                <TouchableOpacity
+                  onPress={pickImage}
+                  style={{alignItems: 'flex-end', top: 5, right: 5}}>
+                  <MaterialCommunityIcons
+                    name="plus-circle"
+                    size={30}
+                    color={COLORS.white}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
 
             <View style={{flexDirection: 'row'}}>
               <TextInput
@@ -287,9 +324,7 @@ const CitizenSignup = ({navigation}) => {
               />
             </View>
 
-            <TouchableOpacity
-              onPress={Signup}
-              style={styles.button}>
+            <TouchableOpacity onPress={Signup} style={styles.button}>
               <Text style={styles.buttonText}>Signup</Text>
             </TouchableOpacity>
 
@@ -321,6 +356,17 @@ const styles = StyleSheet.create({
   text: {
     textAlign: 'center',
     fontSize: 30,
+  },
+
+  imgContainer: {},
+
+  img: {
+    width: 110,
+    height: 110,
+    top: 16,
+    borderRadius: 55,
+    borderColor: COLORS.primary,
+    borderWidth: 4,
   },
 
   image: {

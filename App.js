@@ -1,6 +1,6 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BottomNavigator from './src/components/navigation/BottomNavigator';
 import ComplaintsBottomNavigator from './src/components/navigation/ComplaintsBottomNavigator';
 import Splash from './src/components/screens/Splash';
@@ -22,10 +22,9 @@ import OfficialPortal from './src/components/screens/OfficialModule/OfficialPort
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }} >
+      <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="Splash" component={Splash} />
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="CitizenPortal" component={BottomNavigator} />
@@ -35,8 +34,14 @@ const App = () => {
         <Stack.Screen name="CitizenHome" component={DrawerNavigator} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Personal" component={Personal} />
-        <Stack.Screen name="CitizenComplaints" component={ComplaintsBottomNavigator} />
-        <Stack.Screen name="ViewComplaints" component={ComplaintsBottomNavigator} />
+        <Stack.Screen
+          name="CitizenComplaints"
+          component={ComplaintsBottomNavigator}
+        />
+        <Stack.Screen
+          name="ViewComplaints"
+          component={ComplaintsBottomNavigator}
+        />
         <Stack.Screen name="Torture" component={TortureForm} />
         <Stack.Screen name="Kidnapping" component={KidnappingForm} />
         <Stack.Screen name="Killing" component={KillingForm} />
@@ -47,10 +52,6 @@ const App = () => {
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
 
 export default App;
-
-
-
-

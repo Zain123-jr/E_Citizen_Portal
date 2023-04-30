@@ -11,9 +11,8 @@ import {
 import Button from "../button/Button";
 import COLORS from "../consts/Colors";
 
-
-const Welcome = ({ navigation }) => {  
-  return (    
+const Welcome = ({ navigation }) => {
+  return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
         style={styles.image}
@@ -25,10 +24,10 @@ const Welcome = ({ navigation }) => {
               fontSize: 40,
               color: "white",
               textAlign: "center",
-              fontWeight: "600",                           
+              fontWeight: "600",
             }}
           >
-           <Text style={styles.upperheading} >Welcome to</Text> {'\n'} 
+           <Text style={styles.upperheading} >Welcome to</Text> {'\n'}
            <Text style={styles.lowerheading} >E-Citizen Portal</Text>
           </Text>
 
@@ -45,7 +44,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",    
+    alignItems: "center",
   },
 
   image: {
@@ -55,12 +54,13 @@ const styles = StyleSheet.create({
   },
 
   upperheading:{
-    fontSize:25,    
+    fontSize:25,
     color:COLORS.secondary,
   },
 
-  lowerheading:{        
+  lowerheading:{
     color:COLORS.primary,
   }
-     
+
 });
+
