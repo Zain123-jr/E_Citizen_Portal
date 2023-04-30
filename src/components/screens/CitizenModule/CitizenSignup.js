@@ -90,9 +90,38 @@ const CitizenSignup = ({navigation}) => {
     }
   };
 
-  const handleFullnameChange = value => {
-    setFullname(value);
+  const isValidInput = () => {
+    const fullNamePattern = /^[a-zA-Z\s]*$/;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordPattern =
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/;
+    const dobPattern = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
+    const mobilePattern = /^[0-9]{11}$/;
+    const cnicPattern = /^(\d{5})-?(\d{7})-?(\d{1})$/;
+
+    const isFullNameValid = fullNamePattern.test(fullname);
+    const isEmailValid = emailPattern.test(email);
+    const isPasswordValid = passwordPattern.test(password);
+    const isConfirmPasswordValid = confirmPassword === password;
+    const isDobValid = dobPattern.test(dob);
+    const isGenderValid = gender.trim().length > 0;
+    const isMobileValid = mobilePattern.test(mobile);
+    const isAddressValid = addressline.trim().length > 0;
+    const isCnicValid = cnicPattern.test(cnic);
+
+    return (
+      isFullNameValid &&
+      isEmailValid &&
+      isPasswordValid &&
+      isConfirmPasswordValid &&
+      isDobValid &&
+      isGenderValid &&
+      isMobileValid &&
+      isAddressValid &&
+      isCnicValid
+    );
   };
+
   const validateFullname = () => {
     const regex = /^[a-zA-Z\s]*$/;
     if (!fullname.match(regex)) {
@@ -238,7 +267,7 @@ const CitizenSignup = ({navigation}) => {
                 placeholderTextColor="white"
                 autoCapitalize="none"
                 value={fullname}
-                onChangeText={handleFullnameChange}
+                onChangeText={setFullname}
               />
               {fullnameError ? (
                 <Text style={styles.validationerror}>{fullnameError}</Text>
@@ -442,7 +471,10 @@ const CitizenSignup = ({navigation}) => {
               />
             </View>
 
-            <TouchableOpacity onPress={Signup} style={styles.button}>
+            <TouchableOpacity
+              disabled={!isValidInput()}
+              onPress={Signup}
+              style={styles.button}>
               <Text style={styles.buttonText}>Signup</Text>
             </TouchableOpacity>
 
