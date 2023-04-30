@@ -2,9 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {Image, ImageBackground} from 'react-native';
 import {View, StyleSheet, Text} from 'react-native';
 import COLORS from '../consts/Colors';
-// import '../../../FirebaseConfig';
-// import firebase from 'firebase/compat';
-// import auth from '@react-native-firebase/auth';
 
 const Splash = ({navigation}) => {
   useEffect(() => {

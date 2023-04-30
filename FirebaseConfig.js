@@ -17,7 +17,6 @@
 // export const auth = getAuth(app);
 
 import firebase from 'firebase/compat';
-import storage from 'firebase/storage';
 
 const firebaseConfig = {
   // Your Firebase project configuration object goes here
@@ -32,4 +31,3 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-export {storage};

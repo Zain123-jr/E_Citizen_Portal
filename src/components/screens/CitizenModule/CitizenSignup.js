@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {ScrollView} from 'react-native';
 import {useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
-import ImagePicker, {openPicker} from 'react-native-image-crop-picker';
 
 import {
   View,
@@ -16,7 +15,6 @@ import {
 } from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import imgPlaceHolder from '../../../assets/defualt-Avatar.png';
 import COLORS from '../../consts/Colors';
 import '../../../../FirebaseConfig';
 import '@react-native-firebase/firestore';
@@ -24,7 +22,6 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 const CitizenSignup = ({navigation}) => {
-  const [image, setImage] = useState(null);
   const [fullname, setFullname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -39,9 +36,7 @@ const CitizenSignup = ({navigation}) => {
 
   const Signup = async () => {
     //to send citizen data into firestore
-    if (image == null) {
-      alert('Select Image');
-    } else if (fullname == '') {
+    if (fullname == '') {
       alert('Enter Full Name');
     } else if (email == '') {
       alert('Enter Email');
@@ -98,19 +93,6 @@ const CitizenSignup = ({navigation}) => {
     }
   };
 
-  const pickImage = async () => {
-    try {
-      const image = await ImagePicker.openPicker({
-        width: 300,
-        height: 400,
-        cropping: true,
-      });
-      setImage(image.path);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -122,24 +104,6 @@ const CitizenSignup = ({navigation}) => {
             <Text style={styles.description}>
               Please provide all required details to register
             </Text>
-
-            <View style={{flex: 1, alignItems: 'center'}}>
-              <View style={styles.imgContainer}>
-                <Image
-                  style={styles.img}
-                  source={image ? {uri: image} : imgPlaceHolder}
-                />
-                <TouchableOpacity
-                  onPress={pickImage}
-                  style={{alignItems: 'flex-end', top: 5, right: 5}}>
-                  <MaterialCommunityIcons
-                    name="plus-circle"
-                    size={30}
-                    color={COLORS.white}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
 
             <View style={{flexDirection: 'row'}}>
               <TextInput
