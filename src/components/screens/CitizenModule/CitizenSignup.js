@@ -11,7 +11,6 @@ import {
   ImageBackground,
   TextInput,
   TouchableOpacity,
-  Image,
 } from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -60,8 +59,6 @@ const CitizenSignup = ({navigation}) => {
         .add({
           fullname: fullname,
           email: email,
-          password: password,
-          confirmPassword: confirmPassword,
           dob: dob,
           gender: gender,
           mobile: mobile,
@@ -93,6 +90,135 @@ const CitizenSignup = ({navigation}) => {
     }
   };
 
+  const handleFullnameChange = value => {
+    setFullname(value);
+  };
+  const validateFullname = () => {
+    const regex = /^[a-zA-Z\s]*$/;
+    if (!fullname.match(regex)) {
+      return 'Special Characters Not Allowed';
+    }
+    return '';
+  };
+  const fullnameError = validateFullname();
+
+  const handleEmailChange = value => {
+    setEmail(value);
+  };
+  const validateEmail = () => {
+    if (!email) {
+      return '';
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return 'Invalid email format';
+    }
+    return '';
+  };
+  const emailError = validateEmail();
+
+  const handlePasswordChange = value => {
+    setPassword(value);
+  };
+  const validatePassword = () => {
+    if (!password) {
+      return '';
+    }
+    const passwordRegex =
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/;
+    if (!passwordRegex.test(password)) {
+      return 'Invalid Password Format';
+    }
+    return '';
+  };
+  const passwordError = validatePassword();
+
+  const handleConfirmPasswordChange = value => {
+    setConfirmPassword(value);
+  };
+  const validateConfirmPassword = () => {
+    if (confirmPassword !== password) {
+      return 'Passwords do not match';
+    }
+    return '';
+  };
+  const confirmPasswordError = validateConfirmPassword();
+
+  const handleDobChange = value => {
+    setDob(value);
+  };
+  const validateDob = () => {
+    if (!dob) {
+      return '';
+    }
+    const dobRegex = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
+    if (!dobRegex.test(dob)) {
+      return 'Invalid date of birth format (DD/MM/YYYY)';
+    }
+  };
+  const dobError = validateDob();
+
+  const handleGenderChange = value => {
+    setGender(value);
+  };
+  const validateGender = () => {
+    if (!gender) {
+      return '';
+    } else if (
+      gender.toLowerCase() !== 'male' &&
+      gender.toLowerCase() !== 'female'
+    ) {
+      return 'Invalid gender';
+    }
+    return '';
+  };
+  const genderError = validateGender();
+
+  const handleMobileNumberChange = value => {
+    setMobile(value);
+  };
+  const validateMobileNumber = () => {
+    if (!mobile) {
+      return '';
+    }
+    const mobileNumberRegex = /^[0-9]{11}$/;
+    if (!mobileNumberRegex.test(mobile)) {
+      return 'Invalid mobile number';
+    }
+    return '';
+  };
+  const mobileNumberError = validateMobileNumber();
+
+  const handleAddressChange = value => {
+    setAddressLine(value);
+  };
+  const validateAddress = () => {
+    if (!addressline) {
+      return '';
+    }
+    if (addressline.length < 5) {
+      return 'Address must be at least 5 characters long';
+    }
+    return '';
+  };
+  const addressError = validateAddress();
+
+  const handleCnicChange = value => {
+    setCnic(value);
+  };
+
+  const validateCnic = () => {
+    if (!cnic) {
+      return '';
+    }
+    const cnicRegex = /^(\d{5})-?(\d{7})-?(\d{1})$/;
+    if (!cnicRegex.test(cnic)) {
+      return 'Invalid CNIC number';
+    }
+    return '';
+  };
+  const cnicError = validateCnic();
+
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -112,8 +238,11 @@ const CitizenSignup = ({navigation}) => {
                 placeholderTextColor="white"
                 autoCapitalize="none"
                 value={fullname}
-                onChangeText={setFullname}
+                onChangeText={handleFullnameChange}
               />
+              {fullnameError ? (
+                <Text style={styles.validationerror}>{fullnameError}</Text>
+              ) : null}
               <MaterialCommunityIcons
                 name="account-circle-outline"
                 size={30}
@@ -124,11 +253,14 @@ const CitizenSignup = ({navigation}) => {
             <View style={{flexDirection: 'row'}}>
               <TextInput
                 style={styles.input}
-                placeholder="Email: (Hello123@gmail.com)"
+                placeholder="Email: (Hello@gmail.com)"
                 placeholderTextColor="white"
                 value={email}
-                onChangeText={setEmail}
+                onChangeText={handleEmailChange}
               />
+              {emailError ? (
+                <Text style={styles.validationerror}>{emailError}</Text>
+              ) : null}
               <MaterialCommunityIcons
                 name="email-outline"
                 size={30}
@@ -143,8 +275,11 @@ const CitizenSignup = ({navigation}) => {
                 placeholderTextColor="white"
                 secureTextEntry={hidePassword}
                 value={password}
-                onChangeText={setPassword}
+                onChangeText={handlePasswordChange}
               />
+              {passwordError ? (
+                <Text style={styles.validationerror}>{passwordError}</Text>
+              ) : null}
               <View style={styles.eyeIconContainer}>
                 <TouchableOpacity
                   onPress={() => setHidePassword(!hidePassword)}>
@@ -169,7 +304,7 @@ const CitizenSignup = ({navigation}) => {
                 placeholderTextColor="white"
                 secureTextEntry={hidePassword1}
                 value={confirmPassword}
-                onChangeText={setConfirmPassword}
+                onChangeText={handleConfirmPasswordChange}
               />
               <View style={styles.eyeIconContainer}>
                 <TouchableOpacity
@@ -181,6 +316,11 @@ const CitizenSignup = ({navigation}) => {
                   />
                 </TouchableOpacity>
               </View>
+              {confirmPasswordError ? (
+                <Text style={styles.validationerror}>
+                  {confirmPasswordError}
+                </Text>
+              ) : null}
               <MaterialCommunityIcons
                 name="lock-outline"
                 size={30}
@@ -191,12 +331,15 @@ const CitizenSignup = ({navigation}) => {
             <View style={{flexDirection: 'row'}}>
               <TextInput
                 style={styles.input}
-                placeholder="Date of Birth: (DD-MM-YY)"
+                placeholder="Date of Birth: (DD/MM/YY)"
                 placeholderTextColor="white"
                 keyboardType="numeric"
                 value={dob}
-                onChangeText={setDob}
+                onChangeText={handleDobChange}
               />
+              {dobError ? (
+                <Text style={styles.validationerror}>{dobError}</Text>
+              ) : null}
               <MaterialCommunityIcons
                 name="calendar-outline"
                 size={30}
@@ -215,7 +358,7 @@ const CitizenSignup = ({navigation}) => {
               }}>
               <Picker
                 selectedValue={gender}
-                onValueChange={setGender}
+                onValueChange={handleGenderChange}
                 style={{
                   left: 18,
                   top: 8,
@@ -233,7 +376,9 @@ const CitizenSignup = ({navigation}) => {
                   value="female"
                 />
               </Picker>
-
+              {genderError ? (
+                <Text style={styles.validationerror}>{genderError}</Text>
+              ) : null}
               <MaterialCommunityIcons
                 name="gender-male"
                 size={30}
@@ -248,8 +393,11 @@ const CitizenSignup = ({navigation}) => {
                 placeholderTextColor="white"
                 keyboardType="numeric"
                 value={mobile}
-                onChangeText={setMobile}
+                onChangeText={handleMobileNumberChange}
               />
+              {mobileNumberError ? (
+                <Text style={styles.validationerror}>{mobileNumberError}</Text>
+              ) : null}
               <MaterialCommunityIcons
                 name="phone-outline"
                 size={30}
@@ -263,8 +411,11 @@ const CitizenSignup = ({navigation}) => {
                 placeholder="Address Line"
                 placeholderTextColor="white"
                 value={addressline}
-                onChangeText={setAddressLine}
+                onChangeText={handleAddressChange}
               />
+              {addressError ? (
+                <Text style={styles.validationerror}>{addressError}</Text>
+              ) : null}
               <MaterialCommunityIcons
                 name="map-marker-outline"
                 size={30}
@@ -279,8 +430,11 @@ const CitizenSignup = ({navigation}) => {
                 placeholderTextColor="white"
                 keyboardType="numeric"
                 value={cnic}
-                onChangeText={setCnic}
+                onChangeText={handleCnicChange}
               />
+              {cnicError ? (
+                <Text style={styles.validationerror}>{cnicError}</Text>
+              ) : null}
               <MaterialCommunityIcons
                 name="id-card"
                 size={30}
@@ -439,5 +593,13 @@ const styles = StyleSheet.create({
 
   item: {
     fontSize: 14,
+  },
+
+  validationerror: {
+    color: 'red',
+    position: 'absolute',
+    top: 60,
+    fontWeight: '700',
+    fontSize: 13,
   },
 });
