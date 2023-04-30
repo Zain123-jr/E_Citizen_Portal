@@ -15,16 +15,86 @@ import {
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../../consts/Colors';
+import '../../../../../FirebaseConfig';
+import '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 const OICSignup = ({navigation}) => {
+  const [fullname, setFullname] = useState('');
+  const [badge, setBadge] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [dob, setDob] = useState('');
+  const [gender, setGender] = useState('');
+  const [mobile, setMobile] = useState('');
+  const [addressline, setAddressLine] = useState('');
+  const [cnic, setCnic] = useState('');
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePassword1, setHidePassword1] = useState(true);
-  const [hideBadge, setHideBadge] = useState(true);
+  // const [hideBadge, setHideBadge] = useState(true);
 
-  function Submit() {
-    alert('Officer Incharge Registered Successfully');
-    navigation.navigate('OICLogin');
-  }
+  const handleSignup = async () => {
+    //to send oic data into firestore
+    if (fullname == '') {
+      alert('Enter Full Name');
+    } else if (badge == '') {
+      alert('Enter Badge Number');
+    } else if (email == '') {
+      alert('Enter Email');
+    } else if (password == '') {
+      alert('Enter Password');
+    } else if (confirmPassword == '') {
+      alert('Enter Confirm Password');
+    } else if (dob == '') {
+      alert('Enter Date of Birth');
+    } else if (gender == '') {
+      alert('Select Gender');
+    } else if (mobile == '') {
+      alert('Enter Mobile Number');
+    } else if (addressline == '') {
+      alert('Enter Address');
+    } else if (cnic == '') {
+      alert('Enter CNIC');
+    } else {
+      firestore()
+        .collection('OIC')
+        .add({
+          fullname: fullname,
+          email: email,
+          password: password,
+          confirmPassword: confirmPassword,
+          dob: dob,
+          gender: gender,
+          mobile: mobile,
+          addressline: addressline,
+          cnic: cnic,
+        })
+        .then(() => {
+          alert('OIC Registered Successfully!');
+          navigation.navigate('OICLogin');
+        })
+        .catch(error => {
+          console.error(error);
+        });
+
+      auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          console.log('OIC is Added to Firebase!');
+        })
+        .catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            alert('That email address is already in use!');
+          }
+          if (error.code === 'auth/invalid-email') {
+            alert('That email address is invalid!');
+          }
+          console.error(error);
+        });
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -44,6 +114,8 @@ const OICSignup = ({navigation}) => {
                 placeholder="Full Name"
                 placeholderTextColor="white"
                 autoCapitalize="none"
+                value={fullname}
+                onChangeText={setFullname}
               />
               <MaterialCommunityIcons
                 name="account-circle-outline"
@@ -56,9 +128,16 @@ const OICSignup = ({navigation}) => {
                 style={styles.input}
                 placeholder="Badge No"
                 placeholderTextColor="white"
-                secureTextEntry={hideBadge}
+                // secureTextEntry={hideBadge}
+                value={badge}
+                onChangeText={setBadge}
               />
-              <View style={styles.eyeIconContainer}>
+              <MaterialCommunityIcons
+                name="police-badge-outline"
+                size={30}
+                style={styles.icon}
+              />
+              {/* <View style={styles.eyeIconContainer}>
                 <TouchableOpacity onPress={() => setHideBadge(!hideBadge)}>
                   <MaterialCommunityIcons
                     name={hideBadge ? 'eye-off-outline' : 'eye-outline'}
@@ -71,7 +150,7 @@ const OICSignup = ({navigation}) => {
                 name="police-badge-outline"
                 size={30}
                 style={styles.icon}
-              />
+              /> */}
             </View>
 
             <View style={{flexDirection: 'row'}}>
@@ -79,6 +158,8 @@ const OICSignup = ({navigation}) => {
                 style={styles.input}
                 placeholder="Email: (Hello123@gmail.com)"
                 placeholderTextColor="white"
+                value={email}
+                onChangeText={setEmail}
               />
               <MaterialCommunityIcons
                 name="email-outline"
@@ -93,6 +174,8 @@ const OICSignup = ({navigation}) => {
                 placeholder="Password: (Hello123#)"
                 placeholderTextColor="white"
                 secureTextEntry={hidePassword}
+                value={password}
+                onChangeText={setPassword}
               />
               <View style={styles.eyeIconContainer}>
                 <TouchableOpacity
@@ -117,6 +200,8 @@ const OICSignup = ({navigation}) => {
                 placeholder="Confirm Password: (Hello123#)"
                 placeholderTextColor="white"
                 secureTextEntry={hidePassword1}
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
               />
               <View style={styles.eyeIconContainer}>
                 <TouchableOpacity
@@ -141,6 +226,8 @@ const OICSignup = ({navigation}) => {
                 placeholder="Date of Birth: (DD-MM-YY)"
                 placeholderTextColor="white"
                 keyboardType="numeric"
+                value={dob}
+                onChangeText={setDob}
               />
               <MaterialCommunityIcons
                 name="calendar-outline"
@@ -159,6 +246,8 @@ const OICSignup = ({navigation}) => {
                 borderRightWidth: 0,
               }}>
               <Picker
+                selectedValue={gender}
+                onValueChange={setGender}
                 style={{
                   left: 18,
                   top: 8,
@@ -190,6 +279,8 @@ const OICSignup = ({navigation}) => {
                 placeholder="Mobile:"
                 placeholderTextColor="white"
                 keyboardType="numeric"
+                value={mobile}
+                onChangeText={setMobile}
               />
               <MaterialCommunityIcons
                 name="phone-outline"
@@ -203,6 +294,8 @@ const OICSignup = ({navigation}) => {
                 style={styles.input}
                 placeholder="Address Line"
                 placeholderTextColor="white"
+                value={addressline}
+                onChangeText={setAddressLine}
               />
               <MaterialCommunityIcons
                 name="map-marker-outline"
@@ -217,6 +310,8 @@ const OICSignup = ({navigation}) => {
                 placeholder="CNIC: (XXXXX-XXXXXXX-X)"
                 placeholderTextColor="white"
                 keyboardType="numeric"
+                value={cnic}
+                onChangeText={setCnic}
               />
               <MaterialCommunityIcons
                 name="id-card"
@@ -225,7 +320,7 @@ const OICSignup = ({navigation}) => {
               />
             </View>
 
-            <TouchableOpacity onPress={() => Submit()} style={styles.button}>
+            <TouchableOpacity onPress={handleSignup} style={styles.button}>
               <Text style={styles.buttonText}>Signup</Text>
             </TouchableOpacity>
 

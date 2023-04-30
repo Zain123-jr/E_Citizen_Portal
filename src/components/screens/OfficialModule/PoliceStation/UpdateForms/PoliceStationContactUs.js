@@ -1,6 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ScrollView} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
+import '../../../../../../FirebaseConfig';
+import '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 
 import {
   View,
@@ -12,11 +15,41 @@ import {
 } from 'react-native';
 import COLORS from '../../../../consts/Colors';
 
-const PoliceStationContactUs = ({navigation}) => {
+const ContactUs = ({navigation}) => {
+  const [reason, setReason] = useState('');
+  const [mobile, setMobile] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
 
-  function Submit(){
-    alert('Feedback Submit Successfully')
-  }
+  const handleReport = async () => {
+    //to send report about app into firestore
+    if (reason == '') {
+      alert('Select Reason');
+    } else if (mobile == '') {
+      alert('Enter Mobile');
+    } else if (email == '') {
+      alert('Enter Email');
+    } else if (message == '') {
+      alert('Enter Details of Reason');
+    } else {
+      firestore()
+        .collection('PoliceStationReport')
+        .add({
+          reason: reason,
+          mobile: mobile,
+          email: email,
+          message: message,
+        })
+        .then(() => {
+          alert(
+            'Thank You! Your Report is Submit Successfully, We Will Contact Soon!',
+          );
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -36,7 +69,9 @@ const PoliceStationContactUs = ({navigation}) => {
                 left: -18,
                 top: 8,
                 color: 'black',
-              }}>
+              }}
+              selectedValue={reason}
+              onValueChange={setReason}>
               <Picker.Item style={styles.item} label="Pick a Reason" value="" />
               <Picker.Item
                 style={styles.item}
@@ -70,15 +105,8 @@ const PoliceStationContactUs = ({navigation}) => {
               placeholder="Mobile:"
               placeholderTextColor="black"
               keyboardType="numeric"
-            />
-          </View>
-
-          <View style={{flexDirection: 'row'}}>
-            <TextInput
-              style={styles.input}
-              placeholder="CNIC"
-              placeholderTextColor="black"
-              keyboardType="numeric"
+              value={mobile}
+              onChangeText={setMobile}
             />
           </View>
 
@@ -87,6 +115,8 @@ const PoliceStationContactUs = ({navigation}) => {
               style={styles.input}
               placeholder="Email"
               placeholderTextColor="black"
+              value={email}
+              onChangeText={setEmail}
             />
           </View>
 
@@ -97,12 +127,12 @@ const PoliceStationContactUs = ({navigation}) => {
               placeholderTextColor="black"
               multiline={true}
               numberOfLines={6}
+              value={message}
+              onChangeText={setMessage}
             />
           </View>
 
-          <TouchableOpacity
-            onPress={() => Submit()}
-            style={styles.button}>
+          <TouchableOpacity onPress={handleReport} style={styles.button}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </View>
@@ -111,7 +141,7 @@ const PoliceStationContactUs = ({navigation}) => {
   );
 };
 
-export default PoliceStationContactUs;
+export default ContactUs;
 
 const styles = StyleSheet.create({
   container: {

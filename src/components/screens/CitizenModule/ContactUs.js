@@ -22,8 +22,8 @@ const ContactUs = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleFeedback = async () => {
-    //to send feedback into firestore
+  const handleReport = async () => {
+    //to send report about app into firestore
     if (reason == '') {
       alert('Select Reason');
     } else if (mobile == '') {
@@ -36,7 +36,7 @@ const ContactUs = ({navigation}) => {
       alert('Enter Details of Reason');
     } else {
       firestore()
-        .collection('CitizenFeedback')
+        .collection('CitizenReport')
         .add({
           reason: reason,
           mobile: mobile,
@@ -45,7 +45,7 @@ const ContactUs = ({navigation}) => {
           message: message,
         })
         .then(() => {
-          alert('Your Feedback is Submit Successfully');
+          alert('Thank You! Your Report is Submit Successfully, We Will Contact Soon!');
         })
         .catch(error => {
           console.error(error);
@@ -144,7 +144,7 @@ const ContactUs = ({navigation}) => {
             />
           </View>
 
-          <TouchableOpacity onPress={handleFeedback} style={styles.button}>
+          <TouchableOpacity onPress={handleReport} style={styles.button}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </View>

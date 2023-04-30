@@ -14,16 +14,70 @@ import {
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../../consts/Colors';
+import '../../../../../FirebaseConfig';
+import '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 const PoliceStationSignup = ({navigation}) => {
+  const [fullname, setFullname] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [addressline, setAddressLine] = useState('');
+  const [mobile, setMobile] = useState('');
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePassword1, setHidePassword1] = useState(true);
-  // const [hideBadge, setHideBadge] = useState(true);
 
-  function Submit() {
-    alert('Station Registered Successfully');
-    navigation.navigate('PoliceStationLogin');
-  }
+  const handleSignup = async () => {
+    //to send police Station data into firestore
+    if (fullname == '') {
+      alert('Enter Full Name');
+    } else if (email == '') {
+      alert('Enter Email');
+    } else if (password == '') {
+      alert('Enter Password');
+    } else if (confirmPassword == '') {
+      alert('Enter Confirm Password');
+    } else if (addressline == '') {
+      alert('Enter Address');
+    } else if (mobile == '') {
+      alert('Enter Number');
+    } else {
+      firestore()
+        .collection('Police HQ')
+        .add({
+          fullname: fullname,
+          email: email,
+          password: password,
+          confirmPassword: confirmPassword,
+          addressline: addressline,
+          mobile: mobile,
+        })
+        .then(() => {
+          alert('Station Registered Successfully!');
+          navigation.navigate('PoliceStationLogin');
+        })
+        .catch(error => {
+          console.error(error);
+        });
+
+      auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          console.log('Station is Added to Firebase!');
+        })
+        .catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            alert('That email address is already in use!');
+          }
+          if (error.code === 'auth/invalid-email') {
+            alert('That email address is invalid!');
+          }
+          console.error(error);
+        });
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -40,32 +94,11 @@ const PoliceStationSignup = ({navigation}) => {
             <View style={{flexDirection: 'row'}}>
               <TextInput
                 style={styles.input}
-                placeholder="Station ID"
-                placeholderTextColor="white"
-                // secureTextEntry={hideBadge}
-              />
-              {/* <View style={styles.eyeIconContainer}>
-                    <TouchableOpacity onPress={() => setHideBadge(!hideBadge)}>
-                      <MaterialCommunityIcons
-                        name={hideBadge ? 'eye-off-outline' : 'eye-outline'}
-                        size={25}
-                        color={hideBadge ? 'white' : 'white'}
-                      />
-                    </TouchableOpacity>
-                  </View> */}
-              <MaterialCommunityIcons
-                name="id-card"
-                size={30}
-                style={styles.icon}
-              />
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-              <TextInput
-                style={styles.input}
                 placeholder="Station Name"
                 placeholderTextColor="white"
                 autoCapitalize="none"
+                value={fullname}
+                onChangeText={setFullname}
               />
               <MaterialCommunityIcons
                 name="account-circle-outline"
@@ -77,9 +110,26 @@ const PoliceStationSignup = ({navigation}) => {
             <View style={{flexDirection: 'row'}}>
               <TextInput
                 style={styles.input}
+                placeholder="Station Email"
+                placeholderTextColor="white"
+                value={email}
+                onChangeText={setEmail}
+              />
+              <MaterialCommunityIcons
+                name="email-outline"
+                size={30}
+                style={styles.icon}
+              />
+            </View>
+
+            <View style={{flexDirection: 'row'}}>
+              <TextInput
+                style={styles.input}
                 placeholder="Password: (Hello123#)"
                 placeholderTextColor="white"
                 secureTextEntry={hidePassword}
+                value={password}
+                onChangeText={setPassword}
               />
               <View style={styles.eyeIconContainer}>
                 <TouchableOpacity
@@ -104,6 +154,8 @@ const PoliceStationSignup = ({navigation}) => {
                 placeholder="Confirm Password: (Hello123#)"
                 placeholderTextColor="white"
                 secureTextEntry={hidePassword1}
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
               />
               <View style={styles.eyeIconContainer}>
                 <TouchableOpacity
@@ -127,6 +179,8 @@ const PoliceStationSignup = ({navigation}) => {
                 style={styles.input}
                 placeholder="Station Address"
                 placeholderTextColor="white"
+                value={addressline}
+                onChangeText={setAddressLine}
               />
               <MaterialCommunityIcons
                 name="map-marker-outline"
@@ -141,6 +195,8 @@ const PoliceStationSignup = ({navigation}) => {
                 placeholder="Station Phone/Landline Number:"
                 placeholderTextColor="white"
                 keyboardType="numeric"
+                value={mobile}
+                onChangeText={setMobile}
               />
               <MaterialCommunityIcons
                 name="phone-outline"
@@ -149,7 +205,7 @@ const PoliceStationSignup = ({navigation}) => {
               />
             </View>
 
-            <TouchableOpacity onPress={() => Submit()} style={styles.button}>
+            <TouchableOpacity onPress={handleSignup} style={styles.button}>
               <Text style={styles.buttonText}>Signup</Text>
             </TouchableOpacity>
 

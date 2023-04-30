@@ -8,15 +8,22 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {useNavigation} from '@react-navigation/native';
 import COLORS from './Colors';
 import imgPlaceHolder from '../../assets/defualt-Avatar.png';
+import '../../../FirebaseConfig';
+import auth from '@react-native-firebase/auth';
 
 const PSCustomDrawer = props => {
   const [profile, setProfile] = useState(null);
   const navigation = useNavigation();
 
-  function Logout() {
-    alert('Logout');
-    navigation.navigate('PoliceStationLogin');
-  }
+  const handleLogout = async () => {
+    try {
+      await auth().signOut();
+      alert('Logout Successfully');
+      navigation.navigate('PoliceStationLogin');
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
 
   return (
     <View style={{flex: 1}}>
@@ -48,7 +55,7 @@ const PSCustomDrawer = props => {
           flexDirection: 'row',
           alignItems: 'center',
         }}>
-        <TouchableOpacity onPress={() => Logout()}>
+        <TouchableOpacity onPress={handleLogout}>
           <View style={{flexDirection: 'row'}}>
             <MaterialCommunityIcons name="logout" size={22} color="grey" />
             <Text

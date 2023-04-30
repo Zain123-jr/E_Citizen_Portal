@@ -4,7 +4,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import COLORS from '../consts/Colors';
 import PoliceStationHomepage from '../screens/OfficialModule/PoliceStation/PoliceStationHomepage';
 import PoliceStationProfile from '../screens/OfficialModule/PoliceStation/PoliceStationProfile';
-import PoliceStationChangePassword from '../screens/OfficialModule/PoliceStation/UpdateForms/PoliceStationChangePassword';
 import PoliceStationContactUs from '../screens/OfficialModule/PoliceStation/UpdateForms/PoliceStationContactUs';
 import PSCustomDrawer from '../consts/PSCustomDrawer';
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -69,49 +68,6 @@ const PoliceStationDrawer = () => {
           drawerIcon: ({color}) => (
             <MaterialCommunityIcons
               name="account-circle-outline"
-              size={22}
-              color={color}
-            />
-          ),
-          drawerLabelStyle: {marginLeft: -20, fontWeight: '700', fontSize: 16},
-
-          headerRight: () => (
-            <View style={{flexDirection: 'row'}}>
-              <TouchableOpacity style={{left: -20, paddingRight: 20}}>
-                <MaterialCommunityIcons
-                  name="bell-ring-outline"
-                  size={28}
-                  color="#fff"
-                />
-              </TouchableOpacity>
-
-              <TouchableOpacity style={{left: -20}}>
-                <MaterialCommunityIcons
-                  name="email-outline"
-                  size={28}
-                  color="#fff"
-                />
-              </TouchableOpacity>
-            </View>
-          ),
-          headerStyle: {
-            height: 100,
-            borderTopLeftRadius: 50,
-            borderBottomRightRadius: 50,
-            backgroundColor: COLORS.primary,
-            shadowColor: '#000',
-            elevation: 25,
-          },
-        }}
-      />
-
-      <Drawer.Screen
-        name="Police HQ ChangePassword"
-        component={PoliceStationChangePassword}
-        options={{
-          drawerIcon: ({color}) => (
-            <MaterialCommunityIcons
-              name="lock-outline"
               size={22}
               color={color}
             />

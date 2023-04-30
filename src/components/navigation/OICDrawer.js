@@ -3,7 +3,6 @@ import {View, TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../consts/Colors';
 import OICHomepage from '../screens/OfficialModule/OIC/OICHomepage';
-import OICChangePassword from '../screens/OfficialModule/OIC/UpdateForms/OICChangePassword';
 import OICProfile from '../screens/OfficialModule/OIC/UpdateForms/OICProfile';
 import OICContactUs from '../screens/OfficialModule/OIC/UpdateForms/OICContactUs';
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -69,49 +68,6 @@ const OICDrawer = () => {
           drawerIcon: ({color}) => (
             <MaterialCommunityIcons
               name="account-circle-outline"
-              size={22}
-              color={color}
-            />
-          ),
-          drawerLabelStyle: {marginLeft: -20, fontWeight: '700', fontSize: 16},
-
-          headerRight: () => (
-            <View style={{flexDirection: 'row'}}>
-              <TouchableOpacity style={{left: -20, paddingRight: 20}}>
-                <MaterialCommunityIcons
-                  name="bell-ring-outline"
-                  size={28}
-                  color="#fff"
-                />
-              </TouchableOpacity>
-
-              <TouchableOpacity style={{left: -20}}>
-                <MaterialCommunityIcons
-                  name="email-outline"
-                  size={28}
-                  color="#fff"
-                />
-              </TouchableOpacity>
-            </View>
-          ),
-          headerStyle: {
-            height: 100,
-            borderTopLeftRadius: 50,
-            borderBottomRightRadius: 50,
-            backgroundColor: COLORS.primary,
-            shadowColor: '#000',
-            elevation: 25,
-          },
-        }}
-      />
-
-      <Drawer.Screen
-        name="OIC ChangePassword"
-        component={OICChangePassword}
-        options={{
-          drawerIcon: ({color}) => (
-            <MaterialCommunityIcons
-              name="lock-outline"
               size={22}
               color={color}
             />

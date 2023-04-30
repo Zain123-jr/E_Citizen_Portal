@@ -1,6 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ScrollView} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
+import '../../../../../../FirebaseConfig';
+import '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 
 import {
   View,
@@ -13,8 +16,44 @@ import {
 import COLORS from '../../../../consts/Colors';
 
 const OICContactUs = ({navigation}) => {
-  const handleSubmit = () => {
-    alert('Form Submit Successfully');
+  const [reason, setReason] = useState('');
+  const [mobile, setMobile] = useState('');
+  const [cnic, setCnic] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleReport = async () => {
+    //to send report about app into firestore
+
+    if (reason == '') {
+      alert('Select Reason');
+    } else if (mobile == '') {
+      alert('Enter Mobile');
+    } else if (cnic == '') {
+      alert('Enter CNIC');
+    } else if (email == '') {
+      alert('Enter Email');
+    } else if (message == '') {
+      alert('Enter Details of Reason');
+    } else {
+      firestore()
+        .collection('OICReport')
+        .add({
+          reason: reason,
+          mobile: mobile,
+          cnic: cnic,
+          email: email,
+          message: message,
+        })
+        .then(() => {
+          alert(
+            'Thank You! Your Report is Submit Successfully, We Will Contact Soon!',
+          );
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
   };
 
   return (
@@ -31,6 +70,8 @@ const OICContactUs = ({navigation}) => {
               borderRightWidth: 0,
             }}>
             <Picker
+              selectedValue={reason}
+              onValueChange={setReason}
               style={{
                 left: -18,
                 top: 8,
@@ -69,6 +110,8 @@ const OICContactUs = ({navigation}) => {
               placeholder="Mobile:"
               placeholderTextColor="black"
               keyboardType="numeric"
+              value={mobile}
+              onChangeText={setMobile}
             />
           </View>
 
@@ -78,6 +121,8 @@ const OICContactUs = ({navigation}) => {
               placeholder="CNIC"
               placeholderTextColor="black"
               keyboardType="numeric"
+              value={cnic}
+              onChangeText={setCnic}
             />
           </View>
 
@@ -86,6 +131,8 @@ const OICContactUs = ({navigation}) => {
               style={styles.input}
               placeholder="Email"
               placeholderTextColor="black"
+              value={email}
+              onChangeText={setEmail}
             />
           </View>
 
@@ -96,10 +143,12 @@ const OICContactUs = ({navigation}) => {
               placeholderTextColor="black"
               multiline={true}
               numberOfLines={6}
+              value={message}
+              onChangeText={setMessage}
             />
           </View>
 
-          <TouchableOpacity onPress={handleSubmit} style={styles.button}>
+          <TouchableOpacity onPress={handleReport} style={styles.button}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </View>

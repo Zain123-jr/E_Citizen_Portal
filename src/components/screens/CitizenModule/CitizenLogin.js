@@ -32,7 +32,7 @@ const CitizenLogin = ({navigation}) => {
       auth()
         .signInWithEmailAndPassword(email, password)
         .then(() => {
-          alert('Login Successfull');
+          alert('Login Successful');
           navigation.navigate('CitizenHome');
         })
         .catch(error => {
@@ -113,9 +113,7 @@ const CitizenLogin = ({navigation}) => {
             </View>
 
             <TouchableOpacity
-              onPress={() => {
-                handleLogin();
-              }}
+              onPress={handleLogin}
               style={styles.button}>
               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>

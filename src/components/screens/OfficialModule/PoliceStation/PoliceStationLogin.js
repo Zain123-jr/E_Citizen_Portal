@@ -14,14 +14,43 @@ import {
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../../consts/Colors';
+import '../../../../../FirebaseConfig';
+import auth from '@react-native-firebase/auth';
 
 const PoliceStationLogin = ({navigation}) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [hidePassword, setHidePassword] = useState(true);
 
-  function Submit() {
-    alert('Login Successfully');
-    navigation.navigate('PoliceStationDrawer');
-  }
+  const handleLogin = async () => {
+    //to autheticate police station
+    if (email == '') {
+      alert('Enter Email');
+    } else if (password == '') {
+      alert('Enter Password');
+    } else {
+      auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          alert('Login Successful');
+          navigation.navigate('PoliceStationHomepage');
+        })
+        .catch(error => {
+          alert(error);
+        });
+    }
+  };
+
+  const handleResetPassword = async () => {
+    auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        alert('Password reset email sent successfully');
+      })
+      .catch(error => {
+        alert('Error sending password reset email:', error);
+      });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -36,12 +65,14 @@ const PoliceStationLogin = ({navigation}) => {
             <View style={{flexDirection: 'row'}}>
               <TextInput
                 style={styles.input}
-                placeholder="Station ID"
+                placeholder="Station Email"
                 placeholderTextColor="white"
                 autoCapitalize="none"
+                value={email}
+                onChangeText={setEmail}
               />
               <MaterialCommunityIcons
-                name="id-card"
+                name="email-outline"
                 size={30}
                 style={styles.icon}
               />
@@ -53,6 +84,8 @@ const PoliceStationLogin = ({navigation}) => {
                 placeholder="Password"
                 placeholderTextColor="white"
                 secureTextEntry={hidePassword}
+                value={password}
+                onChangeText={setPassword}
               />
               <View style={styles.eyeIconContainer}>
                 <TouchableOpacity
@@ -71,7 +104,15 @@ const PoliceStationLogin = ({navigation}) => {
               />
             </View>
 
-            <TouchableOpacity onPress={() => Submit()} style={styles.button}>
+            <View style={{flex: 1}}>
+              <TouchableOpacity onPress={handleResetPassword}>
+                <Text style={{fontSize: 18, color: 'white', fontWeight: '700'}}>
+                  Forget Password ?
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity onPress={handleLogin} style={styles.button}>
               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
 

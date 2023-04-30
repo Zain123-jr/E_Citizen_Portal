@@ -54,7 +54,7 @@ const CustomDrawer = props => {
           flexDirection: 'row',
           alignItems: 'center',
         }}>
-        <TouchableOpacity onPress={() => handleLogout()}>
+        <TouchableOpacity onPress={handleLogout}>
           <View style={{flexDirection: 'row'}}>
             <MaterialCommunityIcons name="logout" size={22} color="grey" />
             <Text
