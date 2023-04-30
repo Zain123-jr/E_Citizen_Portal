@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {ScrollView} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
+import '../../../../FirebaseConfig';
+import '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 
 import {
   View,
@@ -13,15 +16,41 @@ import {
 import COLORS from '../../consts/Colors';
 
 const ContactUs = ({navigation}) => {
+  const [reason, setReason] = useState('');
+  const [mobile, setMobile] = useState('');
+  const [cnic, setCnic] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
 
-  const [reason, setReason] = useState('')
-  const [mobile, setMobile] = useState('')
-  const [cnic, setCnic] = useState('')
-  const [email, setEmail] = useState('')
-  const [message, setMessage] = useState('')
-
-  const handleSubmit = () => {
-    alert('Thanks! Your Feedback is Submitted ');
+  const handleFeedback = async () => {
+    //to send feedback into firestore
+    if (reason == '') {
+      alert('Select Reason');
+    } else if (mobile == '') {
+      alert('Enter Mobile');
+    } else if (cnic == '') {
+      alert('Enter CNIC');
+    } else if (email == '') {
+      alert('Enter Email');
+    } else if (message == '') {
+      alert('Enter Details of Reason');
+    } else {
+      firestore()
+        .collection('CitizenFeedback')
+        .add({
+          reason: reason,
+          mobile: mobile,
+          cnic: cnic,
+          email: email,
+          message: message,
+        })
+        .then(() => {
+          alert('Your Feedback is Submit Successfully');
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
   };
 
   return (
@@ -112,11 +141,10 @@ const ContactUs = ({navigation}) => {
               numberOfLines={6}
               value={message}
               onChangeText={setMessage}
-              
             />
           </View>
 
-          <TouchableOpacity onPress={handleSubmit} style={styles.button}>
+          <TouchableOpacity onPress={handleFeedback} style={styles.button}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </View>

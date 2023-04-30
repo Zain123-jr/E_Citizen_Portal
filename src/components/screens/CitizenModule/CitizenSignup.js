@@ -287,7 +287,11 @@ const CitizenSignup = ({navigation}) => {
               />
             </View>
 
-            <TouchableOpacity onPress={()=>{Signup();}} style={styles.button}>
+            <TouchableOpacity
+              onPress={() => {
+                Signup();
+              }}
+              style={styles.button}>
               <Text style={styles.buttonText}>Signup</Text>
             </TouchableOpacity>
 

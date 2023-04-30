@@ -16,9 +16,11 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Picker} from '@react-native-picker/picker';
 
+
 const Personal = ({navigation, route}) => {
   const [profile, setProfile] = useState(null);
-
+  const [fullname, setfullName] = useState(null);
+ 
   const imagePick = () => {
     ImagePicker.openPicker({
       width: 400,
@@ -58,6 +60,8 @@ const Personal = ({navigation, route}) => {
                   style={styles.input}
                   placeholder="Full Name"
                   placeholderTextColor={COLORS.gender}
+                  value={fullname}
+                  onChangeText={setfullName}
                 />
                 <MaterialCommunityIcons
                   name="account-circle-outline"
@@ -79,8 +83,7 @@ const Personal = ({navigation, route}) => {
                 />
               </View>
 
-              <TouchableOpacity
-                onPress={() => navigation.navigate('CitizenHome')}
+              <TouchableOpacity               
                 style={styles.button}>
                 <Text style={styles.buttonText}>Update</Text>
               </TouchableOpacity>

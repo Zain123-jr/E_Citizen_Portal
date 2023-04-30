@@ -2,16 +2,14 @@ import React, {useEffect, useState} from 'react';
 import {Image, ImageBackground} from 'react-native';
 import {View, StyleSheet, Text} from 'react-native';
 import COLORS from '../consts/Colors';
-import '../../../FirebaseConfig';
-import Auth from '@react-native-firebase/auth';
+// import '../../../FirebaseConfig';
+// import firebase from 'firebase/compat';
+// import auth from '@react-native-firebase/auth';
 
 const Splash = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
-      Auth().onAuthStateChanged(function (user) {
-        const routeName = user !== null ? 'CitizenHome' : 'CitizenSignup';
-        navigation.navigate(routeName);
-      });
+      navigation.navigate('CitizenPortal');
     }, 2000);
   }, []);
 

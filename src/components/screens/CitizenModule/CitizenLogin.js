@@ -41,6 +41,17 @@ const CitizenLogin = ({navigation}) => {
     }
   };
 
+  const handleResetPassword = async () => {
+    auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        alert('Password reset email sent successfully');
+      })
+      .catch(error => {
+        alert('Error sending password reset email:', error);
+      });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -93,7 +104,19 @@ const CitizenLogin = ({navigation}) => {
               />
             </View>
 
-            <TouchableOpacity onPress={()=>{handleLogin()}} style={styles.button}>
+            <View style={{flex: 1}}>
+              <TouchableOpacity onPress={handleResetPassword}>
+                <Text style={{fontSize: 18, color: 'white', fontWeight: '700'}}>
+                  Forget Password ?
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity
+              onPress={() => {
+                handleLogin();
+              }}
+              style={styles.button}>
               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
 
