@@ -2,7 +2,7 @@ import React from 'react';
 import Officer from './OfficialStart';
 import OICDrawer from '../../navigation/OICDrawer';
 import OICViewComplaints from './OIC/OICViewComplains';
-import PoliceViewComplaints from './OIC/PoliceViewComplains';
+import PoliceViewComplaints from './PoliceStation/PoliceViewComplains';
 import PoliceStationDrawer from '../../navigation/PoliceStationDrawer';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import PoliceStationPersonal from './PoliceStation/PoliceStationPersonal';
