@@ -40,7 +40,7 @@ const OICHomepage = ({navigation}) => {
       </View>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate('OICViewComplaints')}
+        onPress={() => navigation.navigate('OICViewComplains')}
         style={styles.card}>
         <View>
           <Image
