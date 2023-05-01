@@ -25,7 +25,7 @@ const Signup = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [role, setRole] = useState('');
+  const [cnic, setCnic] = useState('');
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePassword1, setHidePassword1] = useState(true);
 
@@ -37,9 +37,10 @@ const Signup = ({navigation}) => {
       .add({
         fullname: fullname,
         email: email,
+        cnic: cnic,
       })
       .then(() => {
-        alert('User Registered Successfully!');
+        // alert('User Registered Successfully!');
         navigation.navigate('Login');
       })
       .catch(error => {
@@ -67,19 +68,20 @@ const Signup = ({navigation}) => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordPattern =
       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/;
+    const cnicPattern = /^(\d{5})-(\d{7})-(\d{1})$/gm;
 
     const isFullNameValid = fullNamePattern.test(fullname);
     const isEmailValid = emailPattern.test(email);
     const isPasswordValid = passwordPattern.test(password);
     const isConfirmPasswordValid = confirmPassword === password;
-    const isRoleValid = role;
+    const isCnicValid = cnicPattern.test(cnic);
 
     return (
       isFullNameValid &&
       isEmailValid &&
       isPasswordValid &&
       isConfirmPasswordValid &&
-      isRoleValid
+      isCnicValid
     );
   };
 
@@ -134,22 +136,20 @@ const Signup = ({navigation}) => {
   };
   const confirmPasswordError = validateConfirmPassword();
 
-  const handleRoleChange = value => {
-    setRole(value);
+  const handleCnicChange = value => {
+    setCnic(value);
   };
-  const validateRole = () => {
-    if (!role) {
-      return 'This Field is Mandatory';
-    } else if (
-      role.toLowerCase() !== 'citizen' &&
-      role.toLowerCase() !== 'oic' &&
-      role.toLowerCase() !== 'police hq'
-    ) {
+  const validateCnic = () => {
+    if (!cnic) {
       return '';
+    }
+    const cnicRegex = /^(\d{5})-(\d{7})-(\d{1})$/gm;
+    if (!cnicRegex.test(cnic)) {
+      return 'Invalid CNIC Format';
     }
     return '';
   };
-  const roleError = validateRole();
+  const cnicError = validateCnic();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -260,41 +260,19 @@ const Signup = ({navigation}) => {
               />
             </View>
 
-            <View
-              style={{
-                borderColor: '#ccc',
-                top: -6,
-                borderWidth: 2,
-                borderTopWidth: 0,
-                borderLeftWidth: 0,
-                borderRightWidth: 0,
-              }}>
-              <Picker
-                selectedValue={role}
-                onValueChange={handleRoleChange}
-                style={{
-                  left: 18,
-                  top: 8,
-                  color: 'white',
-                }}>
-                <Picker.Item style={styles.item} label="Select Role" value="" />
-                <Picker.Item
-                  style={styles.item}
-                  label="Citizen"
-                  value="citizen"
-                />
-                <Picker.Item style={styles.item} label="OIC" value="oic" />
-                <Picker.Item
-                  style={styles.item}
-                  label="Police HQ"
-                  value="police hq"
-                />
-              </Picker>
-              {roleError ? (
-                <Text style={styles.validationerror}>{roleError}</Text>
+            <View style={{flexDirection: 'row'}}>
+              <TextInput
+                style={styles.input}
+                placeholder="CNIC: (XXXXX-XXXXXXX-X)"
+                placeholderTextColor="white"
+                value={cnic}
+                onChangeText={handleCnicChange}
+              />
+              {cnicError ? (
+                <Text style={styles.validationerror}>{cnicError}</Text>
               ) : null}
               <MaterialCommunityIcons
-                name="account-outline"
+                name="id-card"
                 size={30}
                 style={styles.icon}
               />
@@ -401,7 +379,7 @@ const styles = StyleSheet.create({
     // backgroundColor: COLORS.primary,
     padding: 10,
     borderRadius: 5,
-    top:20,
+    top: 20,
     alignItems: 'center',
     marginTop: 15,
   },
