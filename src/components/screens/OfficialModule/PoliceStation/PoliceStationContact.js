@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -10,10 +10,51 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import COLORS from '../../../consts/Colors';
 
 const PoliceStationContact = ({navigation}) => {
+  const [addressline, setAddressLine] = useState('');
+  const [mobile, setMobile] = useState('');
 
-  function Submit(){
-    alert('Contact Update Successfully')
+  function Submit() {
+    alert('Contact Update Successfully');
   }
+
+  const isValidInput = () => {
+    const mobilePattern = /^[0-9]{11}$/;
+
+    const isMobileValid = mobilePattern.test(mobile);
+    const isAddressValid = addressline.trim().length > 0;
+
+    return isAddressValid && isMobileValid;
+  };
+
+  const handleMobileNumberChange = value => {
+    setMobile(value);
+  };
+
+  const handleAddressChange = value => {
+    setAddressLine(value);
+  };
+  const validateAddress = () => {
+    if (!addressline) {
+      return '';
+    }
+    if (addressline.length < 5) {
+      return 'Address must be at least 5 characters long';
+    }
+    return '';
+  };
+  const addressError = validateAddress();
+
+  const validateMobileNumber = () => {
+    if (!mobile) {
+      return '';
+    }
+    const mobileNumberRegex = /^[0-9]{11}$/;
+    if (!mobileNumberRegex.test(mobile)) {
+      return 'Invalid mobile number';
+    }
+    return '';
+  };
+  const mobileNumberError = validateMobileNumber();
 
   return (
     <View>
@@ -23,7 +64,12 @@ const PoliceStationContact = ({navigation}) => {
             style={styles.input}
             placeholder="Station Address"
             placeholderTextColor="black"
+            value={addressline}
+            onChangeText={handleAddressChange}
           />
+          {addressError ? (
+            <Text style={styles.validationerror}>{addressError}</Text>
+          ) : null}
           <MaterialCommunityIcons
             name="map-marker-outline"
             size={30}
@@ -37,7 +83,12 @@ const PoliceStationContact = ({navigation}) => {
             placeholder="Station Phone/Landline Number:"
             placeholderTextColor="black"
             keyboardType="numeric"
+            value={mobile}
+            onChangeText={handleMobileNumberChange}
           />
+          {mobileNumberError ? (
+            <Text style={styles.validationerror}>{mobileNumberError}</Text>
+          ) : null}
           <MaterialCommunityIcons
             name="phone-outline"
             size={30}
@@ -46,8 +97,12 @@ const PoliceStationContact = ({navigation}) => {
         </View>
 
         <TouchableOpacity
+          disabled={!isValidInput()}
           onPress={() => Submit()}
-          style={styles.button}>
+          style={[
+            styles.button,
+            {backgroundColor: isValidInput() ? COLORS.primary : '#ccc'},
+          ]}>
           <Text style={styles.buttonText}>Update</Text>
         </TouchableOpacity>
       </View>
@@ -86,7 +141,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: COLORS.primary,
+    // backgroundColor: COLORS.primary,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
@@ -103,5 +158,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 19,
     color: '#000',
+  },
+
+  validationerror: {
+    color: 'red',
+    position: 'absolute',
+    top: 60,
+    fontWeight: '700',
+    fontSize: 13,
   },
 });

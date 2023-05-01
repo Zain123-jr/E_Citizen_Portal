@@ -18,6 +18,8 @@ import {Picker} from '@react-native-picker/picker';
 
 const OICPersonal = ({navigation}) => {
   const [profile, setProfile] = useState(null);
+  const [fullname, setfullName] = useState('');
+  const [mobile, setMobile] = useState('');
 
   function Submit() {
     alert('Profile Update Successfully');
@@ -32,6 +34,46 @@ const OICPersonal = ({navigation}) => {
       setProfile(image.path);
     });
   };
+
+  const isValidInput = () => {
+    const fullNamePattern = /^[a-zA-Z\s]*$/;
+    const mobilePattern = /^[0-9]{11}$/;
+
+    const isFullNameValid = fullNamePattern.test(fullname);
+    const isMobileValid = mobilePattern.test(mobile);
+
+    return isFullNameValid && isMobileValid;
+  };
+
+  const handleFullnameChange = value => {
+    setfullName(value);
+  };
+  const validateFullname = () => {
+    if (!fullname) {
+      return '';
+    }
+    const regex = /^[a-zA-Z\s]*$/;
+    if (!fullname.match(regex)) {
+      return 'Special Characters Not Allowed';
+    }
+    return '';
+  };
+  const fullnameError = validateFullname();
+
+  const handleMobileNumberChange = value => {
+    setMobile(value);
+  };
+  const validateMobileNumber = () => {
+    if (!mobile) {
+      return '';
+    }
+    const mobileNumberRegex = /^[0-9]{11}$/;
+    if (!mobileNumberRegex.test(mobile)) {
+      return 'Invalid mobile number';
+    }
+    return '';
+  };
+  const mobileNumberError = validateMobileNumber();
 
   return (
     <SafeAreaView>
@@ -62,7 +104,12 @@ const OICPersonal = ({navigation}) => {
                   style={styles.input}
                   placeholder="Full Name"
                   placeholderTextColor={COLORS.gender}
+                  value={fullname}
+                  onChangeText={handleFullnameChange}
                 />
+                {fullnameError ? (
+                  <Text style={styles.validationerror}>{fullnameError}</Text>
+                ) : null}
                 <MaterialCommunityIcons
                   name="account-circle-outline"
                   size={30}
@@ -75,7 +122,14 @@ const OICPersonal = ({navigation}) => {
                   style={styles.input}
                   placeholder="Phone Number"
                   keyboardType="phone-pad"
+                  value={mobile}
+                  onChangeText={handleMobileNumberChange}
                 />
+                {mobileNumberError ? (
+                  <Text style={styles.validationerror}>
+                    {mobileNumberError}
+                  </Text>
+                ) : null}
                 <MaterialCommunityIcons
                   name="phone-outline"
                   size={30}
@@ -83,7 +137,13 @@ const OICPersonal = ({navigation}) => {
                 />
               </View>
 
-              <TouchableOpacity onPress={() => Submit()} style={styles.button}>
+              <TouchableOpacity
+                onPress={() => Submit()}
+                disabled={!isValidInput()}
+                style={[
+                  styles.button,
+                  {backgroundColor: isValidInput() ? COLORS.primary : '#ccc'},
+                ]}>
                 <Text style={styles.buttonText}>Update</Text>
               </TouchableOpacity>
             </View>
@@ -141,7 +201,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: COLORS.primary,
+    // backgroundColor: COLORS.primary,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
@@ -158,5 +218,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 19,
     color: '#000',
+  },
+
+  validationerror: {
+    color: 'red',
+    position: 'absolute',
+    top: 60,
+    fontWeight: '700',
+    fontSize: 13,
   },
 });

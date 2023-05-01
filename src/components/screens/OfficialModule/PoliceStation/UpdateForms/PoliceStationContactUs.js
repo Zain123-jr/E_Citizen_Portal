@@ -23,33 +23,76 @@ const ContactUs = ({navigation}) => {
 
   const handleReport = async () => {
     //to send report about app into firestore
-    if (reason == '') {
-      alert('Select Reason');
-    } else if (mobile == '') {
-      alert('Enter Mobile');
-    } else if (email == '') {
-      alert('Enter Email');
-    } else if (message == '') {
-      alert('Enter Details of Reason');
-    } else {
-      firestore()
-        .collection('PoliceStationReport')
-        .add({
-          reason: reason,
-          mobile: mobile,
-          email: email,
-          message: message,
-        })
-        .then(() => {
-          alert(
-            'Thank You! Your Report is Submit Successfully, We Will Contact Soon!',
-          );
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    }
+
+    firestore()
+      .collection('PoliceStationReport')
+      .add({
+        reason: reason,
+        mobile: mobile,
+        email: email,
+        message: message,
+      })
+      .then(() => {
+        alert(
+          'Thank You! Your Report is Submit Successfully, We Will Contact Soon!',
+        );
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
+
+  const isValidInput = () => {
+    const mobilePattern = /^[0-9]{11}$/;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const isReasonValid = reason.trim().length > 0;
+    const isMobileValid = mobilePattern.test(mobile);
+    const isEmailValid = emailPattern.test(email);
+
+    return isReasonValid && isMobileValid && isEmailValid;
+  };
+
+  const handleReasonChange = value => {
+    setReason(value);
+  };
+  const validateReason = () => {
+    if (!reason) {
+      return '';
+    }
+    return '';
+  };
+  const reasonError = validateReason();
+
+  const handleMobileNumberChange = value => {
+    setMobile(value);
+  };
+  const validateMobileNumber = () => {
+    if (!mobile) {
+      return '';
+    }
+    const mobileNumberRegex = /^[0-9]{11}$/;
+    if (!mobileNumberRegex.test(mobile)) {
+      return 'Invalid mobile number';
+    }
+    return '';
+  };
+  const mobileNumberError = validateMobileNumber();
+
+  const handleEmailChange = value => {
+    setEmail(value);
+  };
+  const validateEmail = () => {
+    if (!email) {
+      return '';
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return 'Invalid email format';
+    }
+    return '';
+  };
+  const emailError = validateEmail();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -71,7 +114,7 @@ const ContactUs = ({navigation}) => {
                 color: 'black',
               }}
               selectedValue={reason}
-              onValueChange={setReason}>
+              onValueChange={handleReasonChange}>
               <Picker.Item style={styles.item} label="Pick a Reason" value="" />
               <Picker.Item
                 style={styles.item}
@@ -97,6 +140,9 @@ const ContactUs = ({navigation}) => {
                 value="Mobile App Bug Report"
               />
             </Picker>
+            {reasonError ? (
+              <Text style={styles.validationerror}>{reasonError}</Text>
+            ) : null}
           </View>
 
           <View style={{flexDirection: 'row'}}>
@@ -106,8 +152,11 @@ const ContactUs = ({navigation}) => {
               placeholderTextColor="black"
               keyboardType="numeric"
               value={mobile}
-              onChangeText={setMobile}
+              onChangeText={handleMobileNumberChange}
             />
+            {mobileNumberError ? (
+              <Text style={styles.validationerror}>{mobileNumberError}</Text>
+            ) : null}
           </View>
 
           <View style={{flexDirection: 'row'}}>
@@ -116,14 +165,17 @@ const ContactUs = ({navigation}) => {
               placeholder="Email"
               placeholderTextColor="black"
               value={email}
-              onChangeText={setEmail}
+              onChangeText={handleEmailChange}
             />
+            {emailError ? (
+              <Text style={styles.validationerror}>{emailError}</Text>
+            ) : null}
           </View>
 
           <View style={{flexDirection: 'row'}}>
             <TextInput
               style={styles.messagebox}
-              placeholder="Enter Details Here!"
+              placeholder="Enter Details Here! (Optional)!"
               placeholderTextColor="black"
               multiline={true}
               numberOfLines={6}
@@ -132,7 +184,13 @@ const ContactUs = ({navigation}) => {
             />
           </View>
 
-          <TouchableOpacity onPress={handleReport} style={styles.button}>
+          <TouchableOpacity
+            disabled={!isValidInput()}
+            style={[
+              styles.button,
+              {backgroundColor: isValidInput() ? COLORS.primary : '#ccc'},
+            ]}
+            onPress={handleReport}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </View>
@@ -199,7 +257,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     marginTop: 15,
-    backgroundColor: COLORS.primary,
+    // backgroundColor: COLORS.primary,
   },
 
   buttonText: {
@@ -226,5 +284,13 @@ const styles = StyleSheet.create({
 
   item: {
     fontSize: 14,
+  },
+
+  validationerror: {
+    color: 'red',
+    position: 'absolute',
+    top: 60,
+    fontWeight: '700',
+    fontSize: 13,
   },
 });

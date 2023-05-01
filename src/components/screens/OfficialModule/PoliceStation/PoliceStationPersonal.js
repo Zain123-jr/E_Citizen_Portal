@@ -17,9 +17,11 @@ import {ScrollView} from 'react-native-gesture-handler';
 
 const PoliceStationPersonal = ({navigation}) => {
   const [profile, setProfile] = useState(null);
+  const [fullname, setfullName] = useState('');
+  const [email, setEmail] = useState('');
 
-  function Submit(){
-    alert('Profile Update Successfully')
+  function Submit() {
+    alert('Profile Update Successfully');
   }
 
   const imagePick = () => {
@@ -31,6 +33,46 @@ const PoliceStationPersonal = ({navigation}) => {
       setProfile(image.path);
     });
   };
+
+  const isValidInput = () => {
+    const fullNamePattern = /^[a-zA-Z\s]*$/;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const isFullNameValid = fullNamePattern.test(fullname);
+    const isEmailValid = emailPattern.test(email);
+
+    return isFullNameValid && isEmailValid;
+  };
+
+  const handleFullnameChange = value => {
+    setfullName(value);
+  };
+  const validateFullname = () => {
+    if (!fullname) {
+      return '';
+    }
+    const regex = /^[a-zA-Z\s]*$/;
+    if (!fullname.match(regex)) {
+      return 'Special Characters Not Allowed';
+    }
+    return '';
+  };
+  const fullnameError = validateFullname();
+
+  const handleEmailChange = value => {
+    setEmail(value);
+  };
+  const validateEmail = () => {
+    if (!email) {
+      return '';
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return 'Invalid email format';
+    }
+    return '';
+  };
+  const emailError = validateEmail();
 
   return (
     <SafeAreaView>
@@ -59,12 +101,17 @@ const PoliceStationPersonal = ({navigation}) => {
               <View style={{flexDirection: 'row'}}>
                 <TextInput
                   style={styles.input}
-                  placeholder="Station ID"
+                  placeholder="Station Name"
                   placeholderTextColor="black"
                   autoCapitalize="none"
+                  value={fullname}
+                  onChangeText={handleFullnameChange}
                 />
+                {fullnameError ? (
+                  <Text style={styles.validationerror}>{fullnameError}</Text>
+                ) : null}
                 <MaterialCommunityIcons
-                  name="id-card"
+                  name="account-circle-outline"
                   size={30}
                   style={styles.icon}
                 />
@@ -73,20 +120,29 @@ const PoliceStationPersonal = ({navigation}) => {
               <View style={{flexDirection: 'row'}}>
                 <TextInput
                   style={styles.input}
-                  placeholder="Station Name"
+                  placeholder="Station Email"
                   placeholderTextColor="black"
                   autoCapitalize="none"
+                  value={email}
+                  onChangeText={handleEmailChange}
                 />
+                {emailError ? (
+                  <Text style={styles.validationerror}>{emailError}</Text>
+                ) : null}
                 <MaterialCommunityIcons
-                  name="account-circle-outline"
+                  name="email-outline"
                   size={30}
                   style={styles.icon}
                 />
               </View>
 
               <TouchableOpacity
+                disabled={!isValidInput()}
                 onPress={() => Submit()}
-                style={styles.button}>
+                style={[
+                  styles.button,
+                  {backgroundColor: isValidInput() ? COLORS.primary : '#ccc'},
+                ]}>
                 <Text style={styles.buttonText}>Update</Text>
               </TouchableOpacity>
             </View>
@@ -144,7 +200,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: COLORS.primary,
+    // backgroundColor: COLORS.primary,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
@@ -161,5 +217,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 19,
     color: '#000',
+  },
+
+  validationerror: {
+    color: 'red',
+    position: 'absolute',
+    top: 60,
+    fontWeight: '700',
+    fontSize: 13,
   },
 });
