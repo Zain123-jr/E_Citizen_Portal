@@ -25,11 +25,7 @@ const Signup = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [dob, setDob] = useState('');
-  const [gender, setGender] = useState('');
-  const [mobile, setMobile] = useState('');
-  const [addressline, setAddressLine] = useState('');
-  const [cnic, setCnic] = useState('');
+  const [role, setRole] = useState('');
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePassword1, setHidePassword1] = useState(true);
 
@@ -41,11 +37,6 @@ const Signup = ({navigation}) => {
       .add({
         fullname: fullname,
         email: email,
-        dob: dob,
-        gender: gender,
-        mobile: mobile,
-        addressline: addressline,
-        cnic: cnic,
       })
       .then(() => {
         alert('User Registered Successfully!');
@@ -76,30 +67,19 @@ const Signup = ({navigation}) => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordPattern =
       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/;
-    const dobPattern = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
-    const mobilePattern = /^[0-9]{11}$/;
-    const cnicPattern = /^(\d{5})-?(\d{7})-?(\d{1})$/;
 
     const isFullNameValid = fullNamePattern.test(fullname);
     const isEmailValid = emailPattern.test(email);
     const isPasswordValid = passwordPattern.test(password);
     const isConfirmPasswordValid = confirmPassword === password;
-    const isDobValid = dobPattern.test(dob);
-    const isGenderValid = gender.trim().length > 0;
-    const isMobileValid = mobilePattern.test(mobile);
-    const isAddressValid = addressline.trim().length > 0;
-    const isCnicValid = cnicPattern.test(cnic);
+    const isRoleValid = role;
 
     return (
       isFullNameValid &&
       isEmailValid &&
       isPasswordValid &&
       isConfirmPasswordValid &&
-      isDobValid &&
-      isGenderValid &&
-      isMobileValid &&
-      isAddressValid &&
-      isCnicValid
+      isRoleValid
     );
   };
 
@@ -154,80 +134,22 @@ const Signup = ({navigation}) => {
   };
   const confirmPasswordError = validateConfirmPassword();
 
-  const handleDobChange = value => {
-    setDob(value);
+  const handleRoleChange = value => {
+    setRole(value);
   };
-  const validateDob = () => {
-    if (!dob) {
-      return '';
-    }
-    const dobRegex = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
-    if (!dobRegex.test(dob)) {
-      return 'Invalid date of birth format (DD/MM/YYYY)';
-    }
-  };
-  const dobError = validateDob();
-
-  const handleGenderChange = value => {
-    setGender(value);
-  };
-  const validateGender = () => {
-    if (!gender) {
-      return '';
+  const validateRole = () => {
+    if (!role) {
+      return 'This Field is Mandatory';
     } else if (
-      gender.toLowerCase() !== 'male' &&
-      gender.toLowerCase() !== 'female'
+      role.toLowerCase() !== 'citizen' &&
+      role.toLowerCase() !== 'oic' &&
+      role.toLowerCase() !== 'police hq'
     ) {
-      return 'Invalid gender';
-    }
-    return '';
-  };
-  const genderError = validateGender();
-
-  const handleMobileNumberChange = value => {
-    setMobile(value);
-  };
-  const validateMobileNumber = () => {
-    if (!mobile) {
       return '';
     }
-    const mobileNumberRegex = /^[0-9]{11}$/;
-    if (!mobileNumberRegex.test(mobile)) {
-      return 'Invalid mobile number';
-    }
     return '';
   };
-  const mobileNumberError = validateMobileNumber();
-
-  const handleAddressChange = value => {
-    setAddressLine(value);
-  };
-  const validateAddress = () => {
-    if (!addressline) {
-      return '';
-    }
-    if (addressline.length < 5) {
-      return 'Address must be at least 5 characters long';
-    }
-    return '';
-  };
-  const addressError = validateAddress();
-
-  const handleCnicChange = value => {
-    setCnic(value);
-  };
-
-  const validateCnic = () => {
-    if (!cnic) {
-      return '';
-    }
-    const cnicRegex = /^(\d{5})-?(\d{7})-?(\d{1})$/;
-    if (!cnicRegex.test(cnic)) {
-      return 'Invalid CNIC number';
-    }
-    return '';
-  };
-  const cnicError = validateCnic();
+  const roleError = validateRole();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -338,25 +260,6 @@ const Signup = ({navigation}) => {
               />
             </View>
 
-            <View style={{flexDirection: 'row'}}>
-              <TextInput
-                style={styles.input}
-                placeholder="Date of Birth: (DD/MM/YY)"
-                placeholderTextColor="white"
-                keyboardType="numeric"
-                value={dob}
-                onChangeText={handleDobChange}
-              />
-              {dobError ? (
-                <Text style={styles.validationerror}>{dobError}</Text>
-              ) : null}
-              <MaterialCommunityIcons
-                name="calendar-outline"
-                size={30}
-                style={styles.icon}
-              />
-            </View>
-
             <View
               style={{
                 borderColor: '#ccc',
@@ -367,86 +270,31 @@ const Signup = ({navigation}) => {
                 borderRightWidth: 0,
               }}>
               <Picker
-                selectedValue={gender}
-                onValueChange={handleGenderChange}
+                selectedValue={role}
+                onValueChange={handleRoleChange}
                 style={{
                   left: 18,
                   top: 8,
                   color: 'white',
                 }}>
+                <Picker.Item style={styles.item} label="Select Role" value="" />
                 <Picker.Item
                   style={styles.item}
-                  label="Select gender"
-                  value=""
+                  label="Citizen"
+                  value="citizen"
                 />
-                <Picker.Item style={styles.item} label="Male" value="male" />
+                <Picker.Item style={styles.item} label="OIC" value="oic" />
                 <Picker.Item
                   style={styles.item}
-                  label="Female"
-                  value="female"
+                  label="Police HQ"
+                  value="police hq"
                 />
               </Picker>
-              {genderError ? (
-                <Text style={styles.validationerror}>{genderError}</Text>
+              {roleError ? (
+                <Text style={styles.validationerror}>{roleError}</Text>
               ) : null}
               <MaterialCommunityIcons
-                name="gender-male"
-                size={30}
-                style={styles.icon}
-              />
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-              <TextInput
-                style={styles.input}
-                placeholder="Mobile:"
-                placeholderTextColor="white"
-                keyboardType="numeric"
-                value={mobile}
-                onChangeText={handleMobileNumberChange}
-              />
-              {mobileNumberError ? (
-                <Text style={styles.validationerror}>{mobileNumberError}</Text>
-              ) : null}
-              <MaterialCommunityIcons
-                name="phone-outline"
-                size={30}
-                style={styles.icon}
-              />
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-              <TextInput
-                style={styles.input}
-                placeholder="Address Line"
-                placeholderTextColor="white"
-                value={addressline}
-                onChangeText={handleAddressChange}
-              />
-              {addressError ? (
-                <Text style={styles.validationerror}>{addressError}</Text>
-              ) : null}
-              <MaterialCommunityIcons
-                name="map-marker-outline"
-                size={30}
-                style={styles.icon}
-              />
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-              <TextInput
-                style={styles.input}
-                placeholder="CNIC: (XXXXX-XXXXXXX-X)"
-                placeholderTextColor="white"
-                keyboardType="numeric"
-                value={cnic}
-                onChangeText={handleCnicChange}
-              />
-              {cnicError ? (
-                <Text style={styles.validationerror}>{cnicError}</Text>
-              ) : null}
-              <MaterialCommunityIcons
-                name="id-card"
+                name="account-outline"
                 size={30}
                 style={styles.icon}
               />
@@ -553,6 +401,7 @@ const styles = StyleSheet.create({
     // backgroundColor: COLORS.primary,
     padding: 10,
     borderRadius: 5,
+    top:20,
     alignItems: 'center',
     marginTop: 15,
   },
@@ -572,16 +421,16 @@ const styles = StyleSheet.create({
   extracontainer: {
     flex: 1,
     flexDirection: 'row',
-    paddingTop: 10,
+    paddingTop: 30,
     paddingLeft: 5,
   },
 
   extra: {
     fontSize: 15,
-    color: '#9DC08B',
+    color: 'black',
     fontWeight: '700',
     paddingRight: 5,
-    top: 10,
+    top: 20,
   },
 
   btn: {
@@ -590,6 +439,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     paddingTop: 10,
+    marginTop: 10,
     paddingBottom: 10,
   },
 
