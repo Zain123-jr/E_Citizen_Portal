@@ -36,8 +36,6 @@ const Signup = ({navigation}) => {
   const handleSignup = async () => {
     //to send user data into firestore
 
-    
-
     firestore()
       .collection('user')
       .add({
