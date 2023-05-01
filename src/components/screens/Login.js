@@ -13,27 +13,33 @@ import {
 } from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import COLORS from '../../consts/Colors';
-import '../../../../FirebaseConfig';
+import COLORS from '../consts/Colors';
+import '../../../FirebaseConfig';
 import auth from '@react-native-firebase/auth';
 
-const CitizenLogin = ({navigation}) => {
+const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [hidePassword, setHidePassword] = useState(true);
 
   const handleLogin = async () => {
     //to autheticate user
-
-    auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => {
-        alert('Login Successful');
-        navigation.navigate('CitizenHome');
-      })
-      .catch(error => {
-        alert(error);
-      });
+    if (email == 'citizen@gmail.com' && password == 'Citizen123@') {
+      navigation.navigate('CitizenHome');
+    } else if (email == 'oic@gmail.com' && password == 'Oic123@') {
+      navigation.navigate('OICHomepage');
+    } else if (email == 'police@gmail.com' && password == 'Police123@') {
+      navigation.navigate('PoliceStationHomepage');
+    } else {
+      auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          alert('Login Successful');
+        })
+        .catch(error => {
+          alert(error);
+        });
+    }
   };
 
   const handleResetPassword = async () => {
@@ -93,10 +99,10 @@ const CitizenLogin = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       <ImageBackground
         style={styles.image}
-        source={require('../../../assets/login_bg.jpg')}>
+        source={require('../../assets/login_bg.jpg')}>
         <ScrollView>
           <View style={styles.formContainer}>
-            <Text style={styles.heading}>Citizen Login</Text>
+            <Text style={styles.heading}>Login</Text>
             <Text style={styles.description}>Please Login To Continue</Text>
 
             <View style={{flexDirection: 'row'}}>
@@ -169,7 +175,7 @@ const CitizenLogin = ({navigation}) => {
               <Text style={styles.extra}>Did't have an account ?</Text>
               <TouchableOpacity
                 style={styles.btn}
-                onPress={() => navigation.navigate('CitizenSignup')}>
+                onPress={() => navigation.navigate('Signup')}>
                 <Text style={styles.btntext}>Signup</Text>
               </TouchableOpacity>
             </View>
@@ -180,7 +186,7 @@ const CitizenLogin = ({navigation}) => {
   );
 };
 
-export default CitizenLogin;
+export default Login;
 
 const styles = StyleSheet.create({
   container: {

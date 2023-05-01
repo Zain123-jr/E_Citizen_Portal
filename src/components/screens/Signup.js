@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ScrollView} from 'react-native';
 import {useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
@@ -14,15 +14,14 @@ import {
 } from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import COLORS from '../../../consts/Colors';
-import '../../../../../FirebaseConfig';
+import COLORS from '../consts/Colors';
+import '../../../FirebaseConfig';
 import '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
-const OICSignup = ({navigation}) => {
+const Signup = ({navigation}) => {
   const [fullname, setFullname] = useState('');
-  const [badge, setBadge] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -33,77 +32,213 @@ const OICSignup = ({navigation}) => {
   const [cnic, setCnic] = useState('');
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePassword1, setHidePassword1] = useState(true);
-  // const [hideBadge, setHideBadge] = useState(true);
 
   const handleSignup = async () => {
-    //to send oic data into firestore
-    if (fullname == '') {
-      alert('Enter Full Name');
-    } else if (badge == '') {
-      alert('Enter Badge Number');
-    } else if (email == '') {
-      alert('Enter Email');
-    } else if (password == '') {
-      alert('Enter Password');
-    } else if (confirmPassword == '') {
-      alert('Enter Confirm Password');
-    } else if (dob == '') {
-      alert('Enter Date of Birth');
-    } else if (gender == '') {
-      alert('Select Gender');
-    } else if (mobile == '') {
-      alert('Enter Mobile Number');
-    } else if (addressline == '') {
-      alert('Enter Address');
-    } else if (cnic == '') {
-      alert('Enter CNIC');
-    } else {
-      firestore()
-        .collection('OIC')
-        .add({
-          fullname: fullname,
-          email: email,
-          password: password,
-          confirmPassword: confirmPassword,
-          dob: dob,
-          gender: gender,
-          mobile: mobile,
-          addressline: addressline,
-          cnic: cnic,
-        })
-        .then(() => {
-          alert('OIC Registered Successfully!');
-          navigation.navigate('OICLogin');
-        })
-        .catch(error => {
-          console.error(error);
-        });
+    //to send user data into firestore
 
-      auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then(() => {
-          console.log('OIC is Added to Firebase!');
-        })
-        .catch(error => {
-          if (error.code === 'auth/email-already-in-use') {
-            alert('That email address is already in use!');
-          }
-          if (error.code === 'auth/invalid-email') {
-            alert('That email address is invalid!');
-          }
-          console.error(error);
-        });
+    
+
+    firestore()
+      .collection('user')
+      .add({
+        fullname: fullname,
+        email: email,
+        dob: dob,
+        gender: gender,
+        mobile: mobile,
+        addressline: addressline,
+        cnic: cnic,
+      })
+      .then(() => {
+        alert('User Registered Successfully!');
+        navigation.navigate('Login');
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+    auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log('User is Added to Firebase!');
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          alert('That email address is already in use!');
+        }
+        if (error.code === 'auth/invalid-email') {
+          alert('That email address is invalid!');
+        }
+        console.error(error);
+      });
+  };
+
+  const isValidInput = () => {
+    const fullNamePattern = /^[a-zA-Z\s]*$/;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordPattern =
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/;
+    const dobPattern = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
+    const mobilePattern = /^[0-9]{11}$/;
+    const cnicPattern = /^(\d{5})-?(\d{7})-?(\d{1})$/;
+
+    const isFullNameValid = fullNamePattern.test(fullname);
+    const isEmailValid = emailPattern.test(email);
+    const isPasswordValid = passwordPattern.test(password);
+    const isConfirmPasswordValid = confirmPassword === password;
+    const isDobValid = dobPattern.test(dob);
+    const isGenderValid = gender.trim().length > 0;
+    const isMobileValid = mobilePattern.test(mobile);
+    const isAddressValid = addressline.trim().length > 0;
+    const isCnicValid = cnicPattern.test(cnic);
+
+    return (
+      isFullNameValid &&
+      isEmailValid &&
+      isPasswordValid &&
+      isConfirmPasswordValid &&
+      isDobValid &&
+      isGenderValid &&
+      isMobileValid &&
+      isAddressValid &&
+      isCnicValid
+    );
+  };
+
+  const validateFullname = () => {
+    const regex = /^[a-zA-Z\s]*$/;
+    if (!fullname.match(regex)) {
+      return 'Special Characters Not Allowed';
+    }
+    return '';
+  };
+  const fullnameError = validateFullname();
+
+  const handleEmailChange = value => {
+    setEmail(value);
+  };
+  const validateEmail = () => {
+    if (!email) {
+      return '';
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return 'Invalid email format';
+    }
+    return '';
+  };
+  const emailError = validateEmail();
+
+  const handlePasswordChange = value => {
+    setPassword(value);
+  };
+  const validatePassword = () => {
+    if (!password) {
+      return '';
+    }
+    const passwordRegex =
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/;
+    if (!passwordRegex.test(password)) {
+      return 'Invalid Password Format';
+    }
+    return '';
+  };
+  const passwordError = validatePassword();
+
+  const handleConfirmPasswordChange = value => {
+    setConfirmPassword(value);
+  };
+  const validateConfirmPassword = () => {
+    if (confirmPassword !== password) {
+      return 'Passwords do not match';
+    }
+    return '';
+  };
+  const confirmPasswordError = validateConfirmPassword();
+
+  const handleDobChange = value => {
+    setDob(value);
+  };
+  const validateDob = () => {
+    if (!dob) {
+      return '';
+    }
+    const dobRegex = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
+    if (!dobRegex.test(dob)) {
+      return 'Invalid date of birth format (DD/MM/YYYY)';
     }
   };
+  const dobError = validateDob();
+
+  const handleGenderChange = value => {
+    setGender(value);
+  };
+  const validateGender = () => {
+    if (!gender) {
+      return '';
+    } else if (
+      gender.toLowerCase() !== 'male' &&
+      gender.toLowerCase() !== 'female'
+    ) {
+      return 'Invalid gender';
+    }
+    return '';
+  };
+  const genderError = validateGender();
+
+  const handleMobileNumberChange = value => {
+    setMobile(value);
+  };
+  const validateMobileNumber = () => {
+    if (!mobile) {
+      return '';
+    }
+    const mobileNumberRegex = /^[0-9]{11}$/;
+    if (!mobileNumberRegex.test(mobile)) {
+      return 'Invalid mobile number';
+    }
+    return '';
+  };
+  const mobileNumberError = validateMobileNumber();
+
+  const handleAddressChange = value => {
+    setAddressLine(value);
+  };
+  const validateAddress = () => {
+    if (!addressline) {
+      return '';
+    }
+    if (addressline.length < 5) {
+      return 'Address must be at least 5 characters long';
+    }
+    return '';
+  };
+  const addressError = validateAddress();
+
+  const handleCnicChange = value => {
+    setCnic(value);
+  };
+
+  const validateCnic = () => {
+    if (!cnic) {
+      return '';
+    }
+    const cnicRegex = /^(\d{5})-?(\d{7})-?(\d{1})$/;
+    if (!cnicRegex.test(cnic)) {
+      return 'Invalid CNIC number';
+    }
+    return '';
+  };
+  const cnicError = validateCnic();
 
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
         style={styles.image}
-        source={require('../../../../assets/signup_bg.jpeg')}>
+        source={require('../../assets/signup_bg.jpeg')}>
         <ScrollView>
           <View style={styles.formContainer}>
-            <Text style={styles.heading}>OIC Signup</Text>
+            <Text style={styles.heading}>Signup</Text>
             <Text style={styles.description}>
               Please provide all required details to register
             </Text>
@@ -117,50 +252,27 @@ const OICSignup = ({navigation}) => {
                 value={fullname}
                 onChangeText={setFullname}
               />
+              {fullnameError ? (
+                <Text style={styles.validationerror}>{fullnameError}</Text>
+              ) : null}
               <MaterialCommunityIcons
                 name="account-circle-outline"
                 size={30}
                 style={styles.icon}
               />
             </View>
-            <View style={{flexDirection: 'row'}}>
-              <TextInput
-                style={styles.input}
-                placeholder="Badge No"
-                placeholderTextColor="white"
-                // secureTextEntry={hideBadge}
-                value={badge}
-                onChangeText={setBadge}
-              />
-              <MaterialCommunityIcons
-                name="police-badge-outline"
-                size={30}
-                style={styles.icon}
-              />
-              {/* <View style={styles.eyeIconContainer}>
-                <TouchableOpacity onPress={() => setHideBadge(!hideBadge)}>
-                  <MaterialCommunityIcons
-                    name={hideBadge ? 'eye-off-outline' : 'eye-outline'}
-                    size={25}
-                    color={hideBadge ? 'white' : 'white'}
-                  />
-                </TouchableOpacity>
-              </View>
-              <MaterialCommunityIcons
-                name="police-badge-outline"
-                size={30}
-                style={styles.icon}
-              /> */}
-            </View>
 
             <View style={{flexDirection: 'row'}}>
               <TextInput
                 style={styles.input}
-                placeholder="Email: (Hello123@gmail.com)"
+                placeholder="Email: (Hello@gmail.com)"
                 placeholderTextColor="white"
                 value={email}
-                onChangeText={setEmail}
+                onChangeText={handleEmailChange}
               />
+              {emailError ? (
+                <Text style={styles.validationerror}>{emailError}</Text>
+              ) : null}
               <MaterialCommunityIcons
                 name="email-outline"
                 size={30}
@@ -175,8 +287,11 @@ const OICSignup = ({navigation}) => {
                 placeholderTextColor="white"
                 secureTextEntry={hidePassword}
                 value={password}
-                onChangeText={setPassword}
+                onChangeText={handlePasswordChange}
               />
+              {passwordError ? (
+                <Text style={styles.validationerror}>{passwordError}</Text>
+              ) : null}
               <View style={styles.eyeIconContainer}>
                 <TouchableOpacity
                   onPress={() => setHidePassword(!hidePassword)}>
@@ -201,7 +316,7 @@ const OICSignup = ({navigation}) => {
                 placeholderTextColor="white"
                 secureTextEntry={hidePassword1}
                 value={confirmPassword}
-                onChangeText={setConfirmPassword}
+                onChangeText={handleConfirmPasswordChange}
               />
               <View style={styles.eyeIconContainer}>
                 <TouchableOpacity
@@ -213,6 +328,11 @@ const OICSignup = ({navigation}) => {
                   />
                 </TouchableOpacity>
               </View>
+              {confirmPasswordError ? (
+                <Text style={styles.validationerror}>
+                  {confirmPasswordError}
+                </Text>
+              ) : null}
               <MaterialCommunityIcons
                 name="lock-outline"
                 size={30}
@@ -223,12 +343,15 @@ const OICSignup = ({navigation}) => {
             <View style={{flexDirection: 'row'}}>
               <TextInput
                 style={styles.input}
-                placeholder="Date of Birth: (DD-MM-YY)"
+                placeholder="Date of Birth: (DD/MM/YY)"
                 placeholderTextColor="white"
                 keyboardType="numeric"
                 value={dob}
-                onChangeText={setDob}
+                onChangeText={handleDobChange}
               />
+              {dobError ? (
+                <Text style={styles.validationerror}>{dobError}</Text>
+              ) : null}
               <MaterialCommunityIcons
                 name="calendar-outline"
                 size={30}
@@ -247,7 +370,7 @@ const OICSignup = ({navigation}) => {
               }}>
               <Picker
                 selectedValue={gender}
-                onValueChange={setGender}
+                onValueChange={handleGenderChange}
                 style={{
                   left: 18,
                   top: 8,
@@ -265,7 +388,9 @@ const OICSignup = ({navigation}) => {
                   value="female"
                 />
               </Picker>
-
+              {genderError ? (
+                <Text style={styles.validationerror}>{genderError}</Text>
+              ) : null}
               <MaterialCommunityIcons
                 name="gender-male"
                 size={30}
@@ -280,8 +405,11 @@ const OICSignup = ({navigation}) => {
                 placeholderTextColor="white"
                 keyboardType="numeric"
                 value={mobile}
-                onChangeText={setMobile}
+                onChangeText={handleMobileNumberChange}
               />
+              {mobileNumberError ? (
+                <Text style={styles.validationerror}>{mobileNumberError}</Text>
+              ) : null}
               <MaterialCommunityIcons
                 name="phone-outline"
                 size={30}
@@ -295,8 +423,11 @@ const OICSignup = ({navigation}) => {
                 placeholder="Address Line"
                 placeholderTextColor="white"
                 value={addressline}
-                onChangeText={setAddressLine}
+                onChangeText={handleAddressChange}
               />
+              {addressError ? (
+                <Text style={styles.validationerror}>{addressError}</Text>
+              ) : null}
               <MaterialCommunityIcons
                 name="map-marker-outline"
                 size={30}
@@ -311,8 +442,11 @@ const OICSignup = ({navigation}) => {
                 placeholderTextColor="white"
                 keyboardType="numeric"
                 value={cnic}
-                onChangeText={setCnic}
+                onChangeText={handleCnicChange}
               />
+              {cnicError ? (
+                <Text style={styles.validationerror}>{cnicError}</Text>
+              ) : null}
               <MaterialCommunityIcons
                 name="id-card"
                 size={30}
@@ -320,7 +454,13 @@ const OICSignup = ({navigation}) => {
               />
             </View>
 
-            <TouchableOpacity onPress={handleSignup} style={styles.button}>
+            <TouchableOpacity
+              disabled={!isValidInput()}
+              onPress={handleSignup}
+              style={[
+                styles.button,
+                {backgroundColor: isValidInput() ? COLORS.primary : '#ccc'},
+              ]}>
               <Text style={styles.buttonText}>Signup</Text>
             </TouchableOpacity>
 
@@ -328,7 +468,7 @@ const OICSignup = ({navigation}) => {
               <Text style={styles.extra}>Already have an account ?</Text>
               <TouchableOpacity
                 style={styles.btn}
-                onPress={() => navigation.navigate('OICLogin')}>
+                onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.btntext}>Login</Text>
               </TouchableOpacity>
             </View>
@@ -339,7 +479,7 @@ const OICSignup = ({navigation}) => {
   );
 };
 
-export default OICSignup;
+export default Signup;
 
 const styles = StyleSheet.create({
   container: {
@@ -352,6 +492,17 @@ const styles = StyleSheet.create({
   text: {
     textAlign: 'center',
     fontSize: 30,
+  },
+
+  imgContainer: {},
+
+  img: {
+    width: 110,
+    height: 110,
+    top: 16,
+    borderRadius: 55,
+    borderColor: COLORS.primary,
+    borderWidth: 4,
   },
 
   image: {
@@ -401,7 +552,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: COLORS.primary,
+    // backgroundColor: COLORS.primary,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
@@ -460,5 +611,13 @@ const styles = StyleSheet.create({
 
   item: {
     fontSize: 14,
+  },
+
+  validationerror: {
+    color: 'red',
+    position: 'absolute',
+    top: 60,
+    fontWeight: '700',
+    fontSize: 13,
   },
 });

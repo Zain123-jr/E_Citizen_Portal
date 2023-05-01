@@ -14,7 +14,7 @@ const PoliceStationHomepage = ({navigation}) => {
     if (user) {
       const userQuery = firebase
         .firestore()
-        .collection('Police HQ')
+        .collection('user')
         .where('email', '==', user.email);
       const userDoc = await userQuery.get();
       if (!userDoc.empty) {

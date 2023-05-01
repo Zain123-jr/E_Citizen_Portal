@@ -19,7 +19,7 @@ const PSCustomDrawer = props => {
     try {
       await auth().signOut();
       alert('Logout Successfully');
-      navigation.navigate('PoliceStationLogin');
+      navigation.navigate('Login');
     } catch (error) {
       console.error(error.message);
     }

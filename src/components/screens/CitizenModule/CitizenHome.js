@@ -14,7 +14,7 @@ const CitizenHome = ({navigation}) => {
     if (user) {
       const userQuery = firebase
         .firestore()
-        .collection('Citizen')
+        .collection('user')
         .where('email', '==', user.email);
       const userDoc = await userQuery.get();
       if (!userDoc.empty) {

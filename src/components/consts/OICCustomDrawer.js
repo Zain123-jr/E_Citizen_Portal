@@ -19,7 +19,7 @@ const OICCustomDrawer = props => {
     try {
       await auth().signOut();
       alert('Logout Successfully');
-      navigation.navigate('OICLogin');
+      navigation.navigate('Login');
     } catch (error) {
       console.error(error.message);
     }

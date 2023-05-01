@@ -1,12 +1,11 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import BottomNavigator from './src/components/navigation/BottomNavigator';
 import ComplaintsBottomNavigator from './src/components/navigation/ComplaintsBottomNavigator';
 import Splash from './src/components/screens/Splash';
 import Welcome from './src/components/screens/Welcome';
-import CitizenSignup from './src/components/screens/CitizenModule/CitizenSignup';
-import CitizenLogin from './src/components/screens/CitizenModule/CitizenLogin';
+import Signup from './src/components/screens/Signup';
+import Login from './src/components/screens/Login';
 import DrawerNavigator from './src/components/navigation/DrawerNavigator';
 import TortureForm from './src/components/screens/CitizenModule/ComplaintForms/TortureForm';
 import KidnappingForm from './src/components/screens/CitizenModule/ComplaintForms/KidnappinForm';
@@ -18,6 +17,10 @@ import MissingPersonForm from './src/components/screens/CitizenModule/ComplaintF
 import Profile from './src/components/screens/CitizenModule/Profile';
 import Personal from './src/components/screens/CitizenModule/UpdateForms/Personal';
 import OfficialPortal from './src/components/screens/OfficialModule/OfficialPortal';
+import CitizenPortal from './src/components/screens/CitizenModule/CitizenPortal';
+import OICHomepage from './src/components/screens/OfficialModule/OIC/OICHomepage';
+import OICDrawer from './src/components/navigation/OICDrawer';
+import PoliceStationDrawer from './src/components/navigation/PoliceStationDrawer';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,10 +30,10 @@ const App = () => {
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="Splash" component={Splash} />
         <Stack.Screen name="Welcome" component={Welcome} />
-        <Stack.Screen name="CitizenPortal" component={BottomNavigator} />
+        <Stack.Screen name="CitizenPortal" component={CitizenPortal} />
         <Stack.Screen name="OfficalPortal" component={OfficialPortal} />
-        <Stack.Screen name="CitizenSignup" component={CitizenSignup} />
-        <Stack.Screen name="CitizenLogin" component={CitizenLogin} />
+        <Stack.Screen name="Signup" component={Signup} />
+        <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="CitizenHome" component={DrawerNavigator} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Personal" component={Personal} />
@@ -41,6 +44,14 @@ const App = () => {
         <Stack.Screen
           name="ViewComplaints"
           component={ComplaintsBottomNavigator}
+        />
+        <Stack.Screen
+          name="OICHomepage"
+          component={OICDrawer}
+        />
+        <Stack.Screen
+          name="PoliceStationHomepage"
+          component={PoliceStationDrawer}
         />
         <Stack.Screen name="Torture" component={TortureForm} />
         <Stack.Screen name="Kidnapping" component={KidnappingForm} />

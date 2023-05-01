@@ -14,7 +14,7 @@ const OICHomepage = ({navigation}) => {
     if (user) {
       const userQuery = firebase
         .firestore()
-        .collection('OIC')
+        .collection('user')
         .where('email', '==', user.email);
       const userDoc = await userQuery.get();
       if (!userDoc.empty) {
