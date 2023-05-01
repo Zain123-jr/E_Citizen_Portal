@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -10,6 +10,47 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import COLORS from '../../../consts/Colors';
 
 const Contact = ({navigation}) => {
+  const [email, setEmail] = useState('');
+  const [addressline, setAddressLine] = useState('');
+
+  const isValidInput = () => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const isEmailValid = emailPattern.test(email);
+    const isAddressValid = addressline.trim().length > 0;
+
+    return isEmailValid && isAddressValid;
+  };
+
+  const handleEmailChange = value => {
+    setEmail(value);
+  };
+  const validateEmail = () => {
+    if (!email) {
+      return '';
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return 'Invalid email format';
+    }
+    return '';
+  };
+  const emailError = validateEmail();
+
+  const handleAddressChange = value => {
+    setAddressLine(value);
+  };
+  const validateAddress = () => {
+    if (!addressline) {
+      return '';
+    }
+    if (addressline.length < 5) {
+      return 'Address must be at least 5 characters long';
+    }
+    return '';
+  };
+  const addressError = validateAddress();
+
   return (
     <View>
       <View style={styles.formContainer}>
@@ -18,7 +59,12 @@ const Contact = ({navigation}) => {
             style={styles.input}
             placeholder="Email: (Hello123@gmail.com)"
             placeholderTextColor={COLORS.grey}
+            value={email}
+            onChangeText={handleEmailChange}
           />
+          {emailError ? (
+            <Text style={styles.validationerror}>{emailError}</Text>
+          ) : null}
           <MaterialCommunityIcons
             name="email-outline"
             size={30}
@@ -31,7 +77,12 @@ const Contact = ({navigation}) => {
             style={styles.input}
             placeholder="Address Line"
             placeholderTextColor={COLORS.grey}
+            value={addressline}
+            onChangeText={handleAddressChange}
           />
+          {addressError ? (
+            <Text style={styles.validationerror}>{addressError}</Text>
+          ) : null}
           <MaterialCommunityIcons
             name="map-marker-outline"
             size={30}
@@ -40,8 +91,12 @@ const Contact = ({navigation}) => {
         </View>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate('CitizenHome')}
-          style={styles.button}>
+          disabled={!isValidInput()}
+          style={[
+            styles.button,
+            {backgroundColor: isValidInput() ? COLORS.primary : '#ccc'},
+          ]}
+          onPress={() => navigation.navigate('CitizenHome')}>
           <Text style={styles.buttonText}>Update</Text>
         </TouchableOpacity>
       </View>
@@ -80,7 +135,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: COLORS.primary,
+    // backgroundColor: COLORS.primary,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
@@ -97,5 +152,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 19,
     color: '#000',
+  },
+
+  validationerror: {
+    color: 'red',
+    position: 'absolute',
+    top: 60,
+    fontWeight: '700',
+    fontSize: 13,
   },
 });

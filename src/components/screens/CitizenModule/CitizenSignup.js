@@ -35,59 +35,40 @@ const CitizenSignup = ({navigation}) => {
 
   const Signup = async () => {
     //to send citizen data into firestore
-    if (fullname == '') {
-      alert('Enter Full Name');
-    } else if (email == '') {
-      alert('Enter Email');
-    } else if (password == '') {
-      alert('Enter Password');
-    } else if (confirmPassword == '') {
-      alert('Enter Confirm Password');
-    } else if (dob == '') {
-      alert('Enter Date of Birth');
-    } else if (gender == '') {
-      alert('Select Gender');
-    } else if (mobile == '') {
-      alert('Enter Mobile Number');
-    } else if (addressline == '') {
-      alert('Enter Address');
-    } else if (cnic == '') {
-      alert('Enter CNIC');
-    } else {
-      firestore()
-        .collection('Citizen')
-        .add({
-          fullname: fullname,
-          email: email,
-          dob: dob,
-          gender: gender,
-          mobile: mobile,
-          addressline: addressline,
-          cnic: cnic,
-        })
-        .then(() => {
-          alert('Citizen Registered Successfully!');
-          navigation.navigate('CitizenLogin');
-        })
-        .catch(error => {
-          console.error(error);
-        });
 
-      auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then(() => {
-          console.log('Citizen is Added to Firebase!');
-        })
-        .catch(error => {
-          if (error.code === 'auth/email-already-in-use') {
-            alert('That email address is already in use!');
-          }
-          if (error.code === 'auth/invalid-email') {
-            alert('That email address is invalid!');
-          }
-          console.error(error);
-        });
-    }
+    firestore()
+      .collection('Citizen')
+      .add({
+        fullname: fullname,
+        email: email,
+        dob: dob,
+        gender: gender,
+        mobile: mobile,
+        addressline: addressline,
+        cnic: cnic,
+      })
+      .then(() => {
+        alert('Citizen Registered Successfully!');
+        navigation.navigate('CitizenLogin');
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+    auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log('Citizen is Added to Firebase!');
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          alert('That email address is already in use!');
+        }
+        if (error.code === 'auth/invalid-email') {
+          alert('That email address is invalid!');
+        }
+        console.error(error);
+      });
   };
 
   const isValidInput = () => {
@@ -474,7 +455,10 @@ const CitizenSignup = ({navigation}) => {
             <TouchableOpacity
               disabled={!isValidInput()}
               onPress={Signup}
-              style={styles.button}>
+              style={[
+                styles.button,
+                {backgroundColor: isValidInput() ? COLORS.primary : '#ccc'},
+              ]}>
               <Text style={styles.buttonText}>Signup</Text>
             </TouchableOpacity>
 
@@ -566,7 +550,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: COLORS.primary,
+    // backgroundColor: COLORS.primary,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',

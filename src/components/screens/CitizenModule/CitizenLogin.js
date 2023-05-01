@@ -24,21 +24,16 @@ const CitizenLogin = ({navigation}) => {
 
   const handleLogin = async () => {
     //to autheticate user
-    if (email == '') {
-      alert('Enter Email');
-    } else if (password == '') {
-      alert('Enter Password');
-    } else {
-      auth()
-        .signInWithEmailAndPassword(email, password)
-        .then(() => {
-          alert('Login Successful');
-          navigation.navigate('CitizenHome');
-        })
-        .catch(error => {
-          alert(error);
-        });
-    }
+
+    auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        alert('Login Successful');
+        navigation.navigate('CitizenHome');
+      })
+      .catch(error => {
+        alert(error);
+      });
   };
 
   const handleResetPassword = async () => {
@@ -51,6 +46,48 @@ const CitizenLogin = ({navigation}) => {
         alert('Error sending password reset email:', error);
       });
   };
+
+  const isValidInput = () => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordPattern =
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/;
+
+    const isEmailValid = emailPattern.test(email);
+    const isPasswordValid = passwordPattern.test(password);
+
+    return isEmailValid && isPasswordValid;
+  };
+
+  const handleEmailChange = value => {
+    setEmail(value);
+  };
+  const validateEmail = () => {
+    if (!email) {
+      return '';
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return 'Invalid email format';
+    }
+    return '';
+  };
+  const emailError = validateEmail();
+
+  const handlePasswordChange = value => {
+    setPassword(value);
+  };
+  const validatePassword = () => {
+    if (!password) {
+      return '';
+    }
+    const passwordRegex =
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/;
+    if (!passwordRegex.test(password)) {
+      return 'Invalid Password Format';
+    }
+    return '';
+  };
+  const passwordError = validatePassword();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -69,8 +106,11 @@ const CitizenLogin = ({navigation}) => {
                 placeholderTextColor="white"
                 autoCapitalize="none"
                 value={email}
-                onChangeText={setEmail}
+                onChangeText={handleEmailChange}
               />
+              {emailError ? (
+                <Text style={styles.validationerror}>{emailError}</Text>
+              ) : null}
               <MaterialCommunityIcons
                 name="account-circle-outline"
                 size={30}
@@ -85,7 +125,7 @@ const CitizenLogin = ({navigation}) => {
                 placeholderTextColor="white"
                 secureTextEntry={hidePassword}
                 value={password}
-                onChangeText={setPassword}
+                onChangeText={handlePasswordChange}
               />
               <View style={styles.eyeIconContainer}>
                 <TouchableOpacity
@@ -97,6 +137,9 @@ const CitizenLogin = ({navigation}) => {
                   />
                 </TouchableOpacity>
               </View>
+              {passwordError ? (
+                <Text style={styles.validationerror}>{passwordError}</Text>
+              ) : null}
               <MaterialCommunityIcons
                 name="lock-outline"
                 size={30}
@@ -112,7 +155,13 @@ const CitizenLogin = ({navigation}) => {
               </TouchableOpacity>
             </View>
 
-            <TouchableOpacity onPress={handleLogin} style={styles.button}>
+            <TouchableOpacity
+              disabled={!isValidInput()}
+              onPress={handleLogin}
+              style={[
+                styles.button,
+                {backgroundColor: isValidInput() ? COLORS.primary : '#ccc'},
+              ]}>
               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
 
@@ -197,7 +246,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     marginTop: 15,
-    backgroundColor: COLORS.primary,
+    // backgroundColor: COLORS.primary,
   },
 
   buttonText: {
@@ -249,5 +298,13 @@ const styles = StyleSheet.create({
     top: 20,
     left: 260,
     padding: 5,
+  },
+
+  validationerror: {
+    color: 'red',
+    position: 'absolute',
+    top: 60,
+    fontWeight: '700',
+    fontSize: 13,
   },
 });

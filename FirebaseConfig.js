@@ -17,6 +17,7 @@
 // export const auth = getAuth(app);
 
 import firebase from 'firebase/compat';
+import 'firebase/compat/auth';
 
 const firebaseConfig = {
   // Your Firebase project configuration object goes here
@@ -31,3 +32,10 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+export const auth = firebase.auth();
+
+export const roles = {
+  citizen: 'Citizen',
+  oic: 'OIC',
+  policestation: 'Police HQ',
+};
