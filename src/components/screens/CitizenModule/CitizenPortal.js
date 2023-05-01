@@ -25,8 +25,8 @@ const CitizenPortal = ({ navigation }) => {
           <Text style={styles.heading} >Welcome to</Text>
           <Text style={styles.subheading}>E-Citizen Portal</Text>
           <Text style={styles.description} >Please Signup first</Text>
-          <FirstButton title={"Signup"} onPress={() => navigation.navigate('Signup')} />
-          <SecondButton title={"Login"} onPress={() => navigation.navigate('Login')} />
+          <FirstButton title={"Signup"} onPress={() => navigation.navigate('CitizenSignup')} />
+          <SecondButton title={"Login"} onPress={() => navigation.navigate('CitizenLogin')} />
         </View>
       </ImageBackground>
     </SafeAreaView>
