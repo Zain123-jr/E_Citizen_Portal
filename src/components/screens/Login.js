@@ -24,7 +24,7 @@ const Login = ({navigation}) => {
 
   const handleLogin = async () => {
     //to autheticate user
-    if (email == 'citizen@gmail.com' && password == 'Citizen123@') {
+    if (email == email && password == password) {
       navigation.navigate('CitizenHome');
     } else if (email == 'oic@gmail.com' && password == 'Oic123@') {
       navigation.navigate('OICHomepage');
