@@ -1,8 +1,8 @@
 import React from 'react';
 import Officer from './OfficialStart';
 import OICDrawer from '../../navigation/OICDrawer';
-import OICViewComplaints from './OIC/OICViewComplains';
-import PoliceViewComplaints from './PoliceStation/PoliceViewComplains';
+import OICViewComplains from './OIC/OICViewComplains';
+import PoliceViewComplains from './PoliceStation/PoliceViewComplains';
 import PoliceStationDrawer from '../../navigation/PoliceStationDrawer';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import PoliceStationPersonal from './PoliceStation/PoliceStationPersonal';
@@ -24,11 +24,11 @@ const OfficialPortal = () => {
 
       <Stack.Screen name="OICDrawer" component={OICDrawer}></Stack.Screen>
       <Stack.Screen
-        name="OICViewComplaints"
-        component={OICViewComplaints}></Stack.Screen>
+        name="OICViewComplains"
+        component={OICViewComplains}></Stack.Screen>
       <Stack.Screen
-        name="PoliceViewComplaints"
-        component={PoliceViewComplaints}></Stack.Screen>
+        name="PoliceViewComplains"
+        component={PoliceViewComplains}></Stack.Screen>
       <Stack.Screen name="OICPersonal" component={OICPersonal} />
       <Stack.Screen
         name="PoliceStationPersonal"

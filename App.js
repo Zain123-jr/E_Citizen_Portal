@@ -21,6 +21,8 @@ import CitizenPortal from './src/components/screens/CitizenModule/CitizenPortal'
 import OICHomepage from './src/components/screens/OfficialModule/OIC/OICHomepage';
 import OICDrawer from './src/components/navigation/OICDrawer';
 import PoliceStationDrawer from './src/components/navigation/PoliceStationDrawer';
+import OICViewComplains from './src/components/screens/OfficialModule/OIC/OICViewComplains';
+import PoliceViewComplains from './src/components/screens/OfficialModule/PoliceStation/PoliceViewComplains';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,13 +47,15 @@ const App = () => {
           name="ViewComplaints"
           component={ComplaintsBottomNavigator}
         />
-        <Stack.Screen
-          name="OICHomepage"
-          component={OICDrawer}
-        />
+        <Stack.Screen name="OICHomepage" component={OICDrawer} />
         <Stack.Screen
           name="PoliceStationHomepage"
           component={PoliceStationDrawer}
+        />
+        <Stack.Screen name="OICViewComplains" component={OICViewComplains} />
+        <Stack.Screen
+          name="PoliceViewComplains"
+          component={PoliceViewComplains}
         />
         <Stack.Screen name="Torture" component={TortureForm} />
         <Stack.Screen name="Kidnapping" component={KidnappingForm} />
@@ -66,4 +70,3 @@ const App = () => {
 };
 
 export default App;
-
