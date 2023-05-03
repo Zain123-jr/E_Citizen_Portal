@@ -1,17 +1,17 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
-import imgPlaceHolder from '../../assets/defualt-Avatar.png';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import COLORS from './Colors';
 import {useNavigation} from '@react-navigation/native';
+import COLORS from './Colors';
+import imgPlaceHolder from '../../assets/defualt-Avatar.png';
 import '../../../FirebaseConfig';
 import auth from '@react-native-firebase/auth';
 
-const CustomDrawer = props => {
+const PSCustomDrawer = props => {
   const [profile, setProfile] = useState(null);
   const navigation = useNavigation();
 
@@ -32,7 +32,8 @@ const CustomDrawer = props => {
         <View style={styles.header}>
           <View style={styles.profileContainer}>
             <View style={styles.imgContainer}>
-              <TouchableOpacity onPress={() => navigation.navigate('Personal')}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('PoliceStationPersonal')}>
                 <Image
                   style={styles.image}
                   source={profile ? {uri: profile} : imgPlaceHolder}
@@ -74,7 +75,7 @@ const CustomDrawer = props => {
   );
 };
 
-export default CustomDrawer;
+export default PSCustomDrawer;
 
 const styles = StyleSheet.create({
   header: {

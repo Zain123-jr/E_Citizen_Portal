@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -7,84 +7,105 @@ import {
   Text,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Formik} from 'formik';
-import * as Yup from 'yup';
 import COLORS from '../../../consts/Colors';
 
-const UpdateContactSchema = Yup.object().shape({
-  stationAddress: Yup.string().required('Station Address line is required'),
-  stationPhoneNo: Yup.string().required('Phone/Landline Number Required'),
-});
-
 const PoliceStationContact = ({navigation}) => {
+  const [addressline, setAddressLine] = useState('');
+  const [mobile, setMobile] = useState('');
+
+  function Submit() {
+    alert('Contact Update Successfully');
+  }
+
+  const isValidInput = () => {
+    const mobilePattern = /^[0-9]{11}$/;
+
+    const isMobileValid = mobilePattern.test(mobile);
+    const isAddressValid = addressline.trim().length > 0;
+
+    return isAddressValid && isMobileValid;
+  };
+
+  const handleMobileNumberChange = value => {
+    setMobile(value);
+  };
+
+  const handleAddressChange = value => {
+    setAddressLine(value);
+  };
+  const validateAddress = () => {
+    if (!addressline) {
+      return '';
+    }
+    if (addressline.length < 5) {
+      return 'Address must be at least 5 characters long';
+    }
+    return '';
+  };
+  const addressError = validateAddress();
+
+  const validateMobileNumber = () => {
+    if (!mobile) {
+      return '';
+    }
+    const mobileNumberRegex = /^[0-9]{11}$/;
+    if (!mobileNumberRegex.test(mobile)) {
+      return 'Invalid mobile number';
+    }
+    return '';
+  };
+  const mobileNumberError = validateMobileNumber();
+
   return (
     <View>
-      <Formik
-        initialValues={{
-          stationAddress: '',
-          stationPhoneNumber: '',
-        }}
-        validationSchema={UpdateContactSchema}>
-        {({
-          handleChange,
-          values,
-          errors,
-          isValid,
-          setFieldTouched,
-          touched,
-        }) => (
-          <View style={styles.formContainer}>
-            <View style={{flexDirection: 'row'}}>
-              <TextInput
-                style={styles.input}
-                placeholder="Station Address"
-                placeholderTextColor="black"
-                onChangeText={handleChange('stationAddress')}
-                onBlur={() => setFieldTouched('stationAddress')}
-                value={values.stationAddress}
-              />
-              <MaterialCommunityIcons
-                name="map-marker-outline"
-                size={30}
-                style={styles.icon}
-              />
-              {touched.stationAddress && errors.stationAddress && (
-                <Text style={styles.errorText}>{errors.stationAddress}</Text>
-              )}
-            </View>
+      <View style={styles.formContainer}>
+        <View style={{flexDirection: 'row'}}>
+          <TextInput
+            style={styles.input}
+            placeholder="Station Address"
+            placeholderTextColor="black"
+            value={addressline}
+            onChangeText={handleAddressChange}
+          />
+          {addressError ? (
+            <Text style={styles.validationerror}>{addressError}</Text>
+          ) : null}
+          <MaterialCommunityIcons
+            name="map-marker-outline"
+            size={30}
+            style={styles.icon}
+          />
+        </View>
 
-            <View style={{flexDirection: 'row'}}>
-              <TextInput
-                style={styles.input}
-                placeholder="Station Phone/Landline Number:"
-                placeholderTextColor="black"
-                keyboardType="numeric"
-                value={values.s}
-                onChangeText={handleChange('stationPhoneNumber')}
-                onBlur={() => setFieldTouched('stationPhoneNumber')}
-              />
-              <MaterialCommunityIcons
-                name="phone-outline"
-                size={30}
-                style={styles.icon}
-              />
-              {touched.stationPhoneNo && errors.stationPhoneNo && (
-                <Text style={styles.errorText}>{errors.stationPhoneNo}</Text>
-              )}
-            </View>
+        <View style={{flexDirection: 'row'}}>
+          <TextInput
+            style={styles.input}
+            placeholder="Station Phone/Landline Number:"
+            placeholderTextColor="black"
+            keyboardType="numeric"
+            value={mobile}
+            onChangeText={handleMobileNumberChange}
+          />
+          {mobileNumberError ? (
+            <Text style={styles.validationerror}>{mobileNumberError}</Text>
+          ) : null}
+          <MaterialCommunityIcons
+            name="phone-outline"
+            size={30}
+            style={styles.icon}
+          />
+        </View>
 
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Home')}
-              disabled={!isValid}
-              style={[
-                styles.button,
-                {backgroundColor: isValid ? '#539165' : '#A5C9CA'},
-              ]}>
-              <Text style={styles.buttonText}>Update</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      </Formik>
+        <TouchableOpacity
+          disabled={!isValidInput()}
+          onPress={() => Submit()}
+          style={[
+            styles.button,
+            {backgroundColor: isValidInput() ? COLORS.primary : '#ccc'},
+          ]}>
+          <Text style={styles.buttonText}>Update</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -120,7 +141,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    // backgroundColor: '#2196F3',
+    // backgroundColor: COLORS.primary,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
@@ -133,17 +154,17 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 
-  errorText: {
-    color: '#E0144C',
-    fontWeight: '600',
-    position: 'absolute',
-    top: 60,
-    fontSize: 12,
-  },
-
   icon: {
     position: 'absolute',
     top: 19,
     color: '#000',
+  },
+
+  validationerror: {
+    color: 'red',
+    position: 'absolute',
+    top: 60,
+    fontWeight: '700',
+    fontSize: 13,
   },
 });

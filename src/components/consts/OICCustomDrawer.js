@@ -11,7 +11,7 @@ import {useNavigation} from '@react-navigation/native';
 import '../../../FirebaseConfig';
 import auth from '@react-native-firebase/auth';
 
-const CustomDrawer = props => {
+const OICCustomDrawer = props => {
   const [profile, setProfile] = useState(null);
   const navigation = useNavigation();
 
@@ -32,7 +32,8 @@ const CustomDrawer = props => {
         <View style={styles.header}>
           <View style={styles.profileContainer}>
             <View style={styles.imgContainer}>
-              <TouchableOpacity onPress={() => navigation.navigate('Personal')}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('OICPersonal')}>
                 <Image
                   style={styles.image}
                   source={profile ? {uri: profile} : imgPlaceHolder}
@@ -74,7 +75,7 @@ const CustomDrawer = props => {
   );
 };
 
-export default CustomDrawer;
+export default OICCustomDrawer;
 
 const styles = StyleSheet.create({
   header: {
