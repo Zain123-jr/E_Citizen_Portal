@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,14 @@ import COLORS from '../../../consts/Colors';
 import {Picker} from '@react-native-picker/picker';
 
 const RobberyForm = ({navigation}) => {
+  const [subject, setSubject] = useState('');
+  const [category, setCategory] = useState('');
+  const [details, setDetails] = useState('');
+  const [address, setAddress] = useState('');
+  const [province, setProvince] = useState('');
+  const [district, setDistrict] = useState('');
+  const [tehsil, setTehsil] = useState('');
+
   function Submit() {
     Alert.alert('Complaint Submit Successfully');
   }
@@ -39,6 +47,8 @@ const RobberyForm = ({navigation}) => {
                     placeholder="Enter Subject"
                     placeholderTextColor="black"
                     autoCapitalize="none"
+                    value={subject}
+                    onChangeText={setSubject}
                   />
                 </View>
 
@@ -52,6 +62,8 @@ const RobberyForm = ({navigation}) => {
                     borderRightWidth: 0,
                   }}>
                   <Picker
+                    selectedValue={category}
+                    onValueChange={setCategory}
                     style={{
                       left: -10,
                       top: 8,
@@ -92,6 +104,8 @@ const RobberyForm = ({navigation}) => {
                     placeholderTextColor="black"
                     multiline={true}
                     numberOfLines={6}
+                    value={details}
+                    onChangeText={setDetails}
                   />
                 </View>
 
@@ -102,6 +116,8 @@ const RobberyForm = ({navigation}) => {
                     placeholderTextColor="black"
                     multiline={true}
                     numberOfLines={6}
+                    value={address}
+                    onChangeText={setAddress}
                   />
                 </View>
 
@@ -117,6 +133,8 @@ const RobberyForm = ({navigation}) => {
                     marginTop: 20,
                   }}>
                   <Picker
+                    selectedValue={province}
+                    onValueChange={setProvince}
                     style={{
                       left: -10,
                       top: 8,
@@ -147,6 +165,8 @@ const RobberyForm = ({navigation}) => {
                     marginTop: 20,
                   }}>
                   <Picker
+                    selectedValue={district}
+                    onValueChange={setDistrict}
                     style={{
                       left: -10,
                       top: 8,
@@ -177,6 +197,8 @@ const RobberyForm = ({navigation}) => {
                     marginTop: 20,
                   }}>
                   <Picker
+                    selectedValue={tehsil}
+                    onValueChange={setTehsil}
                     style={{
                       left: -10,
                       top: 8,
@@ -212,9 +234,7 @@ const RobberyForm = ({navigation}) => {
 
                 <TouchableOpacity
                   onPress={() => Submit()}
-                  style={
-                    styles.button
-                  }>
+                  style={styles.button}>
                   <Text style={styles.buttonText}>Submit Complaint</Text>
                 </TouchableOpacity>
               </View>
@@ -296,7 +316,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 15,
     marginBottom: 20,
-    backgroundColor:COLORS.primary
+    backgroundColor: COLORS.primary,
   },
 
   buttonText: {

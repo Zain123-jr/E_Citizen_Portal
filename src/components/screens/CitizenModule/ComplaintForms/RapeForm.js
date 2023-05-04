@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,14 @@ import COLORS from '../../../consts/Colors';
 import {Picker} from '@react-native-picker/picker';
 
 const RapeForm = ({navigation}) => {
+  const [subject, setSubject] = useState('');
+  const [category, setCategory] = useState('');
+  const [details, setDetails] = useState('');
+  const [address, setAddress] = useState('');
+  const [province, setProvince] = useState('');
+  const [district, setDistrict] = useState('');
+  const [tehsil, setTehsil] = useState('');
+
   function Submit() {
     Alert.alert('Complaint Submit Successfully');
   }
@@ -39,6 +47,8 @@ const RapeForm = ({navigation}) => {
                     placeholder="Enter Subject"
                     placeholderTextColor="black"
                     autoCapitalize="none"
+                    value={subject}
+                    onChangeText={setSubject}
                   />
                 </View>
 
@@ -52,6 +62,8 @@ const RapeForm = ({navigation}) => {
                     borderRightWidth: 0,
                   }}>
                   <Picker
+                    selectedValue={category}
+                    onValueChange={setCategory}
                     style={{
                       left: -10,
                       top: 8,
@@ -87,6 +99,8 @@ const RapeForm = ({navigation}) => {
                     placeholderTextColor="black"
                     multiline={true}
                     numberOfLines={6}
+                    value={details}
+                    onChangeText={setDetails}
                   />
                 </View>
 
@@ -97,6 +111,8 @@ const RapeForm = ({navigation}) => {
                     placeholderTextColor="black"
                     multiline={true}
                     numberOfLines={6}
+                    value={address}
+                    onChangeText={setAddress}
                   />
                 </View>
 
@@ -112,6 +128,8 @@ const RapeForm = ({navigation}) => {
                     marginTop: 20,
                   }}>
                   <Picker
+                    selectedValue={province}
+                    onValueChange={setProvince}
                     style={{
                       left: -10,
                       top: 8,
@@ -142,6 +160,8 @@ const RapeForm = ({navigation}) => {
                     marginTop: 20,
                   }}>
                   <Picker
+                    selectedValue={district}
+                    onValueChange={setDistrict}
                     style={{
                       left: -10,
                       top: 8,
@@ -172,6 +192,8 @@ const RapeForm = ({navigation}) => {
                     marginTop: 20,
                   }}>
                   <Picker
+                    selectedValue={tehsil}
+                    onValueChange={setTehsil}
                     style={{
                       left: -10,
                       top: 8,
