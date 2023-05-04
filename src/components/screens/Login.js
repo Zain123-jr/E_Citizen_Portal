@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView} from 'react-native';
+import {Button, ScrollView} from 'react-native';
 import {useState} from 'react';
 
 import {
@@ -29,13 +29,12 @@ const Login = ({navigation}) => {
     } else if (email == 'police@gmail.com' && password == 'Police123@') {
       navigation.navigate('PoliceStationHomepage');
     } else if (email == email && password == password) {
+      alert('Login Successful');
       navigation.navigate('CitizenHome');
     } else {
       auth()
         .signInWithEmailAndPassword(email, password)
-        .then(() => {
-          alert('Login Successful');
-        })
+        .then(() => {})
         .catch(error => {
           alert(error);
         });

@@ -20,6 +20,7 @@ import '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
+
 const Signup = ({navigation}) => {
   const [fullname, setFullname] = useState('');
   const [email, setEmail] = useState('');
@@ -40,7 +41,7 @@ const Signup = ({navigation}) => {
         cnic: cnic,
       })
       .then(() => {
-        // alert('User Registered Successfully!');
+        alert('User Registered Successfully!');
         navigation.navigate('Login');
       })
       .catch(error => {
@@ -62,6 +63,8 @@ const Signup = ({navigation}) => {
         console.error(error);
       });
   };
+
+ 
 
   const isValidInput = () => {
     const fullNamePattern = /^[a-zA-Z\s]*$/;
@@ -296,6 +299,7 @@ const Signup = ({navigation}) => {
                 <Text style={styles.btntext}>Login</Text>
               </TouchableOpacity>
             </View>
+          
           </View>
         </ScrollView>
       </ImageBackground>
