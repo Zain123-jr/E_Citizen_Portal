@@ -12,6 +12,8 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../../consts/Colors';
 import {Picker} from '@react-native-picker/picker';
+import DocumentPicker from 'react-native-document-picker';
+import storage from '@react-native-firebase/storage';
 
 const TortureForm = ({navigation}) => {
   const [subject, setSubject] = useState('');
@@ -24,6 +26,34 @@ const TortureForm = ({navigation}) => {
 
   function Submit() {
     alert('Complaint Added Successfully');
+  }
+  const [Imagedata, setimagedata] = useState(null);
+  const [upload, setupload] = useState(null);
+  const pickimage = async () => {
+    try {
+      const response = await DocumentPicker.pickSingle({
+        type: [DocumentPicker.types.images],
+        copyTo:'cachesDirectory',
+      });
+
+      console.log(response);
+      setimagedata(response);
+     
+      
+    } catch (error) {
+      console.log(err);
+    }
+  };
+  const uploadimage=async()=>{
+    try {
+      const responses = await storage().ref(`/Citizen/${Imagedata.name}`).putFile(Imagedata.fileCopyUri);
+       console.log(responses);
+       console.log(err);
+      
+    } catch (error) {
+      console.log(err);
+      
+    }
   }
 
   return (
@@ -225,6 +255,32 @@ const TortureForm = ({navigation}) => {
                     />
                   </Picker>
                 </View>
+                <View style={{justifyContent:'center', alignItems:'center',flex:1}}>
+                {Imagedata ? (
+                  <Image
+                    source={{uri: Imagedata.uri}}
+                    style={{height: 100, width: 100}}></Image>
+                ) : (
+                  <Text>image no found</Text>
+                )}
+                </View>
+                <View style={{flexDirection: 'row', width: '100%',justifyContent:'space-around'}}>
+                <TouchableOpacity
+                  onPress={() => {
+                    pickimage();
+                  }}
+                  style={styles.button}>
+                  <Text style={styles.buttonText}>select image</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    uploadimage();
+                  }}
+                  style={styles.button}>
+                  <Text style={styles.buttonText}>upload image</Text>
+                </TouchableOpacity>
+                </View>
+
 
                 <TouchableOpacity
                   onPress={() => {
