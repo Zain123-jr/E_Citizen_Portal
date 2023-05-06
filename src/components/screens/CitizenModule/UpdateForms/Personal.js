@@ -8,20 +8,21 @@ import {
   Text,
 } from 'react-native';
 import imgPlaceHolder from '../../../../assets/defualt-Avatar.png';
-import ImagePicker, {openPicker} from 'react-native-image-crop-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useState} from 'react';
 import COLORS from '../../../consts/Colors';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView} from 'react-native-gesture-handler';
-import {Picker} from '@react-native-picker/picker';
 import '../../../../../FirebaseConfig';
-import firebase from 'firebase/compat';
+import firebase from 'firebase/compat/app';
 import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 
-const Personal = ({navigation, route}) => {
+const Personal = () => {
   const [imageUrl, setImageUrl] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const authInstance = auth();
   const [fullname, setfullName] = useState('');
   const [mobile, setMobile] = useState('');
@@ -32,7 +33,7 @@ const Personal = ({navigation, route}) => {
       height: 400,
       cropping: true,
     }).then(image => {
-      setImageUrl(image);
+      setImageUrl(image.path);
     });
   };
 
@@ -154,7 +155,7 @@ const Personal = ({navigation, route}) => {
 
               <TouchableOpacity
                 disabled={!isValidInput()}
-                // onPress={handleUpdate}
+                // onPress={handleUpdateProfile}
                 style={[
                   styles.button,
                   {backgroundColor: isValidInput() ? COLORS.primary : '#ccc'},
