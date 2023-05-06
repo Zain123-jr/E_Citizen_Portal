@@ -1,7 +1,6 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {ScrollView} from 'react-native';
 import {useState} from 'react';
-import {Picker} from '@react-native-picker/picker';
 
 import {
   View,
@@ -11,72 +10,90 @@ import {
   ImageBackground,
   TextInput,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../consts/Colors';
+import ImagePicker from 'react-native-image-crop-picker';
+// import imgPlaceHolder from '../../assets/defualt-Avatar.png';
 import '../../../FirebaseConfig';
-import '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-
+import {Picker} from '@react-native-picker/picker';
+import storage from '@react-native-firebase/storage';
 
 const Signup = ({navigation}) => {
   const [fullname, setFullname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [address, setAddress] = useState('');
+  const [mobile, setMobile] = useState('');
   const [cnic, setCnic] = useState('');
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePassword1, setHidePassword1] = useState(true);
+  const [role, setRole] = useState('');
+  const [image, setImage] = useState('');
 
   const handleSignup = async () => {
-    //to send user data into firestore
-
-    firestore()
-      .collection('user')
-      .add({
-        fullname: fullname,
-        email: email,
-        cnic: cnic,
-      })
-      .then(() => {
-        alert('User Registered Successfully!');
-        navigation.navigate('Login');
-      })
-      .catch(error => {
-        console.error(error);
-      });
-
-    auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log('User is Added to Firebase!');
-      })
-      .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          alert('That email address is already in use!');
-        }
-        if (error.code === 'auth/invalid-email') {
-          alert('That email address is invalid!');
-        }
-        console.error(error);
-      });
+    try {
+      const authCredential = await auth().createUserWithEmailAndPassword(
+        email,
+        password,
+      );
+      const user = authCredential.user;
+      const userRef = firestore().collection('users').doc(user.uid);
+      const imageRef = storage().ref().child(`users/${user.uid}/`);
+      const imageBlob = await fetch(image.path).then(response =>
+        response.blob(),
+      );
+      await imageRef.put(imageBlob);
+      const imageUrl = await imageRef.getDownloadURL();
+      await userRef
+        .set({
+          role,
+          imageUrl,
+          fullname,
+          email,
+          address,
+          mobile,
+          cnic,
+        })
+        .then(() => {
+          alert('User Registered Successfully');
+          navigation.navigate('Login');
+        });
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
- 
+  const handlePickImage = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 300,
+      cropping: true,
+    }).then(image => {
+      setImage(image);
+    });
+  };
 
   const isValidInput = () => {
     const fullNamePattern = /^[a-zA-Z\s]*$/;
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordPattern =
       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/;
+    const addressPattern = /^[\w\s,'-]*$/;
+    const mobilePattern = /^(\+92|92|0)(3\d{2}|\d{2})(\d{7})$/;
     const cnicPattern = /^(\d{5})-(\d{7})-(\d{1})$/gm;
 
     const isFullNameValid = fullNamePattern.test(fullname);
     const isEmailValid = emailPattern.test(email);
     const isPasswordValid = passwordPattern.test(password);
     const isConfirmPasswordValid = confirmPassword === password;
+    const isAddressValid = addressPattern.test(address);
+    const isMobileValid = mobilePattern.test(mobile);
     const isCnicValid = cnicPattern.test(cnic);
 
     return (
@@ -84,6 +101,8 @@ const Signup = ({navigation}) => {
       isEmailValid &&
       isPasswordValid &&
       isConfirmPasswordValid &&
+      isAddressValid &&
+      isMobileValid &&
       isCnicValid
     );
   };
@@ -139,6 +158,36 @@ const Signup = ({navigation}) => {
   };
   const confirmPasswordError = validateConfirmPassword();
 
+  const handleAddressChange = value => {
+    setAddress(value);
+  };
+  const validateAddress = () => {
+    if (!address) {
+      return '';
+    }
+    const addressRegex = /^[\w\s,'-]*$/;
+    if (!addressRegex.test(address)) {
+      return 'Invalid Address Format';
+    }
+    return '';
+  };
+  const addressError = validateAddress();
+
+  const handleMobileChange = value => {
+    setMobile(value);
+  };
+  const validateMobile = () => {
+    if (!mobile) {
+      return '';
+    }
+    const mobileRegex = /^(\+92|92|0)(3\d{2}|\d{2})(\d{7})$/;
+    if (!mobileRegex.test(mobile)) {
+      return 'Invalid Mobile Format';
+    }
+    return '';
+  };
+  const mobileError = validateMobile();
+
   const handleCnicChange = value => {
     setCnic(value);
   };
@@ -165,6 +214,13 @@ const Signup = ({navigation}) => {
             <Text style={styles.description}>
               Please provide all required details to register
             </Text>
+
+            <View style={styles.imgContainer}>
+              {image && <Image source={{uri: image.path}} style={styles.img} />}
+              <TouchableOpacity style={styles.button} onPress={handlePickImage}>
+                <Text style={styles.buttontext}>Select Image</Text>
+              </TouchableOpacity>
+            </View>
 
             <View style={{flexDirection: 'row'}}>
               <TextInput
@@ -266,6 +322,42 @@ const Signup = ({navigation}) => {
             <View style={{flexDirection: 'row'}}>
               <TextInput
                 style={styles.input}
+                placeholder="Address"
+                placeholderTextColor="white"
+                value={address}
+                onChangeText={handleAddressChange}
+              />
+              {addressError ? (
+                <Text style={styles.validationerror}>{addressError}</Text>
+              ) : null}
+              <MaterialCommunityIcons
+                name="map-marker-outline"
+                size={30}
+                style={styles.icon}
+              />
+            </View>
+
+            <View style={{flexDirection: 'row'}}>
+              <TextInput
+                style={styles.input}
+                placeholder="Phone"
+                placeholderTextColor="white"
+                value={mobile}
+                onChangeText={handleMobileChange}
+              />
+              {mobileError ? (
+                <Text style={styles.validationerror}>{mobileError}</Text>
+              ) : null}
+              <MaterialCommunityIcons
+                name="phone-outline"
+                size={30}
+                style={styles.icon}
+              />
+            </View>
+
+            <View style={{flexDirection: 'row'}}>
+              <TextInput
+                style={styles.input}
                 placeholder="CNIC: (XXXXX-XXXXXXX-X)"
                 placeholderTextColor="white"
                 value={cnic}
@@ -276,6 +368,45 @@ const Signup = ({navigation}) => {
               ) : null}
               <MaterialCommunityIcons
                 name="id-card"
+                size={30}
+                style={styles.icon}
+              />
+            </View>
+
+            <View
+              style={{
+                borderColor: '#ccc',
+                top: -6,
+                borderWidth: 2,
+                borderTopWidth: 0,
+                borderLeftWidth: 0,
+                borderRightWidth: 0,
+                marginBottom: 20,
+                marginTop: 20,
+              }}>
+              <Picker
+                selectedValue={role}
+                onValueChange={setRole}
+                style={{
+                  left: 20,
+                  top: 8,
+                  color: 'white',
+                }}>
+                <Picker.Item style={styles.item} label="Select Role" value="" />
+                <Picker.Item
+                  style={styles.item}
+                  label="Citizen"
+                  value="citizen"
+                />
+                <Picker.Item style={styles.item} label="OIC" value="oic" />
+                <Picker.Item
+                  style={styles.item}
+                  label="Police Station"
+                  value="policestation"
+                />
+              </Picker>
+              <MaterialCommunityIcons
+                name="account-outline"
                 size={30}
                 style={styles.icon}
               />
@@ -299,7 +430,6 @@ const Signup = ({navigation}) => {
                 <Text style={styles.btntext}>Login</Text>
               </TouchableOpacity>
             </View>
-          
           </View>
         </ScrollView>
       </ImageBackground>
@@ -331,6 +461,7 @@ const styles = StyleSheet.create({
     borderRadius: 55,
     borderColor: COLORS.primary,
     borderWidth: 4,
+    left: 85,
   },
 
   image: {
@@ -392,6 +523,13 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 18,
+  },
+
+  buttontext: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 18,
+    bottom: 10,
   },
 
   icon: {

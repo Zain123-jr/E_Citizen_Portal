@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, ScrollView} from 'react-native';
+import {ScrollView} from 'react-native';
 import {useState} from 'react';
 
 import {
@@ -16,6 +16,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import COLORS from '../consts/Colors';
 import '../../../FirebaseConfig';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -23,21 +24,25 @@ const Login = ({navigation}) => {
   const [hidePassword, setHidePassword] = useState(true);
 
   const handleLogin = async () => {
-    //to autheticate user
-    if (email == 'oic@gmail.com' && password == 'Oic123@') {
-      navigation.navigate('OICHomepage');
-    } else if (email == 'police@gmail.com' && password == 'Police123@') {
-      navigation.navigate('PoliceStationHomepage');
-    } else if (email == email && password == password) {
+    try {
+      const authCredential = await auth().signInWithEmailAndPassword(
+        email,
+        password,
+      );
+      const user = authCredential.user;
+      const userRef = firestore().collection('users').doc(user.uid);
+      const userDoc = await userRef.get();
+      const role = userDoc.data().role;
+      if (role === 'citizen') {
+        navigation.navigate('CitizenHome');
+      } else if (role === 'oic') {
+        navigation.navigate('OICHomepage');
+      } else if (role === 'policestation') {
+        navigation.navigate('PoliceStationHomepage');
+      }
       alert('Login Successful');
-      navigation.navigate('CitizenHome');
-    } else {
-      auth()
-        .signInWithEmailAndPassword(email, password)
-        .then(() => {})
-        .catch(error => {
-          alert(error);
-        });
+    } catch (error) {
+      alert(error.message);
     }
   };
 

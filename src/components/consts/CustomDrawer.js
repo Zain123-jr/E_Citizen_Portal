@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   DrawerContentScrollView,
   DrawerItemList,
@@ -10,9 +10,11 @@ import COLORS from './Colors';
 import {useNavigation} from '@react-navigation/native';
 import '../../../FirebaseConfig';
 import auth from '@react-native-firebase/auth';
+import storage from '@react-native-firebase/storage';
 
 const CustomDrawer = props => {
-  const [profile, setProfile] = useState(null);
+  const [imageUrl, setImageUrl] = useState('');
+  const authInstance = auth();
   const navigation = useNavigation();
 
   const handleLogout = async () => {
@@ -21,9 +23,39 @@ const CustomDrawer = props => {
       alert('Logout Successfully');
       navigation.navigate('Login');
     } catch (error) {
-      console.error(error.message);
+      alert(error.message);
     }
   };
+
+  // useEffect(() => {
+  //   storage()
+  //     .ref(`users/${{}}/`) //name in storage in firebase console
+  //     .getDownloadURL()
+  //     .then(url => {
+  //       setImageUrl(url);
+  //     })
+  //     .catch(e => alert('Errors while downloading => ', e));
+  // }, []);
+
+  useEffect(() => {
+    const fetchImageUrl = async () => {
+      const user = authInstance.currentUser;
+      if (user) {
+        try {
+          const url = await storage()
+            .ref(`users/${user.uid}/`) // Name in storage in Firebase console
+            .getDownloadURL();
+          setImageUrl(url);
+        } catch (error) {
+          alert('Error while downloading: ' + error);
+        }
+      } else {
+        // User is not logged in, handle this case if needed
+      }
+    };
+
+    fetchImageUrl();
+  }, []);
 
   return (
     <View style={{flex: 1}}>
@@ -32,12 +64,16 @@ const CustomDrawer = props => {
         <View style={styles.header}>
           <View style={styles.profileContainer}>
             <View style={styles.imgContainer}>
-              <TouchableOpacity onPress={() => navigation.navigate('Personal')}>
-                <Image
-                  style={styles.image}
-                  source={profile ? {uri: profile} : imgPlaceHolder}
-                />
-              </TouchableOpacity>
+              <View style={styles.imgContainer}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Personal')}>
+                  {imageUrl ? (
+                    <Image source={{uri: imageUrl}} style={styles.image} />
+                  ) : (
+                    <Image source={imgPlaceHolder} style={styles.image} />
+                  )}
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>

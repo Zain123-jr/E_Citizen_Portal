@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -15,21 +15,46 @@ import COLORS from '../../../consts/Colors';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Picker} from '@react-native-picker/picker';
+import '../../../../../FirebaseConfig';
+import firebase from 'firebase/compat';
+import auth from '@react-native-firebase/auth';
+import storage from '@react-native-firebase/storage';
 
 const Personal = ({navigation, route}) => {
-  const [profile, setProfile] = useState(null);
+  const [imageUrl, setImageUrl] = useState('');
+  const authInstance = auth();
   const [fullname, setfullName] = useState('');
   const [mobile, setMobile] = useState('');
 
-  const imagePick = () => {
+  const handlePickImage = () => {
     ImagePicker.openPicker({
       width: 400,
       height: 400,
       cropping: true,
     }).then(image => {
-      setProfile(image.path);
+      setImageUrl(image);
     });
   };
+
+  useEffect(() => {
+    const fetchImageUrl = async () => {
+      const user = authInstance.currentUser;
+      if (user) {
+        try {
+          const url = await storage()
+            .ref(`users/${user.uid}/`) // Name in storage in Firebase console
+            .getDownloadURL();
+          setImageUrl(url);
+        } catch (error) {
+          alert('Error while downloading: ' + error);
+        }
+      } else {
+        // User is not logged in, handle this case if needed
+      }
+    };
+
+    fetchImageUrl();
+  }, []);
 
   const isValidInput = () => {
     const fullNamePattern = /^[a-zA-Z\s]*$/;
@@ -45,7 +70,7 @@ const Personal = ({navigation, route}) => {
     setfullName(value);
   };
   const validateFullname = () => {
-    if(!fullname){
+    if (!fullname) {
       return '';
     }
     const regex = /^[a-zA-Z\s]*$/;
@@ -77,18 +102,12 @@ const Personal = ({navigation, route}) => {
         <View style={styles.primarycontainer}>
           <View style={styles.profileContainer}>
             <View style={styles.imgContainer}>
-              <Image
-                style={styles.image}
-                source={profile ? {uri: profile} : imgPlaceHolder}
-              />
-              <TouchableOpacity
-                onPress={imagePick}
-                style={{alignItems: 'flex-end', top: -10}}>
-                <MaterialCommunityIcons
-                  name="plus-circle"
-                  size={30}
-                  color={COLORS.primary}
-                />
+              <TouchableOpacity onPress={handlePickImage}>
+                {imageUrl ? (
+                  <Image source={{uri: imageUrl}} style={styles.image} />
+                ) : (
+                  <Image source={imgPlaceHolder} style={styles.image} />
+                )}
               </TouchableOpacity>
             </View>
           </View>
@@ -135,6 +154,7 @@ const Personal = ({navigation, route}) => {
 
               <TouchableOpacity
                 disabled={!isValidInput()}
+                // onPress={handleUpdate}
                 style={[
                   styles.button,
                   {backgroundColor: isValidInput() ? COLORS.primary : '#ccc'},

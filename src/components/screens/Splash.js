@@ -2,11 +2,40 @@ import React, {useEffect, useState} from 'react';
 import {Image, ImageBackground} from 'react-native';
 import {View, StyleSheet, Text} from 'react-native';
 import COLORS from '../consts/Colors';
+import '../../../FirebaseConfig';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 const Splash = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate('CitizenPortal');
+      const unsubscribe = auth().onAuthStateChanged(async user => {
+        if (user) {
+          const userRef = firestore().collection('users').doc(user.uid);
+          const userDoc = await userRef.get();
+          if (userDoc.exists) {
+            const {role} = userDoc.data();
+            switch (role) {
+              case 'citizen':
+                navigation.navigate('CitizenHome');
+                break;
+              case 'oic':
+                navigation.navigate('OICHomepage');
+                break;
+              case 'policestation':
+                navigation.navigate('PoliceStationHomepage');
+                break;
+              default:
+                console.log('Invalid department');
+            }
+          } else {
+            console.log('User document not found');
+          }
+        } else {
+          navigation.navigate('Login');
+        }
+      });
+      return unsubscribe;
     }, 2000);
   }, []);
 
