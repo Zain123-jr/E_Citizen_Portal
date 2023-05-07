@@ -21,8 +21,6 @@ import storage from '@react-native-firebase/storage';
 
 const Personal = () => {
   const [imageUrl, setImageUrl] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const authInstance = auth();
   const [fullname, setfullName] = useState('');
   const [mobile, setMobile] = useState('');
