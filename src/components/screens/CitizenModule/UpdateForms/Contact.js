@@ -8,16 +8,34 @@ import {
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../../consts/Colors';
+import '../../../../../FirebaseConfig';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 const Contact = ({navigation}) => {
   const [email, setEmail] = useState('');
-  const [addressline, setAddressLine] = useState('');
+  const [address, setAddress] = useState('');
+  const authInstance = auth();
+
+  const handleUpdateContact = async () => {
+    const user = authInstance.currentUser;
+    try {
+      // Update the Firestore document with the new values
+      await firestore().collection('users').doc(user.uid).update({
+        email,
+        address,
+      });
+      alert('Contact information updated successfully!');
+    } catch (error) {
+      alert('Error updating contact information:', error);
+    }
+  };
 
   const isValidInput = () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const isEmailValid = emailPattern.test(email);
-    const isAddressValid = addressline.trim().length > 0;
+    const isAddressValid = address.trim().length > 0;
 
     return isEmailValid && isAddressValid;
   };
@@ -38,13 +56,13 @@ const Contact = ({navigation}) => {
   const emailError = validateEmail();
 
   const handleAddressChange = value => {
-    setAddressLine(value);
+    setAddress(value);
   };
   const validateAddress = () => {
-    if (!addressline) {
+    if (!address) {
       return '';
     }
-    if (addressline.length < 5) {
+    if (address.length < 5) {
       return 'Address must be at least 5 characters long';
     }
     return '';
@@ -77,7 +95,7 @@ const Contact = ({navigation}) => {
             style={styles.input}
             placeholder="Address Line"
             placeholderTextColor={COLORS.grey}
-            value={addressline}
+            value={address}
             onChangeText={handleAddressChange}
           />
           {addressError ? (
@@ -92,12 +110,12 @@ const Contact = ({navigation}) => {
 
         <TouchableOpacity
           disabled={!isValidInput()}
+          onPress={handleUpdateContact}
           style={[
             styles.button,
             {backgroundColor: isValidInput() ? COLORS.primary : '#ccc'},
-          ]}
-          onPress={() => navigation.navigate('CitizenHome')}>
-          <Text style={styles.buttonText}>Update</Text>
+          ]}>
+          <Text style={styles.buttonText}>Update Contact</Text>
         </TouchableOpacity>
       </View>
     </View>

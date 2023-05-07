@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -8,53 +8,66 @@ import {
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../../consts/Colors';
+import '../../../../../FirebaseConfig';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 const PoliceStationContact = ({navigation}) => {
-  const [addressline, setAddressLine] = useState('');
-  const [mobile, setMobile] = useState('');
+  const [email, setEmail] = useState('');
+  const [address, setAddress] = useState('');
+  const authInstance = auth();
 
-  function Submit() {
-    alert('Contact Update Successfully');
-  }
+  const handleUpdateContact = async () => {
+    const user = authInstance.currentUser;
+    try {
+      // Update the Firestore document with the new values
+      await firestore().collection('users').doc(user.uid).update({
+        email,
+        address,
+      });
+      alert('Contact information updated successfully!');
+    } catch (error) {
+      alert('Error updating contact information:', error);
+    }
+  };
 
   const isValidInput = () => {
-    const mobilePattern = /^[0-9]{11}$/;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    const isMobileValid = mobilePattern.test(mobile);
-    const isAddressValid = addressline.trim().length > 0;
+    const isEmailValid = emailPattern.test(email);
+    const isAddressValid = address.trim().length > 0;
 
-    return isAddressValid && isMobileValid;
+    return isEmailValid && isAddressValid;
   };
 
-  const handleMobileNumberChange = value => {
-    setMobile(value);
+  const handleEmailChange = value => {
+    setEmail(value);
   };
-
-  const handleAddressChange = value => {
-    setAddressLine(value);
-  };
-  const validateAddress = () => {
-    if (!addressline) {
+  const validateEmail = () => {
+    if (!email) {
       return '';
     }
-    if (addressline.length < 5) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return 'Invalid email format';
+    }
+    return '';
+  };
+  const emailError = validateEmail();
+
+  const handleAddressChange = value => {
+    setAddress(value);
+  };
+  const validateAddress = () => {
+    if (!address) {
+      return '';
+    }
+    if (address.length < 5) {
       return 'Address must be at least 5 characters long';
     }
     return '';
   };
   const addressError = validateAddress();
-
-  const validateMobileNumber = () => {
-    if (!mobile) {
-      return '';
-    }
-    const mobileNumberRegex = /^[0-9]{11}$/;
-    if (!mobileNumberRegex.test(mobile)) {
-      return 'Invalid mobile number';
-    }
-    return '';
-  };
-  const mobileNumberError = validateMobileNumber();
 
   return (
     <View>
@@ -62,9 +75,27 @@ const PoliceStationContact = ({navigation}) => {
         <View style={{flexDirection: 'row'}}>
           <TextInput
             style={styles.input}
-            placeholder="Station Address"
+            placeholder="Station Email"
             placeholderTextColor="black"
-            value={addressline}
+            value={email}
+            onChangeText={handleEmailChange}
+          />
+          {emailError ? (
+            <Text style={styles.validationerror}>{emailError}</Text>
+          ) : null}
+          <MaterialCommunityIcons
+            name="email-outline"
+            size={30}
+            style={styles.icon}
+          />
+        </View>
+
+        <View style={{flexDirection: 'row'}}>
+          <TextInput
+            style={styles.input}
+            placeholder="Station Address:"
+            placeholderTextColor="black"
+            value={address}
             onChangeText={handleAddressChange}
           />
           {addressError ? (
@@ -77,33 +108,14 @@ const PoliceStationContact = ({navigation}) => {
           />
         </View>
 
-        <View style={{flexDirection: 'row'}}>
-          <TextInput
-            style={styles.input}
-            placeholder="Station Phone/Landline Number:"
-            placeholderTextColor="black"
-            keyboardType="numeric"
-            value={mobile}
-            onChangeText={handleMobileNumberChange}
-          />
-          {mobileNumberError ? (
-            <Text style={styles.validationerror}>{mobileNumberError}</Text>
-          ) : null}
-          <MaterialCommunityIcons
-            name="phone-outline"
-            size={30}
-            style={styles.icon}
-          />
-        </View>
-
         <TouchableOpacity
           disabled={!isValidInput()}
-          onPress={() => Submit()}
+          onPress={handleUpdateContact}
           style={[
             styles.button,
             {backgroundColor: isValidInput() ? COLORS.primary : '#ccc'},
           ]}>
-          <Text style={styles.buttonText}>Update</Text>
+          <Text style={styles.buttonText}>Update Contact</Text>
         </TouchableOpacity>
       </View>
     </View>

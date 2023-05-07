@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -10,38 +10,73 @@ import {
 import imgPlaceHolder from '../../../../assets/defualt-Avatar.png';
 import ImagePicker, {openPicker} from 'react-native-image-crop-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useState} from 'react';
 import COLORS from '../../../consts/Colors';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView} from 'react-native-gesture-handler';
+import '../../../../../FirebaseConfig';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import storage from '@react-native-firebase/storage';
 
 const PoliceStationPersonal = ({navigation}) => {
-  const [profile, setProfile] = useState(null);
+  const [imageUrl, setImageUrl] = useState('');
+  const authInstance = auth();
   const [fullname, setfullName] = useState('');
-  const [email, setEmail] = useState('');
+  const [mobile, setMobile] = useState('');
 
-  function Submit() {
-    alert('Profile Update Successfully');
-  }
-
-  const imagePick = () => {
+  const handlePickImage = () => {
     ImagePicker.openPicker({
       width: 400,
       height: 400,
       cropping: true,
     }).then(image => {
-      setProfile(image.path);
+      setImageUrl(image.path);
     });
+  };
+
+  useEffect(() => {
+    const fetchImageUrl = async () => {
+      const user = authInstance.currentUser;
+      if (user) {
+        try {
+          const url = await storage()
+            .ref(`users/${user.uid}/`) // Name in storage in Firebase console
+            .getDownloadURL();
+          setImageUrl(url);
+        } catch (error) {
+          alert('Error while downloading: ' + error);
+        }
+      } else {
+        // User is not logged in, handle this case if needed
+      }
+    };
+
+    fetchImageUrl();
+  }, []);
+
+  const handleUpdatePersonal = async () => {
+    const user = authInstance.currentUser;
+    try {
+      // Update the Firestore document with the new values
+      await firestore().collection('users').doc(user.uid).update({
+        fullname,
+        mobile,
+      });
+
+      alert('Personal information updated successfully!');
+    } catch (error) {
+      alert('Error updating personal information:', error);
+    }
   };
 
   const isValidInput = () => {
     const fullNamePattern = /^[a-zA-Z\s]*$/;
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const mobilePattern = /^[0-9]{11}$/;
 
     const isFullNameValid = fullNamePattern.test(fullname);
-    const isEmailValid = emailPattern.test(email);
+    const isMobileValid = mobilePattern.test(mobile);
 
-    return isFullNameValid && isEmailValid;
+    return isFullNameValid && isMobileValid;
   };
 
   const handleFullnameChange = value => {
@@ -59,20 +94,20 @@ const PoliceStationPersonal = ({navigation}) => {
   };
   const fullnameError = validateFullname();
 
-  const handleEmailChange = value => {
-    setEmail(value);
+  const handleMobileNumberChange = value => {
+    setMobile(value);
   };
-  const validateEmail = () => {
-    if (!email) {
+  const validateMobileNumber = () => {
+    if (!mobile) {
       return '';
     }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return 'Invalid email format';
+    const mobileNumberRegex = /^[0-9]{11}$/;
+    if (!mobileNumberRegex.test(mobile)) {
+      return 'Invalid mobile number';
     }
     return '';
   };
-  const emailError = validateEmail();
+  const mobileNumberError = validateMobileNumber();
 
   return (
     <SafeAreaView>
@@ -80,18 +115,12 @@ const PoliceStationPersonal = ({navigation}) => {
         <View style={styles.primarycontainer}>
           <View style={styles.profileContainer}>
             <View style={styles.imgContainer}>
-              <Image
-                style={styles.image}
-                source={profile ? {uri: profile} : imgPlaceHolder}
-              />
-              <TouchableOpacity
-                onPress={imagePick}
-                style={{alignItems: 'flex-end', top: -10}}>
-                <MaterialCommunityIcons
-                  name="plus-circle"
-                  size={30}
-                  color={COLORS.primary}
-                />
+              <TouchableOpacity onPress={handlePickImage}>
+                {imageUrl ? (
+                  <Image source={{uri: imageUrl}} style={styles.image} />
+                ) : (
+                  <Image source={imgPlaceHolder} style={styles.image} />
+                )}
               </TouchableOpacity>
             </View>
           </View>
@@ -120,17 +149,19 @@ const PoliceStationPersonal = ({navigation}) => {
               <View style={{flexDirection: 'row'}}>
                 <TextInput
                   style={styles.input}
-                  placeholder="Station Email"
+                  placeholder="Station Phone"
                   placeholderTextColor="black"
                   autoCapitalize="none"
-                  value={email}
-                  onChangeText={handleEmailChange}
+                  value={mobile}
+                  onChangeText={handleMobileNumberChange}
                 />
-                {emailError ? (
-                  <Text style={styles.validationerror}>{emailError}</Text>
+                {mobileNumberError ? (
+                  <Text style={styles.validationerror}>
+                    {mobileNumberError}
+                  </Text>
                 ) : null}
                 <MaterialCommunityIcons
-                  name="email-outline"
+                  name="phone-outline"
                   size={30}
                   style={styles.icon}
                 />
@@ -138,12 +169,12 @@ const PoliceStationPersonal = ({navigation}) => {
 
               <TouchableOpacity
                 disabled={!isValidInput()}
-                onPress={() => Submit()}
+                onPress={handleUpdatePersonal}
                 style={[
                   styles.button,
                   {backgroundColor: isValidInput() ? COLORS.primary : '#ccc'},
                 ]}>
-                <Text style={styles.buttonText}>Update</Text>
+                <Text style={styles.buttonText}>Update Personal</Text>
               </TouchableOpacity>
             </View>
           </View>

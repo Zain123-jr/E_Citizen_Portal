@@ -15,7 +15,7 @@ import COLORS from '../../../consts/Colors';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView} from 'react-native-gesture-handler';
 import '../../../../../FirebaseConfig';
-import firebase from 'firebase/compat/app';
+import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 
@@ -54,6 +54,21 @@ const Personal = () => {
 
     fetchImageUrl();
   }, []);
+
+  const handleUpdatePersonal = async () => {
+    const user = authInstance.currentUser;
+    try {
+      // Update the Firestore document with the new values
+      await firestore().collection('users').doc(user.uid).update({
+        fullname,
+        mobile,
+      });
+
+      alert('Personal information updated successfully!');
+    } catch (error) {
+      alert('Error updating personal information:', error);
+    }
+  };
 
   const isValidInput = () => {
     const fullNamePattern = /^[a-zA-Z\s]*$/;
@@ -153,12 +168,12 @@ const Personal = () => {
 
               <TouchableOpacity
                 disabled={!isValidInput()}
-                // onPress={handleUpdateProfile}
+                onPress={handleUpdatePersonal}
                 style={[
                   styles.button,
                   {backgroundColor: isValidInput() ? COLORS.primary : '#ccc'},
                 ]}>
-                <Text style={styles.buttonText}>Update</Text>
+                <Text style={styles.buttonText}>Update Personal</Text>
               </TouchableOpacity>
             </View>
           </View>
