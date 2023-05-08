@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   Image,
+  
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -14,6 +15,7 @@ import COLORS from '../../../consts/Colors';
 import {Picker} from '@react-native-picker/picker';
 import DocumentPicker from 'react-native-document-picker';
 import storage from '@react-native-firebase/storage';
+
 
 const TortureForm = ({navigation}) => {
   const [subject, setSubject] = useState('');
@@ -31,13 +33,14 @@ const TortureForm = ({navigation}) => {
   const [upload, setupload] = useState(null);
   const pickimage = async () => {
     try {
-      const response = await DocumentPicker.pickSingle({
-        type: [DocumentPicker.types.images],
+      const response = await DocumentPicker.pickMultiple({
+        type: [DocumentPicker.types.allFiles],
         copyTo:'cachesDirectory',
       });
+      const uris = response.map(response => response.fileCopyUri);
 
       console.log(response);
-      setimagedata(response);
+      setimagedata(uris);
      
       
     } catch (error) {
@@ -45,16 +48,33 @@ const TortureForm = ({navigation}) => {
     }
   };
   const uploadimage=async()=>{
-    try {
-      const responses = await storage().ref(`/Citizen/${Imagedata.name}`).putFile(Imagedata.fileCopyUri);
+   
+      const responses = await storage().ref(`/Citizen/`);
+      Imagedata.forEach(uri => {
+        const name = uri.split('/').pop();
+        const task = responses.child(name).putFile(uri);
+  
+        task.on('state_changed', snapshot => {
+          // Handle upload progress
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+        }, error => {
+          // Handle upload error
+          console.log(error);
+        }, () => {
+          // Handle upload success
+          console.log('Upload successful');
+        });
+        task.then(() => {
+          console.log('Video uploaded successfully');
+          setimagedata(null); // Clear selected video after upload
+        });
+      });
        console.log(responses);
-       console.log(err);
+    
       
-    } catch (error) {
-      console.log(err);
-      
-    }
-  }
+   
+  };
 
   return (
     <SafeAreaView style={styles.maincontainer}>
@@ -255,15 +275,28 @@ const TortureForm = ({navigation}) => {
                     />
                   </Picker>
                 </View>
-                <View style={{justifyContent:'center', alignItems:'center',flex:1}}>
-                {Imagedata ? (
-                  <Image
-                    source={{uri: Imagedata.uri}}
-                    style={{height: 100, width: 100}}></Image>
-                ) : (
-                  <Text>image no found</Text>
-                )}
-                </View>
+                <ScrollView>
+      <View>
+       
+        {Imagedata ? (
+          <View>
+            {Imagedata.map(uri => (
+              <Image key={uri} source={{ uri }} style={{ width: 200, height: 200 }} />
+              
+            ))}
+          </View>
+          
+        
+        ): (
+          <Text>image no found</Text>
+        )}
+        
+      </View>
+      <View>
+       
+     
+     </View>
+    </ScrollView>
                 <View style={{flexDirection: 'row', width: '100%',justifyContent:'space-around'}}>
                 <TouchableOpacity
                   onPress={() => {
