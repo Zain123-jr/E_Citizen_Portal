@@ -435,7 +435,7 @@ const Signup = ({navigation}) => {
                 <View>
                   <TextInput
                     style={styles.input}
-                    placeholder="Badge(Mandatory for OIC)!"
+                    placeholder="Badge(For OIC Only)!"
                     placeholderTextColor="white"
                     autoCapitalize="none"
                     value={badge}
@@ -455,7 +455,7 @@ const Signup = ({navigation}) => {
                 <View>
                   <TextInput
                     style={styles.input}
-                    placeholder="Station ID(Mandatory for Police Station)!"
+                    placeholder="Station ID(For Station Only)!"
                     placeholderTextColor="white"
                     autoCapitalize="none"
                     value={stationid}
