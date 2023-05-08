@@ -15,7 +15,7 @@ import COLORS from '../../../consts/Colors';
 import {Picker} from '@react-native-picker/picker';
 import DocumentPicker from 'react-native-document-picker';
 import storage from '@react-native-firebase/storage';
-
+import Video from 'react-native-video';
 
 const TortureForm = ({navigation}) => {
   const [subject, setSubject] = useState('');
@@ -282,6 +282,22 @@ const TortureForm = ({navigation}) => {
           <View>
             {Imagedata.map(uri => (
               <Image key={uri} source={{ uri }} style={{ width: 200, height: 200 }} />
+              
+            ))}
+          </View>
+          
+        
+        ): (
+          <Text>image no found</Text>
+        )}
+        
+      </View>
+      <View>
+       
+        {Imagedata ? (
+          <View>
+            {Imagedata.map(uri => (
+              <Video key={uri} source={{ uri }} style={{ width: 200, height: 200 }} />
               
             ))}
           </View>
