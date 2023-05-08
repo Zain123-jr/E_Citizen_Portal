@@ -34,6 +34,10 @@ const Signup = ({navigation}) => {
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePassword1, setHidePassword1] = useState(true);
   const [role, setRole] = useState('');
+  const [badge, setBadge] = useState('');
+  const [stationid, setStationId] = useState('');
+  const [showBadgeField, setShowBadgeField] = useState(false);
+  const [showStationIdField, setShowStationIdField] = useState(false);
   const [image, setImage] = useState('');
 
   const handleSignup = async () => {
@@ -59,6 +63,8 @@ const Signup = ({navigation}) => {
           address,
           mobile,
           cnic,
+          badge,
+          stationid,
         })
         .then(() => {
           alert('User Registered Successfully');
@@ -77,6 +83,18 @@ const Signup = ({navigation}) => {
     }).then(image => {
       setImage(image);
     });
+  };
+
+  const handleRoleChange = value => {
+    setRole(value);
+    setShowBadgeField(value === 'oic');
+    setShowStationIdField(value === 'policestation');
+  };
+  const handleBadgeChange = value => {
+    setBadge(value);
+  };
+  const handleStationIdChange = value => {
+    setStationId(value);
   };
 
   const isValidInput = () => {
@@ -386,7 +404,7 @@ const Signup = ({navigation}) => {
               }}>
               <Picker
                 selectedValue={role}
-                onValueChange={setRole}
+                onValueChange={handleRoleChange}
                 style={{
                   left: 20,
                   top: 8,
@@ -410,6 +428,46 @@ const Signup = ({navigation}) => {
                 size={30}
                 style={styles.icon}
               />
+            </View>
+
+            <View>
+              {showBadgeField && (
+                <View>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Badge(For OIC Only)!"
+                    placeholderTextColor="white"
+                    autoCapitalize="none"
+                    value={badge}
+                    onChangeText={handleBadgeChange}
+                  />
+                  <MaterialCommunityIcons
+                    name="police-badge-outline"
+                    size={30}
+                    style={styles.icon}
+                  />
+                </View>
+              )}
+            </View>
+
+            <View>
+              {showStationIdField && (
+                <View>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Station ID(For Station Only)!"
+                    placeholderTextColor="white"
+                    autoCapitalize="none"
+                    value={stationid}
+                    onChangeText={handleStationIdChange}
+                  />
+                  <MaterialCommunityIcons
+                    name="police-station"
+                    size={30}
+                    style={styles.icon}
+                  />
+                </View>
+              )}
             </View>
 
             <TouchableOpacity

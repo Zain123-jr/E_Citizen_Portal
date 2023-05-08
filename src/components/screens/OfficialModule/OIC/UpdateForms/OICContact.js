@@ -77,7 +77,7 @@ const OICContact = ({navigation}) => {
           <TextInput
             style={styles.input}
             placeholder="Email: (Hello123@gmail.com)"
-            placeholderTextColor={COLORS.grey}
+            placeholderTextColor={COLORS.dark}
             value={email}
             onChangeText={handleEmailChange}
           />
@@ -95,7 +95,7 @@ const OICContact = ({navigation}) => {
           <TextInput
             style={styles.input}
             placeholder="Address Line"
-            placeholderTextColor={COLORS.grey}
+            placeholderTextColor={COLORS.dark}
             value={address}
             onChangeText={handleAddressChange}
           />
