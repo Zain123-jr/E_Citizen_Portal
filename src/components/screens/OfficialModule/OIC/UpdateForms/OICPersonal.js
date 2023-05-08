@@ -133,7 +133,7 @@ const OICPersonal = ({navigation}) => {
                 <TextInput
                   style={styles.input}
                   placeholder="Full Name"
-                  placeholderTextColor={COLORS.gender}
+                  placeholderTextColor={COLORS.dark}
                   value={fullname}
                   onChangeText={handleFullnameChange}
                 />
@@ -152,6 +152,7 @@ const OICPersonal = ({navigation}) => {
                   style={styles.input}
                   placeholder="Phone Number"
                   keyboardType="phone-pad"
+                  placeholderTextColor={COLORS.dark}
                   value={mobile}
                   onChangeText={handleMobileNumberChange}
                 />

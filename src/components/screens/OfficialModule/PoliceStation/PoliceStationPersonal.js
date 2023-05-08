@@ -131,7 +131,7 @@ const PoliceStationPersonal = ({navigation}) => {
                 <TextInput
                   style={styles.input}
                   placeholder="Station Name"
-                  placeholderTextColor="black"
+                  placeholderTextColor={COLORS.dark}
                   autoCapitalize="none"
                   value={fullname}
                   onChangeText={handleFullnameChange}
@@ -150,7 +150,7 @@ const PoliceStationPersonal = ({navigation}) => {
                 <TextInput
                   style={styles.input}
                   placeholder="Station Phone"
-                  placeholderTextColor="black"
+                  placeholderTextColor={COLORS.dark}
                   autoCapitalize="none"
                   value={mobile}
                   onChangeText={handleMobileNumberChange}

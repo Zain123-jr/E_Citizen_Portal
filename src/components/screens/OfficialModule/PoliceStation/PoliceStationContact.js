@@ -76,7 +76,7 @@ const PoliceStationContact = ({navigation}) => {
           <TextInput
             style={styles.input}
             placeholder="Station Email"
-            placeholderTextColor="black"
+            placeholderTextColor={COLORS.dark}
             value={email}
             onChangeText={handleEmailChange}
           />
@@ -94,7 +94,7 @@ const PoliceStationContact = ({navigation}) => {
           <TextInput
             style={styles.input}
             placeholder="Station Address:"
-            placeholderTextColor="black"
+            placeholderTextColor={COLORS.dark}
             value={address}
             onChangeText={handleAddressChange}
           />
