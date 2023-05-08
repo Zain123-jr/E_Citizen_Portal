@@ -132,7 +132,7 @@ const Personal = () => {
                 <TextInput
                   style={styles.input}
                   placeholder="Full Name"
-                  placeholderTextColor={COLORS.gender}
+                  placeholderTextColor={COLORS.dark}
                   value={fullname}
                   onChangeText={handleFullnameChange}
                 />
@@ -150,6 +150,7 @@ const Personal = () => {
                 <TextInput
                   style={styles.input}
                   placeholder="Phone Number"
+                  placeholderTextColor={COLORS.dark}
                   keyboardType="phone-pad"
                   value={mobile}
                   onChangeText={handleMobileNumberChange}
