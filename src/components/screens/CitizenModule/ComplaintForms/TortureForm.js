@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   TextInput,
   Image,
-  
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -16,7 +15,6 @@ import {Picker} from '@react-native-picker/picker';
 import DocumentPicker from 'react-native-document-picker';
 import storage from '@react-native-firebase/storage';
 import Video from 'react-native-video';
-
 const TortureForm = ({navigation}) => {
   const [subject, setSubject] = useState('');
   const [category, setCategory] = useState('');
@@ -27,7 +25,7 @@ const TortureForm = ({navigation}) => {
   const [tehsil, setTehsil] = useState('');
 
   function Submit() {
-    alert('Complaint Added Successfully');
+    navigation.navigate("OICViewComplains")
   }
   const [Imagedata, setimagedata] = useState(null);
   const [upload, setupload] = useState(null);
@@ -35,44 +33,59 @@ const TortureForm = ({navigation}) => {
     try {
       const response = await DocumentPicker.pickMultiple({
         type: [DocumentPicker.types.allFiles],
-        copyTo:'cachesDirectory',
+        copyTo: 'cachesDirectory',
       });
       const uris = response.map(response => response.fileCopyUri);
 
       console.log(response);
       setimagedata(uris);
-     
-      
     } catch (error) {
       console.log(err);
     }
   };
-  const uploadimage=async()=>{
-   
-      const responses = await storage().ref(`/Citizen/`);
-      Imagedata.forEach(uri => {
-        const name = uri.split('/').pop();
-        const task = responses.child(name).putFile(uri);
+  const fields = { 
+    subject: subject, 
+    category: category, 
+    details: details,
+    address:address,
+    province: province,
+    district:district,
+    tehsil: tehsil,
+  };
+  const jsonString = JSON.stringify(fields);
   
-        task.on('state_changed', snapshot => {
+  const uploadfiles = async () => {
+    const responses = await storage().ref(`/Citizen/`);
+    const subjectRef = responses.child('subject.txt'); // Create a reference to the subject file
+    const subjectTask = subjectRef.putString(jsonString); 
+    Imagedata.forEach(uri => {
+      const name = uri.split('/').pop();
+      const task = responses.child(name).putFile(uri)
+console.log(responses);
+      task.on(
+        'state_changed',
+        snapshot => {
           // Handle upload progress
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log('Upload is ' + progress + '% done');
-        }, error => {
+        },
+        error => {
           // Handle upload error
           console.log(error);
-        }, () => {
+        },
+        () => {
           // Handle upload success
           console.log('Upload successful');
-        });
-        task.then(() => {
-          console.log('Video uploaded successfully');
-          setimagedata(null); // Clear selected video after upload
-        });
+        },
+      );
+      task.then(() => {
+        console.log('Video uploaded successfully');
+        setimagedata(null); // Clear selected video after upload
       });
-       console.log(responses);
-    
-      
+      Promise.all([task, subjectTask]);
+    });
+  
    
   };
 
@@ -121,7 +134,7 @@ const TortureForm = ({navigation}) => {
                     <Picker.Item
                       style={styles.item}
                       label="Select category"
-                      value=""
+                      value=''
                     />
                     <Picker.Item
                       style={styles.item}
@@ -276,58 +289,59 @@ const TortureForm = ({navigation}) => {
                   </Picker>
                 </View>
                 <ScrollView>
-      <View>
-       
-        {Imagedata ? (
-          <View>
-            {Imagedata.map(uri => (
-              <Image key={uri} source={{ uri }} style={{ width: 200, height: 200 }} />
-              
-            ))}
-          </View>
-          
-        
-        ): (
-          <Text>image no found</Text>
-        )}
-        
-      </View>
-      <View>
-       
-        {Imagedata ? (
-          <View>
-            {Imagedata.map(uri => (
-              <Video key={uri} source={{ uri }} style={{ width: 200, height: 200 }} />
-              
-            ))}
-          </View>
-          
-        
-        ): (
-          <Text>image no found</Text>
-        )}
-        
-      </View>
-      <View>
-       
-     
-     </View>
-    </ScrollView>
-                <View style={{flexDirection: 'row', width: '100%',justifyContent:'space-around'}}>
-                <TouchableOpacity
-                  onPress={() => {
-                    pickimage();
-                  }}
-                  style={styles.button}>
-                  <Text style={styles.buttonText}>select image</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    uploadimage();
-                  }}
-                  style={styles.button}>
-                  <Text style={styles.buttonText}>upload image</Text>
-                </TouchableOpacity>
+                
+                  
+                  <View>
+  {Imagedata ? (
+    <View>
+      {Imagedata.map(uri => {
+        if (uri.endsWith(".mp4") || uri.endsWith(".mov")) {
+          return (
+            <Video
+              key={uri}
+              source={{uri}}
+              resizeModel="contain"
+              style={{width: 100, height: 100}}
+            />
+          );
+        } else {
+          return (
+            <Image
+              key={uri}
+              source={{uri}}
+              style={{width: 100, height: 100}}
+            />
+          );
+        }
+      })}
+    </View>
+  ) : (
+    <Text>image not found</Text>
+  )}
+</View>
+
+                  <View></View>
+                </ScrollView>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    width: '100%',
+                    justifyContent: 'space-around',
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      pickimage();
+                    }}
+                    style={styles.button}>
+                    <Text style={styles.buttonText}>select image</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      uploadfiles();
+                    }}
+                    style={styles.button}>
+                    <Text style={styles.buttonText}>upload image</Text>
+                  </TouchableOpacity>
                 </View>
 
 
