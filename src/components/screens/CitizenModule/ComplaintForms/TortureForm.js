@@ -23,12 +23,13 @@ const TortureForm = ({navigation}) => {
   const [province, setProvince] = useState('');
   const [district, setDistrict] = useState('');
   const [tehsil, setTehsil] = useState('');
+  const [Imagedata, setimagedata] = useState(null);
+  const [upload, setupload] = useState(null);
 
   function Submit() {
     navigation.navigate("OICViewComplains")
   }
-  const [Imagedata, setimagedata] = useState(null);
-  const [upload, setupload] = useState(null);
+
   const pickimage = async () => {
     try {
       const response = await DocumentPicker.pickMultiple({
@@ -43,6 +44,7 @@ const TortureForm = ({navigation}) => {
       console.log(err);
     }
   };
+<<<<<<< HEAD
   const fields = { 
     subject: subject, 
     category: category, 
@@ -62,6 +64,14 @@ const TortureForm = ({navigation}) => {
       const name = uri.split('/').pop();
       const task = responses.child(name).putFile(uri)
 console.log(responses);
+=======
+  const uploadimage = async () => {
+    const responses = await storage().ref(`/Citizen/`);
+    Imagedata.forEach(uri => {
+      const name = uri.split('/').pop();
+      const task = responses.child(name).putFile(uri);
+
+>>>>>>> 2000a93d27e1fb0243bde4b5743cd65fb2987a16
       task.on(
         'state_changed',
         snapshot => {
@@ -83,10 +93,15 @@ console.log(responses);
         console.log('Video uploaded successfully');
         setimagedata(null); // Clear selected video after upload
       });
+<<<<<<< HEAD
       Promise.all([task, subjectTask]);
     });
   
    
+=======
+    });
+    console.log(responses);
+>>>>>>> 2000a93d27e1fb0243bde4b5743cd65fb2987a16
   };
 
   return (
@@ -157,7 +172,7 @@ console.log(responses);
                 <View style={{flexDirection: 'row'}}>
                   <TextInput
                     style={styles.messagebox}
-                    placeholder="Enter Compalaint Details Here!"
+                    placeholder="Enter Complaint Details Here!"
                     placeholderTextColor="black"
                     multiline={true}
                     numberOfLines={6}
@@ -169,7 +184,7 @@ console.log(responses);
                 <View style={{flexDirection: 'row'}}>
                   <TextInput
                     style={styles.messagebox}
-                    placeholder="Enter Compalaint Address Here!"
+                    placeholder="Enter Complaint Address Here!"
                     placeholderTextColor="black"
                     multiline={true}
                     numberOfLines={6}
@@ -289,6 +304,7 @@ console.log(responses);
                   </Picker>
                 </View>
                 <ScrollView>
+<<<<<<< HEAD
                 
                   
                   <View>
@@ -320,6 +336,38 @@ console.log(responses);
   )}
 </View>
 
+=======
+                  <View>
+                    {Imagedata ? (
+                      <View>
+                        {Imagedata.map(uri => (
+                          <Image
+                            key={uri}
+                            source={{uri}}
+                            style={{width: 200, height: 200}}
+                          />
+                        ))}
+                      </View>
+                    ) : (
+                      <Text>image no found</Text>
+                    )}
+                  </View>
+                  <View>
+                    {Imagedata ? (
+                      <View>
+                        {Imagedata.map(uri => (
+                          <Video
+                            key={uri}
+                            source={{uri}}
+                            style={{width: 200, height: 200}}
+                          />
+                        ))}
+                      </View>
+                    ) : (
+                      <Text>image no found</Text>
+                    )}
+                  </View>
+>>>>>>> 2000a93d27e1fb0243bde4b5743cd65fb2987a16
                   <View></View>
                 </ScrollView>
                 <View
@@ -337,13 +385,16 @@ console.log(responses);
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
+<<<<<<< HEAD
                       uploadfiles();
+=======
+                      uploadimage();
+>>>>>>> 2000a93d27e1fb0243bde4b5743cd65fb2987a16
                     }}
                     style={styles.button}>
                     <Text style={styles.buttonText}>upload image</Text>
                   </TouchableOpacity>
                 </View>
-
 
                 <TouchableOpacity
                   onPress={() => {
