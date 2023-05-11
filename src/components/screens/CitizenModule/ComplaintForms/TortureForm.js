@@ -144,7 +144,7 @@ const TortureForm = ({navigation}) => {
                 <View style={{flexDirection: 'row'}}>
                   <TextInput
                     style={styles.messagebox}
-                    placeholder="Enter Compalaint Details Here!"
+                    placeholder="Enter Complaint Details Here!"
                     placeholderTextColor="black"
                     multiline={true}
                     numberOfLines={6}
@@ -156,7 +156,7 @@ const TortureForm = ({navigation}) => {
                 <View style={{flexDirection: 'row'}}>
                   <TextInput
                     style={styles.messagebox}
-                    placeholder="Enter Compalaint Address Here!"
+                    placeholder="Enter Complaint Address Here!"
                     placeholderTextColor="black"
                     multiline={true}
                     numberOfLines={6}
