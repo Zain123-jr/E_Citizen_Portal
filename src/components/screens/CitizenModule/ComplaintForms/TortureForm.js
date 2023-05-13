@@ -27,7 +27,7 @@ const TortureForm = ({navigation}) => {
   const [upload, setupload] = useState(null);
 
   function Submit() {
-    navigation.navigate("OICViewComplains")
+    navigation.navigate('OICViewComplains');
   }
 
   const pickimage = async () => {
@@ -44,34 +44,25 @@ const TortureForm = ({navigation}) => {
       console.log(err);
     }
   };
-<<<<<<< HEAD
-  const fields = { 
-    subject: subject, 
-    category: category, 
+  const fields = {
+    subject: subject,
+    category: category,
     details: details,
-    address:address,
+    address: address,
     province: province,
-    district:district,
+    district: district,
     tehsil: tehsil,
   };
   const jsonString = JSON.stringify(fields);
-  
+
   const uploadfiles = async () => {
     const responses = await storage().ref(`/Citizen/`);
     const subjectRef = responses.child('subject.txt'); // Create a reference to the subject file
-    const subjectTask = subjectRef.putString(jsonString); 
-    Imagedata.forEach(uri => {
-      const name = uri.split('/').pop();
-      const task = responses.child(name).putFile(uri)
-console.log(responses);
-=======
-  const uploadimage = async () => {
-    const responses = await storage().ref(`/Citizen/`);
+    const subjectTask = subjectRef.putString(jsonString);
     Imagedata.forEach(uri => {
       const name = uri.split('/').pop();
       const task = responses.child(name).putFile(uri);
-
->>>>>>> 2000a93d27e1fb0243bde4b5743cd65fb2987a16
+      console.log(responses);
       task.on(
         'state_changed',
         snapshot => {
@@ -93,15 +84,8 @@ console.log(responses);
         console.log('Video uploaded successfully');
         setimagedata(null); // Clear selected video after upload
       });
-<<<<<<< HEAD
       Promise.all([task, subjectTask]);
     });
-  
-   
-=======
-    });
-    console.log(responses);
->>>>>>> 2000a93d27e1fb0243bde4b5743cd65fb2987a16
   };
 
   return (
@@ -149,7 +133,7 @@ console.log(responses);
                     <Picker.Item
                       style={styles.item}
                       label="Select category"
-                      value=''
+                      value=""
                     />
                     <Picker.Item
                       style={styles.item}
@@ -304,70 +288,35 @@ console.log(responses);
                   </Picker>
                 </View>
                 <ScrollView>
-<<<<<<< HEAD
-                
-                  
                   <View>
-  {Imagedata ? (
-    <View>
-      {Imagedata.map(uri => {
-        if (uri.endsWith(".mp4") || uri.endsWith(".mov")) {
-          return (
-            <Video
-              key={uri}
-              source={{uri}}
-              resizeModel="contain"
-              style={{width: 100, height: 100}}
-            />
-          );
-        } else {
-          return (
-            <Image
-              key={uri}
-              source={{uri}}
-              style={{width: 100, height: 100}}
-            />
-          );
-        }
-      })}
-    </View>
-  ) : (
-    <Text>image not found</Text>
-  )}
-</View>
+                    {Imagedata ? (
+                      <View>
+                        {Imagedata.map(uri => {
+                          if (uri.endsWith('.mp4') || uri.endsWith('.mov')) {
+                            return (
+                              <Video
+                                key={uri}
+                                source={{uri}}
+                                resizeModel="contain"
+                                style={{width: 100, height: 100}}
+                              />
+                            );
+                          } else {
+                            return (
+                              <Image
+                                key={uri}
+                                source={{uri}}
+                                style={{width: 100, height: 100}}
+                              />
+                            );
+                          }
+                        })}
+                      </View>
+                    ) : (
+                      <Text>image not found</Text>
+                    )}
+                  </View>
 
-=======
-                  <View>
-                    {Imagedata ? (
-                      <View>
-                        {Imagedata.map(uri => (
-                          <Image
-                            key={uri}
-                            source={{uri}}
-                            style={{width: 200, height: 200}}
-                          />
-                        ))}
-                      </View>
-                    ) : (
-                      <Text>image no found</Text>
-                    )}
-                  </View>
-                  <View>
-                    {Imagedata ? (
-                      <View>
-                        {Imagedata.map(uri => (
-                          <Video
-                            key={uri}
-                            source={{uri}}
-                            style={{width: 200, height: 200}}
-                          />
-                        ))}
-                      </View>
-                    ) : (
-                      <Text>image no found</Text>
-                    )}
-                  </View>
->>>>>>> 2000a93d27e1fb0243bde4b5743cd65fb2987a16
                   <View></View>
                 </ScrollView>
                 <View
@@ -385,11 +334,7 @@ console.log(responses);
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
-<<<<<<< HEAD
                       uploadfiles();
-=======
-                      uploadimage();
->>>>>>> 2000a93d27e1fb0243bde4b5743cd65fb2987a16
                     }}
                     style={styles.button}>
                     <Text style={styles.buttonText}>upload image</Text>
