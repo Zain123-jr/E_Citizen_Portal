@@ -1,130 +1,100 @@
-import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import COLORS from '../../../consts/Colors';
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, Image, Button } from 'react-native';
+import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
+import Video from 'react-native-video';
 
-const OICViewComplaints = ({navigation}) => {
-  const complaintsData = [
-    {id: 1, title: 'Complaint 1'},
-    {id: 2, title: 'Complaint 2'},
-    {id: 3, title: 'Complaint 3'},
-  ];
+const OICViewComplains = () => {
+  const [complaints, setComplaints] = useState([]);
 
-  const [complaints, setComplaints] = useState(complaintsData);
-
-  const handleDeleteComplaint = id => {
-    const updatedComplaints = complaints.filter(
-      complaint => complaint.id !== id,
-    );
-    setComplaints(updatedComplaints);
+  const fetchComplaints = async () => {
+    const querySnapshot = await firestore()
+      .collection('complaints')
+      .orderBy('timestamp', 'desc')
+      .get();
+    const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    setComplaints(data);
   };
 
-  const renderComplaintItem = ({item}) => (
-    <View
-      style={{
-        padding: 25,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-        flexDirection: 'row',
-      }}>
-      <Text style={styles.item}>{item.title}</Text>
-      <Text style={styles.item}>{item.description}</Text>
-      <Text style={styles.item}>{item.date}</Text>
-      <View style={styles.iconcontainer}>
-        <TouchableOpacity onPress={() => handleDeleteComplaint(item.id)}>
-          <MaterialCommunityIcons
-            name="delete-outline"
-            size={25}
-            color="red"
-            style={styles.deleteicon}
-          />
-        </TouchableOpacity>
+  useEffect(() => {
+    fetchComplaints();
+  }, []);
 
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('EditComplaint', {complaint: item})
-          }>
-          <MaterialCommunityIcons
-            name="pencil-outline"
-            size={25}
-            color="black"
-            style={styles.editicon}
-          />
-        </TouchableOpacity>
+  const approveComplaint = async (complaintId) => {
+    // Fetch the complaint by ID
+    const complaintRef = firestore().collection('complaints').doc(complaintId);
+    const complaintDoc = await complaintRef.get();
+    const complaintData = complaintDoc.data();
+
+    // Upload the complaint to a separate place
+    await firestore().collection('approvedComplaints').add(complaintData);
+
+    // Delete the complaint from the original collection
+    await complaintRef.delete();
+
+    // Refresh the complaints list
+    fetchComplaints();
+  };
+
+  const deleteComplaint = async (complaintId) => {
+    // Delete the complaint from Firestore
+    await firestore().collection('complaints').doc(complaintId).delete();
+
+    // Refresh the complaints list
+    fetchComplaints();
+  };
+
+  const renderItem = ({ item }) => {
+    return (
+      <View>
+        <Text>{item.subject}</Text>
+        <Text>{item.category}</Text>
+        <Text>{item.details}</Text>
+        <Text>{item.address}</Text>
+        <Text>{item.province}</Text>
+        <Text>{item.district}</Text>
+        <Text>{item.tehsil}</Text>
+        <FlatList
+          data={item.files}
+          keyExtractor={file => file.name}
+          renderItem={({ item: file }) => (
+            <>
+              <View key={file.name}>
+                {file.name.endsWith('.mp4') ? (
+                  <Video
+                    source={{ uri: file.downloadUrl }}
+                    style={{ width: 320, height: 240 }}
+                    controls
+                  />
+                ) : (
+                  <Image
+                    source={{ uri: file.downloadUrl }}
+                    style={{ width: 120, height: 140 }}
+                  />
+                )}
+              </View>
+            </>
+          )}
+        />
+        <Button
+          title="Approve"
+          onPress={() => approveComplaint(item.id)}
+        />
+        <Button
+          title="Delete"
+          onPress={() => deleteComplaint(item.id)}
+        />
       </View>
-    </View>
-  );
+    );
+  };
 
   return (
-    <SafeAreaView style={styles.maincontainer}>
-      <ScrollView>
-        <View style={styles.head}>
-          <TouchableOpacity onPress={() => navigation.navigate('OICHomepage')}>
-            <MaterialCommunityIcons name="arrow-left" size={30} color="#fff" />
-          </TouchableOpacity>
-          <Text style={styles.heading}>View Complaints</Text>
-        </View>
-
-        <FlatList
-          data={complaints}
-          renderItem={renderComplaintItem}
-          keyExtractor={item => item.id.toString()}
-          style={styles.container}
-        />
-      </ScrollView>
-    </SafeAreaView>
+    <FlatList
+      data={complaints}
+      keyExtractor={item => item.id}
+      renderItem={renderItem}
+    />
   );
 };
 
-export default OICViewComplaints;
-
-const styles = StyleSheet.create({
-  maincontainer: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-
-  head: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: COLORS.primary,
-    borderTopLeftRadius: 50,
-    borderBottomRightRadius: 50,
-    padding: 30,
-  },
-
-  heading: {
-    flex: 1,
-    textAlign: 'center',
-    color: '#fff',
-    fontSize: 22,
-  },
-
-  item: {
-    fontSize: 18,
-    color: '#000',
-    textAlign: 'center',
-  },
-
-  iconcontainer: {
-    flexDirection: 'row',
-    left: 160,
-    alignItems: 'center',
-  },
-
-  deleteicon: {
-    paddingRight: 10,
-  },
-
-  editicon: {
-    paddingRight: 10,
-  },
-});
+export default OICViewComplains;
