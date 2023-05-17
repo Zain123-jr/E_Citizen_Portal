@@ -1,68 +1,16 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  FlatList,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../../consts/Colors';
 
 const OICViewComplaints = ({navigation}) => {
-  const complaintsData = [
-    {id: 1, title: 'Complaint 1'},
-    {id: 2, title: 'Complaint 2'},
-    {id: 3, title: 'Complaint 3'},
-  ];
-
-  const [complaints, setComplaints] = useState(complaintsData);
-
-  const handleDeleteComplaint = id => {
-    const updatedComplaints = complaints.filter(
-      complaint => complaint.id !== id,
-    );
-    setComplaints(updatedComplaints);
-  };
-
-  const renderComplaintItem = ({item}) => (
-    <View
-      style={{
-        padding: 25,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-        flexDirection: 'row',
-      }}>
-      <Text style={styles.item}>{item.title}</Text>
-      <Text style={styles.item}>{item.description}</Text>
-      <Text style={styles.item}>{item.date}</Text>
-      <View style={styles.iconcontainer}>
-        <TouchableOpacity onPress={() => handleDeleteComplaint(item.id)}>
-          <MaterialCommunityIcons
-            name="delete-outline"
-            size={25}
-            color="red"
-            style={styles.deleteicon}
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('EditComplaint', {complaint: item})
-          }>
-          <MaterialCommunityIcons
-            name="pencil-outline"
-            size={25}
-            color="black"
-            style={styles.editicon}
-          />
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-
   return (
     <SafeAreaView style={styles.maincontainer}>
       <ScrollView>
@@ -70,15 +18,14 @@ const OICViewComplaints = ({navigation}) => {
           <TouchableOpacity onPress={() => navigation.navigate('OICHomepage')}>
             <MaterialCommunityIcons name="arrow-left" size={30} color="#fff" />
           </TouchableOpacity>
-          <Text style={styles.heading}>View Complaints</Text>
+          <Text style={styles.heading}>Complaints Section</Text>
         </View>
 
-        <FlatList
-          data={complaints}
-          renderItem={renderComplaintItem}
-          keyExtractor={item => item.id.toString()}
-          style={styles.container}
-        />
+        <View style={{flex: 1}}>
+          <Text style={{textAlign: 'center', fontSize: 18, color: 'black'}}>
+            This is OIC View Complaints Screen
+          </Text>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

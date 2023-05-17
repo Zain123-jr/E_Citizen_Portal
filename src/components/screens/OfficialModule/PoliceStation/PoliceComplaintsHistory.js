@@ -10,7 +10,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../../consts/Colors';
 
-const PoliceViewComplaints = ({navigation}) => {
+const PoliceComplaintsHistory = ({navigation}) => {
   return (
     <SafeAreaView style={styles.maincontainer}>
       <ScrollView>
@@ -24,7 +24,7 @@ const PoliceViewComplaints = ({navigation}) => {
 
         <View style={{flex: 1}}>
           <Text style={{textAlign: 'center', fontSize: 18, color: 'black'}}>
-            This is Police View Complaints Screen
+            This is Police Complaints History Screen
           </Text>
         </View>
       </ScrollView>
@@ -32,7 +32,7 @@ const PoliceViewComplaints = ({navigation}) => {
   );
 };
 
-export default PoliceViewComplaints;
+export default PoliceComplaintsHistory;
 
 const styles = StyleSheet.create({
   maincontainer: {
