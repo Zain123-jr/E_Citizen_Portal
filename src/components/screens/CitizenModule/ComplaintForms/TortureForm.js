@@ -46,8 +46,9 @@ const TortureForm = ({navigation}) => {
 
 
 const uploadFiles = async () => {
-    const storageRef = storage().ref(`/Citizen/`);
-  
+  const storageRef = storage().ref(`/Citizen/`);
+
+  if (data && data.length > 0) {
     const promises = data.map(async uri => {
       const name = uri.split('/').pop();
       const task = storageRef.child(name).putFile(uri);
@@ -69,15 +70,15 @@ const uploadFiles = async () => {
       );
       task.then(() => {
         console.log('Video uploaded successfully');
-        setdata(null); // Clear selected video after upload in this code in this code 
+        setdata(null); // Clear selected video after upload
       })
       await task;
       const downloadUrl = await task.snapshot.ref.getDownloadURL();
       return { name, downloadUrl };
     });
-  
+
     const uploadedFiles = await Promise.all(promises);
-  
+
     const fields = {
       subject: subject,
       category: category,
@@ -88,10 +89,27 @@ const uploadFiles = async () => {
       tehsil: tehsil,
       files: uploadedFiles,
     };
-  
+
     const timestamp = firestore.FieldValue.serverTimestamp();
-    const response = await firestore().collection('complaints').doc().set({ ...fields, timestamp });  
-  };
+    const response = await firestore().collection('complaints').doc().set({ ...fields, timestamp });
+  } else {
+    // Handle the case when no files are selected
+    const fields = {
+      subject: subject,
+      category: category,
+      details: details,
+      address: address,
+      province: province,
+      district: district,
+      tehsil: tehsil,
+      files: [],
+    };
+
+    const timestamp = firestore.FieldValue.serverTimestamp();
+    const response = await firestore().collection('complaints').doc().set({ ...fields, timestamp });
+  }
+};
+
 
   return (
     <SafeAreaView style={styles.maincontainer}>

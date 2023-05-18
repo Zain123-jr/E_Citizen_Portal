@@ -45,15 +45,19 @@ const OICViewComplains = () => {
   };
 
   const renderItem = ({ item }) => {
+    const timestamp = item.timestamp.toDate(); // Convert timestamp to Date object
+    const formattedTimestamp = timestamp.toLocaleString();
     return (
       <View>
-        <Text>{item.subject}</Text>
-        <Text>{item.category}</Text>
-        <Text>{item.details}</Text>
-        <Text>{item.address}</Text>
-        <Text>{item.province}</Text>
-        <Text>{item.district}</Text>
-        <Text>{item.tehsil}</Text>
+        <Text>report</Text>
+        <Text>subject:{item.subject}</Text>
+        <Text>category:{item.category}</Text>
+        <Text>details:{item.details}</Text>
+        <Text>address:{item.address}</Text>
+        <Text>province:{item.province}</Text>
+        <Text>district:{item.district}</Text>
+        <Text>tehsil:{item.tehsil}</Text>
+        <Text>timestamp:{formattedTimestamp}</Text> 
         <FlatList
           data={item.files}
           keyExtractor={file => file.name}
@@ -63,7 +67,7 @@ const OICViewComplains = () => {
                 {file.name.endsWith('.mp4') ? (
                   <Video
                     source={{ uri: file.downloadUrl }}
-                    style={{ width: 320, height: 240 }}
+                    style={{ width: 120, height: 140 }}
                     controls
                   />
                 ) : (
