@@ -21,8 +21,8 @@ import CitizenPortal from './src/components/screens/CitizenModule/CitizenPortal'
 import OICHomepage from './src/components/screens/OfficialModule/OIC/OICHomepage';
 import OICDrawer from './src/components/navigation/OICDrawer';
 import PoliceStationDrawer from './src/components/navigation/PoliceStationDrawer';
-import OICViewComplains from './src/components/screens/OfficialModule/OIC/OICViewComplains';
-import PoliceViewComplains from './src/components/screens/OfficialModule/PoliceStation/PoliceViewComplains';
+import OICComplaintsBottomNavigator from './src/components/navigation/OICComplaintsBottomNavigator';
+import PoliceComplaintsBottomNavigator from './src/components/navigation/PoliceComplaintsBottomNavigator';
 
 const Stack = createNativeStackNavigator();
 
@@ -52,11 +52,15 @@ const App = () => {
           name="PoliceStationHomepage"
           component={PoliceStationDrawer}
         />
-        <Stack.Screen name="OICViewComplains" component={OICViewComplains} />
         <Stack.Screen
-          name="PoliceViewComplains"
-          component={PoliceViewComplains}
+          name="OICComplaintsBottomNavigator"
+          component={OICComplaintsBottomNavigator}
         />
+        <Stack.Screen
+          name="PoliceComplaintsBottomNavigator"
+          component={PoliceComplaintsBottomNavigator}
+        />
+
         <Stack.Screen name="Torture" component={TortureForm} />
         <Stack.Screen name="Kidnapping" component={KidnappingForm} />
         <Stack.Screen name="Killing" component={KillingForm} />

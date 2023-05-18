@@ -10,29 +10,26 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../../consts/Colors';
 
-const PoliceViewComplaints = ({navigation}) => {
+const OICComplaintsHistory = ({navigation}) => {
   return (
     <SafeAreaView style={styles.maincontainer}>
       <ScrollView>
         <View style={styles.head}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('PoliceStationHomepage')}>
+          <TouchableOpacity onPress={() => navigation.navigate('OICHomepage')}>
             <MaterialCommunityIcons name="arrow-left" size={30} color="#fff" />
           </TouchableOpacity>
           <Text style={styles.heading}>Complaints Section</Text>
         </View>
 
-        <View style={{flex: 1}}>
-          <Text style={{textAlign: 'center', fontSize: 18, color: 'black'}}>
-            This is Police View Complaints Screen
-          </Text>
+        <View style={{flex:1}} >
+          <Text style={{textAlign:'center', fontSize:18, color:'black'}} >This is OIC Complaints History Screen</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-export default PoliceViewComplaints;
+export default OICComplaintsHistory;
 
 const styles = StyleSheet.create({
   maincontainer: {

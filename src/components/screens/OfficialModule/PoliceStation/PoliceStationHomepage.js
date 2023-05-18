@@ -40,7 +40,7 @@ const PoliceStationHomepage = ({navigation}) => {
       </View>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate('PoliceViewComplains')}
+        onPress={() => navigation.navigate('PoliceComplaintsBottomNavigator')}
         style={styles.card}>
         <View>
           <Image
