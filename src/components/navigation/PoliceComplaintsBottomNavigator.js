@@ -3,7 +3,7 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../consts/Colors';
-import PoliceViewComplaints from '../screens/OfficialModule/PoliceStation/PoliceViewComplains';
+import PoliceViewComplains from '../screens/OfficialModule/PoliceStation/PoliceViewComplains';
 import PoliceComplaintsHistory from '../screens/OfficialModule/PoliceStation/PoliceComplaintsHistory';
 
 const Tab = createBottomTabNavigator();
@@ -23,7 +23,7 @@ const PoliceComplaintsBottomNavigator = () => {
       }}>
       <Tab.Screen
         name="View Complaints"
-        component={PoliceViewComplaints}
+        component={PoliceViewComplains}
         options={{
           tabBarLabel: 'View Complaints',
           tabBarIcon: ({color}) => (

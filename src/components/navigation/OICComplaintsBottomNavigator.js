@@ -3,12 +3,12 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../consts/Colors';
-import OICViewComplaints from '../screens/OfficialModule/OIC/OICViewComplains';
+import OICViewComplains from '../screens/OfficialModule/OIC/OICViewComplains';
 import OICComplaintsHistory from '../screens/OfficialModule/OIC/OICComplaintsHistory';
 
 const Tab = createBottomTabNavigator();
 
-const OICComnplaintsBottomNavigator = () => {
+const OICComplaintsBottomNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -23,7 +23,7 @@ const OICComnplaintsBottomNavigator = () => {
       }}>
       <Tab.Screen
         name="View Complaints"
-        component={OICViewComplaints}
+        component={OICViewComplains}
         options={{
           tabBarLabel: 'View Complaints',
           tabBarIcon: ({color}) => (
@@ -54,4 +54,4 @@ const OICComnplaintsBottomNavigator = () => {
   );
 };
 
-export default OICComnplaintsBottomNavigator;
+export default OICComplaintsBottomNavigator;

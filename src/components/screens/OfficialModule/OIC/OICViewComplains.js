@@ -1,10 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Image, Button } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  Button,
+  TouchableOpacity,
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import Video from 'react-native-video';
+import COLORS from '../../../consts/Colors';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const OICViewComplains = () => {
+const OICViewComplains = ({navigation}) => {
   const [complaints, setComplaints] = useState([]);
 
   const fetchComplaints = async () => {
@@ -12,7 +24,7 @@ const OICViewComplains = () => {
       .collection('complaints')
       .orderBy('timestamp', 'desc')
       .get();
-    const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const data = querySnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
     setComplaints(data);
   };
 
@@ -20,7 +32,7 @@ const OICViewComplains = () => {
     fetchComplaints();
   }, []);
 
-  const approveComplaint = async (complaintId) => {
+  const approveComplaint = async complaintId => {
     // Fetch the complaint by ID
     const complaintRef = firestore().collection('complaints').doc(complaintId);
     const complaintDoc = await complaintRef.get();
@@ -36,7 +48,7 @@ const OICViewComplains = () => {
     fetchComplaints();
   };
 
-  const deleteComplaint = async (complaintId) => {
+  const deleteComplaint = async complaintId => {
     // Delete the complaint from Firestore
     await firestore().collection('complaints').doc(complaintId).delete();
 
@@ -44,7 +56,7 @@ const OICViewComplains = () => {
     fetchComplaints();
   };
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({item}) => {
     const timestamp = item.timestamp.toDate(); // Convert timestamp to Date object
     const formattedTimestamp = timestamp.toLocaleString();
     return (
@@ -57,43 +69,36 @@ const OICViewComplains = () => {
         <Text>province:{item.province}</Text>
         <Text>district:{item.district}</Text>
         <Text>tehsil:{item.tehsil}</Text>
-        <Text>timestamp:{formattedTimestamp}</Text> 
+        <Text>timestamp:{formattedTimestamp}</Text>
         <FlatList
           data={item.files}
           keyExtractor={file => file.name}
-          renderItem={({ item: file }) => (
+          renderItem={({item: file}) => (
             <>
               <View key={file.name}>
                 {file.name.endsWith('.mp4') ? (
                   <Video
-                    source={{ uri: file.downloadUrl }}
-                    style={{ width: 120, height: 140 }}
+                    source={{uri: file.downloadUrl}}
+                    style={{width: 120, height: 140}}
                     controls
                   />
                 ) : (
                   <Image
-                    source={{ uri: file.downloadUrl }}
-                    style={{ width: 120, height: 140 }}
+                    source={{uri: file.downloadUrl}}
+                    style={{width: 120, height: 140}}
                   />
                 )}
               </View>
             </>
           )}
         />
-        <Button
-          title="Approve"
-          onPress={() => approveComplaint(item.id)}
-        />
-        <Button
-          title="Delete"
-          onPress={() => deleteComplaint(item.id)}
-        />
+        <Button title="Approve" onPress={() => approveComplaint(item.id)} />
+        <Button title="Delete" onPress={() => deleteComplaint(item.id)} />
       </View>
     );
   };
 
   return (
-<<<<<<< HEAD
     <SafeAreaView style={styles.maincontainer}>
       <ScrollView>
         <View style={styles.head}>
@@ -109,15 +114,39 @@ const OICViewComplains = () => {
           </Text>
         </View>
       </ScrollView>
+
+      <View>
+        <FlatList
+          data={complaints}
+          keyExtractor={item => item.id}
+          renderItem={renderItem}
+        />
+      </View>
     </SafeAreaView>
-=======
-    <FlatList
-      data={complaints}
-      keyExtractor={item => item.id}
-      renderItem={renderItem}
-    />
->>>>>>> 5f6407060c62990f004c1affc96c27d02c6d3ab8
   );
 };
 
 export default OICViewComplains;
+
+const styles = StyleSheet.create({
+  maincontainer: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+
+  head: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: COLORS.primary,
+    borderTopLeftRadius: 50,
+    borderBottomRightRadius: 50,
+    padding: 30,
+  },
+
+  heading: {
+    flex: 1,
+    textAlign: 'center',
+    color: '#fff',
+    fontSize: 22,
+  },
+});
