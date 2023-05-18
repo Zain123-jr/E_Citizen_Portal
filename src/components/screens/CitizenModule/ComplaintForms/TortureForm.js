@@ -12,10 +12,12 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../../consts/Colors';
 import {Picker} from '@react-native-picker/picker';
-import DocumentPicker from 'react-native-document-picker';
 import storage from '@react-native-firebase/storage';
 import Video from 'react-native-video';
+import DocumentPicker from 'react-native-document-picker';
+import firestore from '@react-native-firebase/firestore';
 const TortureForm = ({navigation}) => {
+  const [data, setdata] = useState(null);
   const [subject, setSubject] = useState('');
   const [category, setCategory] = useState('');
   const [details, setDetails] = useState('');
@@ -23,52 +25,38 @@ const TortureForm = ({navigation}) => {
   const [province, setProvince] = useState('');
   const [district, setDistrict] = useState('');
   const [tehsil, setTehsil] = useState('');
-  const [Imagedata, setimagedata] = useState(null);
-  const [upload, setupload] = useState(null);
 
   function Submit() {
     navigation.navigate('OICViewComplains');
   }
-
   const pickimage = async () => {
     try {
-      const response = await DocumentPicker.pickMultiple({
-        type: [DocumentPicker.types.allFiles],
-        copyTo: 'cachesDirectory',
-      });
-      const uris = response.map(response => response.fileCopyUri);
+        const response = await DocumentPicker.pickMultiple({
+            type: [DocumentPicker.types.allFiles],
+            copyTo: 'cachesDirectory',
+        });
+        const uris = response.map(response => response.fileCopyUri);
 
-      console.log(response);
-      setimagedata(uris);
+        console.log(response);
+        setdata(uris);
     } catch (error) {
-      console.log(err);
+        console.log(err);
     }
-  };
-  const fields = {
-    subject: subject,
-    category: category,
-    details: details,
-    address: address,
-    province: province,
-    district: district,
-    tehsil: tehsil,
-  };
-  const jsonString = JSON.stringify(fields);
+};
 
-  const uploadfiles = async () => {
-    const responses = await storage().ref(`/Citizen/`);
-    const subjectRef = responses.child('subject.txt'); // Create a reference to the subject file
-    const subjectTask = subjectRef.putString(jsonString);
-    Imagedata.forEach(uri => {
+
+const uploadFiles = async () => {
+  const storageRef = storage().ref(`/Citizen/`);
+
+  if (data && data.length > 0) {
+    const promises = data.map(async uri => {
       const name = uri.split('/').pop();
-      const task = responses.child(name).putFile(uri);
-      console.log(responses);
+      const task = storageRef.child(name).putFile(uri);
       task.on(
         'state_changed',
         snapshot => {
           // Handle upload progress
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log('Upload is ' + progress + '% done');
         },
         error => {
@@ -78,15 +66,50 @@ const TortureForm = ({navigation}) => {
         () => {
           // Handle upload success
           console.log('Upload successful');
-        },
+        }
       );
       task.then(() => {
         console.log('Video uploaded successfully');
-        setimagedata(null); // Clear selected video after upload
-      });
-      Promise.all([task, subjectTask]);
+        setdata(null); // Clear selected video after upload
+      })
+      await task;
+      const downloadUrl = await task.snapshot.ref.getDownloadURL();
+      return { name, downloadUrl };
     });
-  };
+
+    const uploadedFiles = await Promise.all(promises);
+
+    const fields = {
+      subject: subject,
+      category: category,
+      details: details,
+      address: address,
+      province: province,
+      district: district,
+      tehsil: tehsil,
+      files: uploadedFiles,
+    };
+
+    const timestamp = firestore.FieldValue.serverTimestamp();
+    const response = await firestore().collection('complaints').doc().set({ ...fields, timestamp });
+  } else {
+    // Handle the case when no files are selected
+    const fields = {
+      subject: subject,
+      category: category,
+      details: details,
+      address: address,
+      province: province,
+      district: district,
+      tehsil: tehsil,
+      files: [],
+    };
+
+    const timestamp = firestore.FieldValue.serverTimestamp();
+    const response = await firestore().collection('complaints').doc().set({ ...fields, timestamp });
+  }
+};
+
 
   return (
     <SafeAreaView style={styles.maincontainer}>
@@ -156,7 +179,7 @@ const TortureForm = ({navigation}) => {
                 <View style={{flexDirection: 'row'}}>
                   <TextInput
                     style={styles.messagebox}
-                    placeholder="Enter Complaint Details Here!"
+                    placeholder="Enter Compalaint Details Here!"
                     placeholderTextColor="black"
                     multiline={true}
                     numberOfLines={6}
@@ -168,7 +191,7 @@ const TortureForm = ({navigation}) => {
                 <View style={{flexDirection: 'row'}}>
                   <TextInput
                     style={styles.messagebox}
-                    placeholder="Enter Complaint Address Here!"
+                    placeholder="Enter Compalaint Address Here!"
                     placeholderTextColor="black"
                     multiline={true}
                     numberOfLines={6}
@@ -288,59 +311,62 @@ const TortureForm = ({navigation}) => {
                   </Picker>
                 </View>
                 <ScrollView>
-                  <View>
-                    {Imagedata ? (
-                      <View>
-                        {Imagedata.map(uri => {
-                          if (uri.endsWith('.mp4') || uri.endsWith('.mov')) {
-                            return (
-                              <Video
-                                key={uri}
-                                source={{uri}}
-                                resizeModel="contain"
-                                style={{width: 100, height: 100}}
-                              />
-                            );
-                          } else {
-                            return (
-                              <Image
-                                key={uri}
-                                source={{uri}}
-                                style={{width: 100, height: 100}}
-                              />
-                            );
-                          }
-                        })}
-                      </View>
-                    ) : (
-                      <Text>image not found</Text>
-                    )}
-                  </View>
+            <View>
+                {data ? (
+                    <View>
+                        {data.map(uri => {
+                            if (uri.endsWith('.mp4') || uri.endsWith('.mov')) {
+                                return (
+                                    <Video
+                                        key={uri}
+                                        source={{ uri }}
+                                        resizeModel="cover"
+                                        controls={true}
 
-                  <View></View>
-                </ScrollView>
-                <View
-                  style={{
+                                        style={{
+                                            width: 200,
+                                            height: 200,
+                                        }}
+                                    />
+                                );
+                            } else {
+                                return (
+                                    <Image
+                                        key={uri}
+                                        source={{ uri }}
+                                        style={{ width: 100, height: 100 }}
+                                    />
+                                );
+                            }
+                        })}
+                    </View>
+                ) : (
+                    <Text style={{ textAlign: 'center', fontSize: 20 }}>select an files</Text>
+                )}
+            </View>
+
+            <View
+                style={{
                     flexDirection: 'row',
                     width: '100%',
                     justifyContent: 'space-around',
-                  }}>
-                  <TouchableOpacity
+                }}>
+                <TouchableOpacity
                     onPress={() => {
-                      pickimage();
+                        pickimage();
                     }}
                     style={styles.button}>
                     <Text style={styles.buttonText}>select image</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
+                </TouchableOpacity>
+                <TouchableOpacity
                     onPress={() => {
-                      uploadfiles();
+                        uploadFiles();
                     }}
                     style={styles.button}>
                     <Text style={styles.buttonText}>upload image</Text>
-                  </TouchableOpacity>
-                </View>
-
+                </TouchableOpacity>
+            </View>
+        </ScrollView>
                 <TouchableOpacity
                   onPress={() => {
                     Submit();
