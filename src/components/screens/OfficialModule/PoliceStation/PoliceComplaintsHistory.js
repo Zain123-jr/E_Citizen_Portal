@@ -19,7 +19,7 @@ const PoliceComplaintsHistory = ({navigation}) => {
             onPress={() => navigation.navigate('PoliceStationHomepage')}>
             <MaterialCommunityIcons name="arrow-left" size={30} color="#fff" />
           </TouchableOpacity>
-          <Text style={styles.heading}>Complaints Section</Text>
+          <Text style={styles.heading}>Police Complaints Section</Text>
         </View>
 
         <View style={{flex: 1}}>
