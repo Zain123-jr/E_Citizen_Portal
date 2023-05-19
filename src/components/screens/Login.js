@@ -10,6 +10,7 @@ import {
   ImageBackground,
   TextInput,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -22,9 +23,11 @@ const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [hidePassword, setHidePassword] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     try {
+      setLoading(true);
       const authCredential = await auth().signInWithEmailAndPassword(
         email,
         password,
@@ -40,7 +43,7 @@ const Login = ({navigation}) => {
       } else if (role === 'policestation') {
         navigation.navigate('PoliceStationHomepage');
       }
-      alert('Login Successful');
+      setLoading(false);
     } catch (error) {
       alert(error.message);
     }
@@ -166,13 +169,17 @@ const Login = ({navigation}) => {
             </View>
 
             <TouchableOpacity
-              disabled={!isValidInput()}
+              disabled={!isValidInput() || loading}
               onPress={handleLogin}
               style={[
                 styles.button,
                 {backgroundColor: isValidInput() ? COLORS.primary : '#ccc'},
               ]}>
-              <Text style={styles.buttonText}>Login</Text>
+              {loading ? (
+                <ActivityIndicator color={COLORS.white} /> // Show loader while loading
+              ) : (
+                <Text style={styles.buttonText}>Login</Text> // Show login text when not loading
+              )}
             </TouchableOpacity>
 
             <View style={styles.extracontainer}>
