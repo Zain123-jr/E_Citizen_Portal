@@ -2,26 +2,25 @@ import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
   FlatList,
   Image,
   Button,
-  TouchableOpacity,
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
 } from 'react-native';
-import firestore from '@react-native-firebase/firestore';
-import storage from '@react-native-firebase/storage';
-import Video from 'react-native-video';
-import COLORS from '../../../consts/Colors';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import COLORS from '../../../consts/Colors';
+import firestore from '@react-native-firebase/firestore';
+import Video from 'react-native-video';
 
-const OICViewComplains = ({navigation}) => {
+const Progress = ({navigation}) => {
   const [complaints, setComplaints] = useState([]);
 
   const fetchComplaints = async () => {
     const querySnapshot = await firestore()
-      .collection('complaints')
+      .collection('progress')
       .orderBy('timestamp', 'desc')
       .get();
     const data = querySnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
@@ -34,13 +33,12 @@ const OICViewComplains = ({navigation}) => {
 
   const approveComplaint = async complaintId => {
     // Fetch the complaint by ID
-    const complaintRef = firestore().collection('complaints').doc(complaintId);
+    const complaintRef = firestore().collection('progress').doc(complaintId);
     const complaintDoc = await complaintRef.get();
     const complaintData = complaintDoc.data();
 
     // Upload the complaint to a separate place
-    await firestore().collection('approvedComplaints').add(complaintData);
-    await firestore().collection('policestation').add(complaintData);
+    await firestore().collection('pending').add(complaintData);
     // Delete the complaint from the original collection
     await complaintRef.delete();
 
@@ -48,20 +46,19 @@ const OICViewComplains = ({navigation}) => {
     fetchComplaints();
   };
 
-  const deleteComplaint = async (complaintId) => {
-      // Fetch the complaint by ID
-      const complaintRef = firestore().collection('complaints').doc(complaintId);
-      const complaintDoc = await complaintRef.get();
-      const complaintData = complaintDoc.data();
-  
-      // Upload the complaint to a separate place
-      await firestore().collection('rejectComplaints').add(complaintData);
+  const deleteComplaint = async complaintId => {
+    // Fetch the complaint by ID
+    const complaintRef = firestore().collection('progress').doc(complaintId);
+    const complaintDoc = await complaintRef.get();
+    const complaintData = complaintDoc.data();
 
-  
-      // Delete the complaint from the original collection
-      await complaintRef.delete();
-  
-      // Refresh the complaints list
+    // Upload the complaint to a separate place
+    await firestore().collection('close').add(complaintData);
+
+    // Delete the complaint from the original collection
+    await complaintRef.delete();
+
+    // Refresh the complaints list
     fetchComplaints();
   };
 
@@ -101,41 +98,22 @@ const OICViewComplains = ({navigation}) => {
             </>
           )}
         />
-        <Button title="Approve" onPress={() => approveComplaint(item.id)} />
-        <Button title="Delete" onPress={() => deleteComplaint(item.id)} />
+        <Button title="Pending" onPress={() => approveComplaint(item.id)} />
+        <Button title="Close" onPress={() => deleteComplaint(item.id)} />
       </View>
     );
   };
 
   return (
-    <SafeAreaView style={styles.maincontainer}>
-      <ScrollView>
-        <View style={styles.head}>
-          <TouchableOpacity onPress={() => navigation.navigate('OICHomepage')}>
-            <MaterialCommunityIcons name="arrow-left" size={30} color="#fff" />
-          </TouchableOpacity>
-          <Text style={styles.heading}>OIC Complaints Section</Text>
-        </View>
-
-        <View style={{flex: 1}}>
-          <Text style={{textAlign: 'center', fontSize: 18, color: 'black'}}>
-            This is OIC View Complaints Screen
-          </Text>
-        </View>
-      </ScrollView>
-
-      <View>
-        <FlatList
-          data={complaints}
-          keyExtractor={item => item.id}
-          renderItem={renderItem}
-        />
-      </View>
-    </SafeAreaView>
+    <FlatList
+      data={complaints}
+      keyExtractor={item => item.id}
+      renderItem={renderItem}
+    />
   );
 };
 
-export default OICViewComplains;
+export default Progress;
 
 const styles = StyleSheet.create({
   maincontainer: {
@@ -157,5 +135,25 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#fff',
     fontSize: 22,
+  },
+
+  item: {
+    fontSize: 18,
+    color: '#000',
+    textAlign: 'center',
+  },
+
+  iconcontainer: {
+    flexDirection: 'row',
+    left: 160,
+    alignItems: 'center',
+  },
+
+  deleteicon: {
+    paddingRight: 10,
+  },
+
+  editicon: {
+    paddingRight: 10,
   },
 });
