@@ -118,7 +118,7 @@ const PoliceViewComplaints = ({navigation}) => {
             onPress={() => navigation.navigate('PoliceStationHomepage')}>
             <MaterialCommunityIcons name="arrow-left" size={30} color="#fff" />
           </TouchableOpacity>
-          <Text style={styles.heading}>Complaints Section</Text>
+          <Text style={styles.heading}>Police Complaints Section</Text>
         </View>
 
         <FlatList
@@ -132,7 +132,7 @@ const PoliceViewComplaints = ({navigation}) => {
   );
 };
 
-export default PoliceViewComplaints;
+export default PoliceViewComplaints ;
 
 const styles = StyleSheet.create({
   maincontainer: {
@@ -154,25 +154,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#fff',
     fontSize: 22,
-  },
-
-  item: {
-    fontSize: 18,
-    color: '#000',
-    textAlign: 'center',
-  },
-
-  iconcontainer: {
-    flexDirection: 'row',
-    left: 160,
-    alignItems: 'center',
-  },
-
-  deleteicon: {
-    paddingRight: 10,
-  },
-
-  editicon: {
-    paddingRight: 10,
-  },
+  },  
 });
