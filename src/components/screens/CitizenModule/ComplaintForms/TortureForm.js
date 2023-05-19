@@ -95,6 +95,7 @@ const TortureForm = ({navigation}) => {
         .collection('complaints')
         .doc()
         .set({...fields, timestamp});
+        await firestore().collection('history').add({...fields, timestamp});
     } else {
       // Handle the case when no files are selected
       const fields = {
@@ -113,6 +114,7 @@ const TortureForm = ({navigation}) => {
         .collection('complaints')
         .doc()
         .set({...fields, timestamp});
+        await firestore().collection('history').add({...fields, timestamp});
     }
   };
 

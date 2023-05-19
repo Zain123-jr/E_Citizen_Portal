@@ -27,7 +27,7 @@ const RapeForm = ({navigation}) => {
   const [tehsil, setTehsil] = useState('');
 
   function Submit() {
-    navigation.navigate('OICViewComplains');
+    navigation.navigate('CitizenHome');
   }
   const pickimage = async () => {
     try {
@@ -95,6 +95,9 @@ const RapeForm = ({navigation}) => {
         .collection('complaints')
         .doc()
         .set({...fields, timestamp});
+      await firestore()
+        .collection('history')
+        .add({...fields, timestamp});
     } else {
       // Handle the case when no files are selected
       const fields = {
@@ -113,6 +116,9 @@ const RapeForm = ({navigation}) => {
         .collection('complaints')
         .doc()
         .set({...fields, timestamp});
+      await firestore()
+        .collection('history')
+        .add({...fields, timestamp});
     }
   };
 
@@ -367,18 +373,13 @@ const RapeForm = ({navigation}) => {
                     </TouchableOpacity>
                     <TouchableOpacity
                       onPress={() => {
-                        uploadFiles();
+                        uploadFiles(), Submit();
                       }}
                       style={styles.button}>
                       <Text style={styles.buttonText}>upload image</Text>
                     </TouchableOpacity>
                   </View>
                 </ScrollView>
-                <TouchableOpacity
-                  onPress={() => Submit()}
-                  style={styles.button}>
-                  <Text style={styles.buttonText}>Submit Complaint</Text>
-                </TouchableOpacity>
               </View>
             </ScrollView>
           </SafeAreaView>

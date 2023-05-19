@@ -27,7 +27,7 @@ const KidnappingForm = ({navigation}) => {
   const [tehsil, setTehsil] = useState('');
 
   function Submit() {
-    navigation.navigate('OICViewComplains');
+    navigation.navigate('CitizenHome');
   }
   const pickimage = async () => {
     try {
@@ -95,6 +95,9 @@ const KidnappingForm = ({navigation}) => {
         .collection('complaints')
         .doc()
         .set({...fields, timestamp});
+      await firestore()
+        .collection('history')
+        .add({...fields, timestamp});
     } else {
       // Handle the case when no files are selected
       const fields = {
@@ -113,6 +116,9 @@ const KidnappingForm = ({navigation}) => {
         .collection('complaints')
         .doc()
         .set({...fields, timestamp});
+      await firestore()
+        .collection('history')
+        .add({...fields, timestamp});
     }
   };
 
@@ -372,7 +378,7 @@ const KidnappingForm = ({navigation}) => {
                     </TouchableOpacity>
                     <TouchableOpacity
                       onPress={() => {
-                        uploadFiles();
+                        uploadFiles(), Submit();
                       }}
                       style={styles.button}>
                       <Text style={styles.buttonText}>upload image</Text>
