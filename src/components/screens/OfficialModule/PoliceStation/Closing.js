@@ -1,18 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Image, Button } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  FlatList,
+  Image,
+  Button,
+} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import COLORS from '../../../consts/Colors';
 import firestore from '@react-native-firebase/firestore';
-import storage from '@react-native-firebase/storage';
 import Video from 'react-native-video';
 
-const OICViewComplains = () => {
+const Close = ({navigation}) => {
   const [complaints, setComplaints] = useState([]);
 
   const fetchComplaints = async () => {
     const querySnapshot = await firestore()
-      .collection('complaints')
+      .collection('close')
       .orderBy('timestamp', 'desc')
       .get();
-    const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const data = querySnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
     setComplaints(data);
   };
 
@@ -20,15 +31,14 @@ const OICViewComplains = () => {
     fetchComplaints();
   }, []);
 
-  const approveComplaint = async (complaintId) => {
+  const approveComplaint = async complaintId => {
     // Fetch the complaint by ID
-    const complaintRef = firestore().collection('complaints').doc(complaintId);
+    const complaintRef = firestore().collection('close').doc(complaintId);
     const complaintDoc = await complaintRef.get();
     const complaintData = complaintDoc.data();
 
     // Upload the complaint to a separate place
-    await firestore().collection('approvedComplaints').add(complaintData);
-    await firestore().collection('policestation').add(complaintData);
+    await firestore().collection('progress').add(complaintData);
     // Delete the complaint from the original collection
     await complaintRef.delete();
 
@@ -36,24 +46,7 @@ const OICViewComplains = () => {
     fetchComplaints();
   };
 
-  const deleteComplaint = async (complaintId) => {
-      // Fetch the complaint by ID
-      const complaintRef = firestore().collection('complaints').doc(complaintId);
-      const complaintDoc = await complaintRef.get();
-      const complaintData = complaintDoc.data();
-  
-      // Upload the complaint to a separate place
-      await firestore().collection('rejectComplaints').add(complaintData);
-
-  
-      // Delete the complaint from the original collection
-      await complaintRef.delete();
-  
-      // Refresh the complaints list
-    fetchComplaints();
-  };
-
-  const renderItem = ({ item }) => {
+  const renderItem = ({item}) => {
     const timestamp = item.timestamp.toDate(); // Convert timestamp to Date object
     const formattedTimestamp = timestamp.toLocaleString();
     return (
@@ -66,37 +59,30 @@ const OICViewComplains = () => {
         <Text>province:{item.province}</Text>
         <Text>district:{item.district}</Text>
         <Text>tehsil:{item.tehsil}</Text>
-        <Text>timestamp:{formattedTimestamp}</Text> 
+        <Text>timestamp:{formattedTimestamp}</Text>
         <FlatList
           data={item.files}
           keyExtractor={file => file.name}
-          renderItem={({ item: file }) => (
+          renderItem={({item: file}) => (
             <>
               <View key={file.name}>
                 {file.name.endsWith('.mp4') ? (
                   <Video
-                    source={{ uri: file.downloadUrl }}
-                    style={{ width: 120, height: 140 }}
+                    source={{uri: file.downloadUrl}}
+                    style={{width: 120, height: 140}}
                     controls
                   />
                 ) : (
                   <Image
-                    source={{ uri: file.downloadUrl }}
-                    style={{ width: 120, height: 140 }}
+                    source={{uri: file.downloadUrl}}
+                    style={{width: 120, height: 140}}
                   />
                 )}
               </View>
             </>
           )}
         />
-        <Button
-          title="Approve"
-          onPress={() => approveComplaint(item.id)}
-        />
-        <Button
-          title="Delete"
-          onPress={() => deleteComplaint(item.id)}
-        />
+        <Button title="Progress" onPress={() => approveComplaint(item.id)} />
       </View>
     );
   };
@@ -110,4 +96,47 @@ const OICViewComplains = () => {
   );
 };
 
-export default OICViewComplains;
+export default Close;
+
+const styles = StyleSheet.create({
+  maincontainer: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+
+  head: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: COLORS.primary,
+    borderTopLeftRadius: 50,
+    borderBottomRightRadius: 50,
+    padding: 30,
+  },
+
+  heading: {
+    flex: 1,
+    textAlign: 'center',
+    color: '#fff',
+    fontSize: 22,
+  },
+
+  item: {
+    fontSize: 18,
+    color: '#000',
+    textAlign: 'center',
+  },
+
+  iconcontainer: {
+    flexDirection: 'row',
+    left: 160,
+    alignItems: 'center',
+  },
+
+  deleteicon: {
+    paddingRight: 10,
+  },
+
+  editicon: {
+    paddingRight: 10,
+  },
+});

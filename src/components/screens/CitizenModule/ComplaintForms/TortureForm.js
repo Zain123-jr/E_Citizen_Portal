@@ -27,89 +27,94 @@ const TortureForm = ({navigation}) => {
   const [tehsil, setTehsil] = useState('');
 
   function Submit() {
-    navigation.navigate('OICViewComplains');
+    navigation.navigate('CitizenHome');
   }
   const pickimage = async () => {
     try {
-        const response = await DocumentPicker.pickMultiple({
-            type: [DocumentPicker.types.allFiles],
-            copyTo: 'cachesDirectory',
-        });
-        const uris = response.map(response => response.fileCopyUri);
+      const response = await DocumentPicker.pickMultiple({
+        type: [DocumentPicker.types.allFiles],
+        copyTo: 'cachesDirectory',
+      });
+      const uris = response.map(response => response.fileCopyUri);
 
-        console.log(response);
-        setdata(uris);
+      console.log(response);
+      setdata(uris);
     } catch (error) {
-        console.log(err);
+      console.log(err);
     }
-};
+  };
 
+  const uploadFiles = async () => {
+    const storageRef = storage().ref(`/Citizen/`);
 
-const uploadFiles = async () => {
-  const storageRef = storage().ref(`/Citizen/`);
+    if (data && data.length > 0) {
+      const promises = data.map(async uri => {
+        const name = uri.split('/').pop();
+        const task = storageRef.child(name).putFile(uri);
+        task.on(
+          'state_changed',
+          snapshot => {
+            // Handle upload progress
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+          },
+          error => {
+            // Handle upload error
+            console.log(error);
+          },
+          () => {
+            // Handle upload success
+            console.log('Upload successful');
+          },
+        );
+        task.then(() => {
+          console.log('Video uploaded successfully');
+          setdata(null); // Clear selected video after upload
+        });
+        await task;
+        const downloadUrl = await task.snapshot.ref.getDownloadURL();
+        return {name, downloadUrl};
+      });
 
-  if (data && data.length > 0) {
-    const promises = data.map(async uri => {
-      const name = uri.split('/').pop();
-      const task = storageRef.child(name).putFile(uri);
-      task.on(
-        'state_changed',
-        snapshot => {
-          // Handle upload progress
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log('Upload is ' + progress + '% done');
-        },
-        error => {
-          // Handle upload error
-          console.log(error);
-        },
-        () => {
-          // Handle upload success
-          console.log('Upload successful');
-        }
-      );
-      task.then(() => {
-        console.log('Video uploaded successfully');
-        setdata(null); // Clear selected video after upload
-      })
-      await task;
-      const downloadUrl = await task.snapshot.ref.getDownloadURL();
-      return { name, downloadUrl };
-    });
+      const uploadedFiles = await Promise.all(promises);
 
-    const uploadedFiles = await Promise.all(promises);
+      const fields = {
+        subject: subject,
+        category: category,
+        details: details,
+        address: address,
+        province: province,
+        district: district,
+        tehsil: tehsil,
+        files: uploadedFiles,
+      };
 
-    const fields = {
-      subject: subject,
-      category: category,
-      details: details,
-      address: address,
-      province: province,
-      district: district,
-      tehsil: tehsil,
-      files: uploadedFiles,
-    };
+      const timestamp = firestore.FieldValue.serverTimestamp();
+      const response = await firestore()
+        .collection('complaints')
+        .doc()
+        .set({...fields, timestamp});
+    } else {
+      // Handle the case when no files are selected
+      const fields = {
+        subject: subject,
+        category: category,
+        details: details,
+        address: address,
+        province: province,
+        district: district,
+        tehsil: tehsil,
+        files: [],
+      };
 
-    const timestamp = firestore.FieldValue.serverTimestamp();
-    const response = await firestore().collection('complaints').doc().set({ ...fields, timestamp });
-  } else {
-    // Handle the case when no files are selected
-    const fields = {
-      subject: subject,
-      category: category,
-      details: details,
-      address: address,
-      province: province,
-      district: district,
-      tehsil: tehsil,
-      files: [],
-    };
-
-    const timestamp = firestore.FieldValue.serverTimestamp();
-    const response = await firestore().collection('complaints').doc().set({ ...fields, timestamp });
-  }
-};
-
+      const timestamp = firestore.FieldValue.serverTimestamp();
+      const response = await firestore()
+        .collection('complaints')
+        .doc()
+        .set({...fields, timestamp});
+    }
+  };
 
   return (
     <SafeAreaView style={styles.maincontainer}>
@@ -311,62 +316,63 @@ const uploadFiles = async () => {
                   </Picker>
                 </View>
                 <ScrollView>
-            <View>
-                {data ? (
-                    <View>
+                  <View>
+                    {data ? (
+                      <View>
                         {data.map(uri => {
-                            if (uri.endsWith('.mp4') || uri.endsWith('.mov')) {
-                                return (
-                                    <Video
-                                        key={uri}
-                                        source={{ uri }}
-                                        resizeModel="cover"
-                                        controls={true}
-
-                                        style={{
-                                            width: 200,
-                                            height: 200,
-                                        }}
-                                    />
-                                );
-                            } else {
-                                return (
-                                    <Image
-                                        key={uri}
-                                        source={{ uri }}
-                                        style={{ width: 100, height: 100 }}
-                                    />
-                                );
-                            }
+                          if (uri.endsWith('.mp4') || uri.endsWith('.mov')) {
+                            return (
+                              <Video
+                                key={uri}
+                                source={{uri}}
+                                resizeModel="cover"
+                                controls={true}
+                                style={{
+                                  width: 200,
+                                  height: 200,
+                                }}
+                              />
+                            );
+                          } else {
+                            return (
+                              <Image
+                                key={uri}
+                                source={{uri}}
+                                style={{width: 100, height: 100}}
+                              />
+                            );
+                          }
                         })}
-                    </View>
-                ) : (
-                    <Text style={{ textAlign: 'center', fontSize: 20 }}>select an files</Text>
-                )}
-            </View>
+                      </View>
+                    ) : (
+                      <Text style={{textAlign: 'center', fontSize: 20}}>
+                        select an files
+                      </Text>
+                    )}
+                  </View>
 
-            <View
-                style={{
-                    flexDirection: 'row',
-                    width: '100%',
-                    justifyContent: 'space-around',
-                }}>
-                <TouchableOpacity
-                    onPress={() => {
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      width: '100%',
+                      justifyContent: 'space-around',
+                    }}>
+                    <TouchableOpacity
+                      onPress={() => {
                         pickimage();
-                    }}
-                    style={styles.button}>
-                    <Text style={styles.buttonText}>select image</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => {
-                        uploadFiles();
-                    }}
-                    style={styles.button}>
-                    <Text style={styles.buttonText}>upload image</Text>
-                </TouchableOpacity>
-            </View>
-        </ScrollView>
+                      }}
+                      style={styles.button}>
+                      <Text style={styles.buttonText}>select a file</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => {
+                        uploadFiles(),Submit();
+                      }}
+                      style={styles.button}>
+                      <Text style={styles.buttonText}>upload file</Text>
+                    </TouchableOpacity>
+                  </View>
+                </ScrollView>
                 <TouchableOpacity
                   onPress={() => {
                     Submit();

@@ -6,29 +6,34 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../../consts/Colors';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import OICCustomDrawer from '../../../consts/OICCustomDrawer';
+import Pending from './Pending';
+import Close from './Closing';
+import Progress from './InProgress';
+const Drawer = createDrawerNavigator();
 
 const PoliceComplaintsHistory = ({navigation}) => {
   return (
-    <SafeAreaView style={styles.maincontainer}>
-      <ScrollView>
-        <View style={styles.head}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('PoliceStationHomepage')}>
-            <MaterialCommunityIcons name="arrow-left" size={30} color="#fff" />
-          </TouchableOpacity>
-          <Text style={styles.heading}>Complaints Section</Text>
-        </View>
-
-        <View style={{flex: 1}}>
-          <Text style={{textAlign: 'center', fontSize: 18, color: 'black'}}>
-            This is Police Complaints History Screen
-          </Text>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <Drawer.Navigator
+      drawerContent={props => <OICCustomDrawer {...props} />}
+      screenOptions={{
+        drawerActiveBackgroundColor: COLORS.primary,
+        drawerActiveTintColor: '#fff',
+        headerStyle: {
+          height: 100,
+          borderTopLeftRadius: 50,
+          borderBottomRightRadius: 50,
+          backgroundColor: COLORS.primary,
+          shadowColor: '#000',
+          elevation: 25,
+        },
+      }}>
+      <Drawer.Screen name="In progress" component={Progress} />
+      <Drawer.Screen name="Pending" component={Pending} />
+      <Drawer.Screen name="Close" component={Close} />
+    </Drawer.Navigator>
   );
 };
 
