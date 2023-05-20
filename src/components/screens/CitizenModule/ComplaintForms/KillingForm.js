@@ -16,6 +16,7 @@ import storage from '@react-native-firebase/storage';
 import Video from 'react-native-video';
 import DocumentPicker from 'react-native-document-picker';
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 const KillingForm = ({navigation}) => {
   const [data, setdata] = useState(null);
   const [subject, setSubject] = useState('');
@@ -91,13 +92,13 @@ const KillingForm = ({navigation}) => {
       };
 
       const timestamp = firestore.FieldValue.serverTimestamp();
+      const user = auth().currentUser;
       const response = await firestore()
         .collection('complaints')
         .doc()
-        .set({...fields, timestamp});
-      await firestore()
-        .collection('history')
-        .add({...fields, timestamp});
+        .set({ ...fields, timestamp });
+      await firestore().collection('history').add({ ...fields,userId: user.uid, timestamp });
+      
     } else {
       // Handle the case when no files are selected
       const fields = {
@@ -112,13 +113,12 @@ const KillingForm = ({navigation}) => {
       };
 
       const timestamp = firestore.FieldValue.serverTimestamp();
+      const user = auth().currentUser;
       const response = await firestore()
         .collection('complaints')
         .doc()
-        .set({...fields, timestamp});
-      await firestore()
-        .collection('history')
-        .add({...fields, timestamp});
+        .set({...fields,userId: user.uid, timestamp});
+        await firestore().collection('history').add({...fields,userId: user.uid, timestamp});
     }
   };
 

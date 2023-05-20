@@ -15,17 +15,24 @@ import storage from '@react-native-firebase/storage';
 import Video from 'react-native-video';
 import COLORS from '../../consts/Colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import auth from '@react-native-firebase/auth';
 const ViewComplaints = ({navigation}) => {
   const [complaints, setComplaints] = useState([]);
   const fetchComplaints = async () => {
+    const user = auth().currentUser;
+    if (!user) {
+      // Handle case when user is not signed in
+      return;
+    }
     const querySnapshot = await firestore()
       .collection('history')
+      .where('userId', '==', user.uid)
       .orderBy('timestamp', 'desc')
       .get();
-    const data = querySnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+    const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     setComplaints(data);
   };
+  
 
   useEffect(() => {
     fetchComplaints();
