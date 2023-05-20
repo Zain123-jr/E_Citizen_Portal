@@ -17,6 +17,7 @@ import Video from 'react-native-video';
 import DocumentPicker from 'react-native-document-picker';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+
 const TortureForm = ({navigation}) => {
   const [data, setdata] = useState(null);
   const [subject, setSubject] = useState('');
@@ -27,9 +28,6 @@ const TortureForm = ({navigation}) => {
   const [district, setDistrict] = useState('');
   const [tehsil, setTehsil] = useState('');
 
-  function Submit() {
-    navigation.navigate('CitizenHome');
-  }
   const pickimage = async () => {
     try {
       const response = await DocumentPicker.pickMultiple({
@@ -66,7 +64,8 @@ const TortureForm = ({navigation}) => {
           },
           () => {
             // Handle upload success
-            console.log('Upload successful');
+            // console.log('Upload successful');
+            alert('Complaint Has Been Submit Successfully!');
           },
         );
         task.then(() => {
@@ -96,9 +95,10 @@ const TortureForm = ({navigation}) => {
       const response = await firestore()
         .collection('complaints')
         .doc()
-        .set({ ...fields, timestamp });
-      await firestore().collection('history').add({ ...fields,userId: user.uid, timestamp });
-      
+        .set({...fields, timestamp});
+      await firestore()
+        .collection('history')
+        .add({...fields, userId: user.uid, timestamp});
     } else {
       // Handle the case when no files are selected
       const fields = {
@@ -117,8 +117,10 @@ const TortureForm = ({navigation}) => {
       const response = await firestore()
         .collection('complaints')
         .doc()
-        .set({...fields,userId: user.uid, timestamp});
-        await firestore().collection('history').add({...fields,userId: user.uid, timestamp});
+        .set({...fields, userId: user.uid, timestamp});
+      await firestore()
+        .collection('history')
+        .add({...fields, userId: user.uid, timestamp});
     }
   };
 
@@ -351,9 +353,7 @@ const TortureForm = ({navigation}) => {
                         })}
                       </View>
                     ) : (
-                      <Text style={{textAlign: 'center', fontSize: 20}}>
-                        select an files
-                      </Text>
+                      <Text style={{fontSize: 20}}>Select Files</Text>
                     )}
                   </View>
 
@@ -361,27 +361,28 @@ const TortureForm = ({navigation}) => {
                     style={{
                       flexDirection: 'row',
                       width: '100%',
-                      justifyContent: 'space-around',
                     }}>
                     <TouchableOpacity
                       onPress={() => {
                         pickimage();
                       }}
-                      style={styles.button}>
-                      <Text style={styles.buttonText}>select a file</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => {
-                        uploadFiles(),Submit();
-                      }}
-                      style={styles.button}>
-                      <Text style={styles.buttonText}>upload file</Text>
+                      style={styles.attachmentbutton}>
+                      <Text style={styles.attachmentbuttonText}>
+                        Choose File
+                      </Text>
                     </TouchableOpacity>
                   </View>
                 </ScrollView>
+                <View style={styles.details}>
+                  <Text style={styles.detail1}>Attachment Size Limit</Text>
+                  <Text style={styles.detail2}>- Image 3 MB</Text>
+                  <Text style={styles.detail2}>- Video 20 MB</Text>
+                  <Text style={styles.detail2}>- Audio 2 MB</Text>
+                  <Text style={styles.detail2}>- File 5 MB</Text>
+                </View>
                 <TouchableOpacity
                   onPress={() => {
-                    Submit();
+                    uploadFiles();
                   }}
                   style={styles.button}>
                   <Text style={styles.buttonText}>Submit Complaint</Text>
@@ -472,6 +473,40 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 18,
+  },
+
+  attachmentbutton: {
+    paddingLeft: 35,
+    paddingRight: 35,
+    paddingTop: 18,
+    paddingBottom: 18,
+    top: 20,
+    borderRadius: 50,
+    marginTop: 15,
+    marginBottom: 20,
+    backgroundColor: COLORS.primary,
+  },
+
+  attachmentbuttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+
+  details: {
+    left: 10,
+    top: 10,
+  },
+
+  detail1: {
+    fontSize: 18,
+    color: COLORS.grey,
+    paddingBottom: 5,
+  },
+
+  detail2: {
+    fontSize: 14,
+    color: 'red',
   },
 
   item: {

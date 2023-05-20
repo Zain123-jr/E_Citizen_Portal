@@ -30,7 +30,7 @@ const PoliceComplaintsHistory = ({navigation}) => {
           elevation: 25,
         },
       }}>
-      <Drawer.Screen name="In progress" component={Progress} />
+      <Drawer.Screen name="InProgress" component={Progress} />
       <Drawer.Screen name="Pending" component={Pending} />
       <Drawer.Screen name="Close" component={Close} />
     </Drawer.Navigator>
