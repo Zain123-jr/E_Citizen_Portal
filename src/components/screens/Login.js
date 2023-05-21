@@ -115,7 +115,7 @@ const Login = ({navigation}) => {
             <View style={{flexDirection: 'row'}}>
               <TextInput
                 style={styles.input}
-                placeholder="Email"
+                placeholder="Email (Hello@gmail.com)"
                 placeholderTextColor="white"
                 autoCapitalize="none"
                 value={email}
@@ -134,7 +134,7 @@ const Login = ({navigation}) => {
             <View style={{flexDirection: 'row'}}>
               <TextInput
                 style={styles.input}
-                placeholder="Password"
+                placeholder="Password (Hello123#)"
                 placeholderTextColor="white"
                 secureTextEntry={hidePassword}
                 value={password}

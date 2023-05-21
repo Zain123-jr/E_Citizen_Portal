@@ -50,39 +50,54 @@ const Close = ({navigation}) => {
     const timestamp = item.timestamp.toDate(); // Convert timestamp to Date object
     const formattedTimestamp = timestamp.toLocaleString();
     return (
-      <View>
-        <Text>report</Text>
-        <Text>subject:{item.subject}</Text>
-        <Text>category:{item.category}</Text>
-        <Text>details:{item.details}</Text>
-        <Text>address:{item.address}</Text>
-        <Text>province:{item.province}</Text>
-        <Text>district:{item.district}</Text>
-        <Text>tehsil:{item.tehsil}</Text>
-        <Text>timestamp:{formattedTimestamp}</Text>
+      <View style={styles.complaintsContainer}>
+        <Text style={styles.complaintFields}>Report</Text>
+        <Text style={styles.complaintFields}>Subject: {item.subject}</Text>
+        <Text style={styles.complaintFields}>Category: {item.category}</Text>
+        <Text style={styles.complaintFields}>Details: {item.details}</Text>
+        <Text style={styles.complaintFields}>Address: {item.address}</Text>
+        <Text style={styles.complaintFields}>Province: {item.province}</Text>
+        <Text style={styles.complaintFields}>District: {item.district}</Text>
+        <Text style={styles.complaintFields}>Tehsil: {item.tehsil}</Text>
+        <Text style={styles.complaintFields}>
+          TimeStamp: {formattedTimestamp}
+        </Text>
         <FlatList
+          style={{flex: 1, flexDirection: 'row'}}
           data={item.files}
           keyExtractor={file => file.name}
           renderItem={({item: file}) => (
             <>
-              <View key={file.name}>
-                {file.name.endsWith('.mp4') ? (
-                  <Video
-                    source={{uri: file.downloadUrl}}
-                    style={{width: 120, height: 140}}
-                    controls
-                  />
-                ) : (
-                  <Image
-                    source={{uri: file.downloadUrl}}
-                    style={{width: 120, height: 140}}
-                  />
-                )}
+              <View>
+                <View key={file.name} style={{top: 8}}>
+                  {file.name.endsWith('.mp4') ? (
+                    <Video
+                      source={{uri: file.downloadUrl}}
+                      style={{width: 120, height: 140, marginRight: 15}}
+                      controls
+                    />
+                  ) : (
+                    <Image
+                      source={{uri: file.downloadUrl}}
+                      style={{width: 100, height: 100, marginRight: 15}}
+                    />
+                  )}
+                </View>
               </View>
             </>
           )}
         />
-        <Button title="Progress" onPress={() => approveComplaint(item.id)} />
+        {/* <Button title="Progress" onPress={() => approveComplaint(item.id)} /> */}
+
+        <View style={styles.buttonContainer}>
+          <View style={styles.approveButton}>
+            <TouchableOpacity onPress={() => approveComplaint(item.id)}>
+              <Text style={{color: 'white', fontWeight: '700', fontSize: 16}}>
+                Progress
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     );
   };
@@ -126,17 +141,32 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  iconcontainer: {
+  buttonContainer: {
     flexDirection: 'row',
-    left: 160,
-    alignItems: 'center',
+    justifyContent: 'space-around',
+    paddingVertical: 30,
   },
 
-  deleteicon: {
-    paddingRight: 10,
+  approveButton: {
+    backgroundColor: COLORS.primary,
+    paddingVertical: 15,
+    paddingHorizontal: 45,
   },
 
-  editicon: {
-    paddingRight: 10,
+  complaintsContainer: {
+    flexDirection: 'column',
+    paddingVertical: 5,
+    borderBottomWidth: 2,
+    borderBottomColor: COLORS.grey,
+    marginBottom: 5,
+    paddingLeft: 5,
+  },
+
+  complaintFields: {
+    color: COLORS.dark,
+    fontSize: 16,
+    fontWeight: '600',
+    lineHeight: 25,
+    marginBottom: 5,
   },
 });

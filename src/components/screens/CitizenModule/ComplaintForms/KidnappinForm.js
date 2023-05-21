@@ -131,7 +131,7 @@ const KidnappingForm = ({navigation}) => {
             onPress={() => navigation.navigate('CitizenComplaints')}>
             <MaterialCommunityIcons name="arrow-left" size={30} color="#fff" />
           </TouchableOpacity>
-          <Text style={styles.heading}>New Compalaint</Text>
+          <Text style={styles.heading}>New Complaint</Text>
         </View>
 
         <View>
@@ -328,70 +328,73 @@ const KidnappingForm = ({navigation}) => {
                     />
                   </Picker>
                 </View>
-                <ScrollView>
-                  <View>
-                    {data ? (
-                      <View>
-                        {data.map(uri => {
-                          if (uri.endsWith('.mp4') || uri.endsWith('.mov')) {
-                            return (
-                              <Video
-                                key={uri}
-                                source={{uri}}
-                                resizeModel="cover"
-                                controls={true}
-                                style={{
-                                  width: 200,
-                                  height: 200,
-                                }}
-                              />
-                            );
-                          } else {
-                            return (
-                              <Image
-                                key={uri}
-                                source={{uri}}
-                                style={{width: 100, height: 100}}
-                              />
-                            );
-                          }
-                        })}
-                      </View>
-                    ) : (
-                      <Text style={{fontSize: 20}}>Select Files</Text>
-                    )}
-                  </View>
 
-                  <View
-                    style={{
-                      flexDirection: 'column',
-                      width: '100%',
-                    }}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        pickimage();
-                      }}
-                      style={styles.attachmentbutton}>
-                      <Text style={styles.attachmentbuttonText}>
-                        Choose File
-                      </Text>
-                    </TouchableOpacity>
-                    <View style={styles.details}>
-                      <Text style={styles.detail1}>Attachment Size Limit</Text>
-                      <Text style={styles.detail2}>- Image 3 MB</Text>
-                      <Text style={styles.detail2}>- Video 20 MB</Text>
-                      <Text style={styles.detail2}>- Audio 2 MB</Text>
-                      <Text style={styles.detail2}>- File 5 MB</Text>
+                <View style={{flex:1, flexDirection: 'row'}}>
+                  {data ? (
+                    <View style={{flex:1, flexDirection: 'row', top:6}}>
+                      {data.map(uri => {
+                        if (uri.endsWith('.mp4') || uri.endsWith('.mov')) {
+                          return (
+                            <Video
+                              key={uri}
+                              source={{uri}}
+                              resizeModel="cover"
+                              controls={true}
+                              style={{
+                                width: 200,
+                                height: 200,
+                                marginRight: 15,
+                              }}
+                            />
+                          );
+                        } else {
+                          return (
+                            <Image
+                              key={uri}
+                              source={{uri}}
+                              style={{
+                                width: 100,
+                                height: 100,
+                                marginBottom: 5,
+                                marginRight: 15,
+                              }}
+                            />
+                          );
+                        }
+                      })}
                     </View>
-                    <TouchableOpacity
-                      onPress={() => {
-                        uploadFiles();
-                      }}
-                      style={styles.button}>
-                      <Text style={styles.buttonText}>Submit Complaint</Text>
-                    </TouchableOpacity>
+                  ) : (
+                    <Text style={{fontSize: 20}}>Select Files</Text>
+                  )}
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    width: '100%',
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      pickimage();
+                    }}
+                    style={styles.attachmentbutton}>
+                    <Text style={styles.attachmentbuttonText}>Choose File</Text>
+                  </TouchableOpacity>
+                  <View style={styles.details}>
+                    <Text style={styles.detail1}>Attachment Size Limit</Text>
+                    <Text style={styles.detail2}>- Image 3 MB</Text>
+                    <Text style={styles.detail2}>- Video 20 MB</Text>
+                    <Text style={styles.detail2}>- Audio 2 MB</Text>
+                    <Text style={styles.detail2}>- File 5 MB</Text>
                   </View>
-                </ScrollView>
+                  <TouchableOpacity
+                    onPress={() => {
+                      uploadFiles();
+                    }}
+                    style={styles.button}>
+                    <Text style={styles.buttonText}>Submit Complaint</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </ScrollView>
           </SafeAreaView>

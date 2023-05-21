@@ -16,8 +16,10 @@ import Video from 'react-native-video';
 import COLORS from '../../consts/Colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import auth from '@react-native-firebase/auth';
+
 const ViewComplaints = ({navigation}) => {
   const [complaints, setComplaints] = useState([]);
+
   const fetchComplaints = async () => {
     const user = auth().currentUser;
     if (!user) {
@@ -29,28 +31,30 @@ const ViewComplaints = ({navigation}) => {
       .where('userId', '==', user.uid)
       .orderBy('timestamp', 'desc')
       .get();
-    const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const data = querySnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
     setComplaints(data);
   };
-  
 
   useEffect(() => {
     fetchComplaints();
   }, []);
+
   const renderItem = ({item}) => {
     const timestamp = item.timestamp.toDate(); // Convert timestamp to Date object
     const formattedTimestamp = timestamp.toLocaleString();
     return (
-      <View>
-        <Text>report</Text>
-        <Text>subject:{item.subject}</Text>
-        <Text>category:{item.category}</Text>
-        <Text>details:{item.details}</Text>
-        <Text>address:{item.address}</Text>
-        <Text>province:{item.province}</Text>
-        <Text>district:{item.district}</Text>
-        <Text>tehsil:{item.tehsil}</Text>
-        <Text>timestamp:{formattedTimestamp}</Text>
+      <View style={styles.complaintsContainer}>
+        <Text style={styles.complaintFields}>Report</Text>
+        <Text style={styles.complaintFields}>Subject: {item.subject}</Text>
+        <Text style={styles.complaintFields}>Category: {item.category}</Text>
+        <Text style={styles.complaintFields}>Details: {item.details}</Text>
+        <Text style={styles.complaintFields}>Address: {item.address}</Text>
+        <Text style={styles.complaintFields}>Province: {item.province}</Text>
+        <Text style={styles.complaintFields}>District: {item.district}</Text>
+        <Text style={styles.complaintFields}>Tehsil: {item.tehsil}</Text>
+        <Text style={styles.complaintFields}>
+          TimeStamp: {formattedTimestamp}
+        </Text>
         <FlatList
           data={item.files}
           keyExtractor={file => file.name}
@@ -101,6 +105,7 @@ const styles = StyleSheet.create({
   maincontainer: {
     flex: 1,
     backgroundColor: 'white',
+    paddingBottom: 20,
   },
 
   head: {
@@ -125,17 +130,21 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  iconcontainer: {
-    flexDirection: 'row',
-    left: 160,
-    alignItems: 'center',
+  complaintsContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    paddingLeft: 5,
+    paddingTop: 10,
+    borderBottomWidth:2,
+    borderBottomColor:COLORS.grey,
+    paddingBottom:20
   },
 
-  deleteicon: {
-    paddingRight: 10,
-  },
-
-  editicon: {
-    paddingRight: 10,
+  complaintFields: {
+    color: COLORS.dark,
+    fontSize: 16,
+    fontWeight: '600',
+    lineHeight: 25,
+    marginBottom: 5,
   },
 });

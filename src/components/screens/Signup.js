@@ -17,7 +17,7 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../consts/Colors';
 import ImagePicker from 'react-native-image-crop-picker';
-// import imgPlaceHolder from '../../assets/defualt-Avatar.png';
+import imgPlaceHolder from '../../assets/defualt-Avatar.png';
 import '../../../FirebaseConfig';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -237,7 +237,12 @@ const Signup = ({navigation}) => {
             </Text>
 
             <View style={styles.imgContainer}>
-              {image && <Image source={{uri: image.path}} style={styles.img} />}
+              {/* {image && <Image source={{uri: image.path}} style={styles.img} />} */}
+              {image ? (
+                <Image source={{uri: image.path}} style={styles.img} />
+              ) : (
+                <Image source={imgPlaceHolder} style={styles.img} />
+              )}
               <TouchableOpacity style={styles.button} onPress={handlePickImage}>
                 <Text style={styles.buttontext}>Select Image</Text>
               </TouchableOpacity>
@@ -419,7 +424,11 @@ const Signup = ({navigation}) => {
                   label="Citizen"
                   value="citizen"
                 />
-                <Picker.Item style={styles.item} label="OIC" value="oic" />
+                <Picker.Item
+                  style={styles.item}
+                  label="Officer Incharge"
+                  value="oic"
+                />
                 <Picker.Item
                   style={styles.item}
                   label="Police Station"

@@ -131,7 +131,7 @@ const TortureForm = ({navigation}) => {
           <TouchableOpacity onPress={() => navigation.navigate('CitizenHome')}>
             <MaterialCommunityIcons name="arrow-left" size={30} color="#fff" />
           </TouchableOpacity>
-          <Text style={styles.heading}>New Compalaint</Text>
+          <Text style={styles.heading}>New Complaint</Text>
         </View>
 
         <View>
@@ -192,7 +192,7 @@ const TortureForm = ({navigation}) => {
                 <View style={{flexDirection: 'row'}}>
                   <TextInput
                     style={styles.messagebox}
-                    placeholder="Enter Compalaint Details Here!"
+                    placeholder="Enter Complaint Details Here!"
                     placeholderTextColor="black"
                     multiline={true}
                     numberOfLines={6}
@@ -204,7 +204,7 @@ const TortureForm = ({navigation}) => {
                 <View style={{flexDirection: 'row'}}>
                   <TextInput
                     style={styles.messagebox}
-                    placeholder="Enter Compalaint Address Here!"
+                    placeholder="Enter Complaint Address Here!"
                     placeholderTextColor="black"
                     multiline={true}
                     numberOfLines={6}
@@ -323,56 +323,59 @@ const TortureForm = ({navigation}) => {
                     />
                   </Picker>
                 </View>
-                <ScrollView>
-                  <View>
-                    {data ? (
-                      <View>
-                        {data.map(uri => {
-                          if (uri.endsWith('.mp4') || uri.endsWith('.mov')) {
-                            return (
-                              <Video
-                                key={uri}
-                                source={{uri}}
-                                resizeModel="cover"
-                                controls={true}
-                                style={{
-                                  width: 200,
-                                  height: 200,
-                                }}
-                              />
-                            );
-                          } else {
-                            return (
-                              <Image
-                                key={uri}
-                                source={{uri}}
-                                style={{width: 100, height: 100}}
-                              />
-                            );
-                          }
-                        })}
-                      </View>
-                    ) : (
-                      <Text style={{fontSize: 20}}>Select Files</Text>
-                    )}
-                  </View>
 
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      width: '100%',
-                    }}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        pickimage();
-                      }}
-                      style={styles.attachmentbutton}>
-                      <Text style={styles.attachmentbuttonText}>
-                        Choose File
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </ScrollView>
+                <View style={{flex:1, flexDirection: 'row'}}>
+                  {data ? (
+                    <View style={{flex:1, flexDirection:'row', top:6}}>
+                      {data.map(uri => {
+                        if (uri.endsWith('.mp4') || uri.endsWith('.mov')) {
+                          return (
+                            <Video
+                              key={uri}
+                              source={{uri}}
+                              resizeModel="cover"
+                              controls={true}
+                              style={{
+                                width: 200,
+                                height: 200,
+                                marginRight: 15,
+                              }}
+                            />
+                          );
+                        } else {
+                          return (
+                            <Image
+                              key={uri}
+                              source={{uri}}
+                              style={{
+                                width: 100,
+                                height: 100,
+                                marginRight: 15,
+                              }}
+                            />
+                          );
+                        }
+                      })}
+                    </View>
+                  ) : (
+                    <Text style={{fontSize: 20}}>Select Files</Text>
+                  )}
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    width: '100%',
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      pickimage();
+                    }}
+                    style={styles.attachmentbutton}>
+                    <Text style={styles.attachmentbuttonText}>Choose File</Text>
+                  </TouchableOpacity>
+                </View>
+
                 <View style={styles.details}>
                   <Text style={styles.detail1}>Attachment Size Limit</Text>
                   <Text style={styles.detail2}>- Image 3 MB</Text>
