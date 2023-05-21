@@ -58,21 +58,24 @@ const ViewComplaints = ({navigation}) => {
         <FlatList
           data={item.files}
           keyExtractor={file => file.name}
+          style={{flex: 1, flexDirection: 'row'}}
           renderItem={({item: file}) => (
             <>
-              <View key={file.name}>
-                {file.name.endsWith('.mp4') ? (
-                  <Video
-                    source={{uri: file.downloadUrl}}
-                    style={{width: 120, height: 140}}
-                    controls
-                  />
-                ) : (
-                  <Image
-                    source={{uri: file.downloadUrl}}
-                    style={{width: 120, height: 140}}
-                  />
-                )}
+              <View>
+                <View key={file.name} style={{top: 8}}>
+                  {file.name.endsWith('.mp4') ? (
+                    <Video
+                      source={{uri: file.downloadUrl}}
+                      style={{width: 120, height: 140, marginRight: 15}}
+                      controls
+                    />
+                  ) : (
+                    <Image
+                      source={{uri: file.downloadUrl}}
+                      style={{width: 100, height: 100, marginRight: 15}}
+                    />
+                  )}
+                </View>
               </View>
             </>
           )}
@@ -135,9 +138,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     paddingLeft: 5,
     paddingTop: 10,
-    borderBottomWidth:2,
-    borderBottomColor:COLORS.grey,
-    paddingBottom:20
+    borderBottomWidth: 2,
+    borderBottomColor: COLORS.grey,
+    paddingBottom: 20,
   },
 
   complaintFields: {
