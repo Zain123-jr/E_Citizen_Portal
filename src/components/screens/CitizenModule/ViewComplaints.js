@@ -66,7 +66,7 @@ const ViewComplaints = ({navigation}) => {
                   {file.name.endsWith('.mp4') ? (
                     <Video
                       source={{uri: file.downloadUrl}}
-                      style={{width: 120, height: 140, marginRight: 15}}
+                      style={{width: 120, height: 140}}
                       controls
                     />
                   ) : (

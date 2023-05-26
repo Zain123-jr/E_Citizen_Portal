@@ -93,7 +93,7 @@ const PoliceViewComplaints = ({navigation}) => {
                   {file.name.endsWith('.mp4') ? (
                     <Video
                       source={{uri: file.downloadUrl}}
-                      style={{width: 120, height: 140, marginRight: 15}}
+                      style={{width: 120, height: 140}}
                       controls
                     />
                   ) : (
@@ -113,7 +113,12 @@ const PoliceViewComplaints = ({navigation}) => {
         <View style={styles.buttonContainer}>
           <View style={styles.approveButton}>
             <TouchableOpacity onPress={() => approveComplaint(item.id)}>
-              <Text style={{color: 'white', fontWeight: '700', fontSize: 16}}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontWeight: '700',
+                  fontSize: 16,
+                }}>
                 Progress
               </Text>
             </TouchableOpacity>
@@ -121,7 +126,12 @@ const PoliceViewComplaints = ({navigation}) => {
 
           <View style={styles.rejectButton}>
             <TouchableOpacity onPress={() => deleteComplaint(item.id)}>
-              <Text style={{color: 'white', fontWeight: '700', fontSize: 16}}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontWeight: '700',
+                  fontSize: 16,
+                }}>
                 Pending
               </Text>
             </TouchableOpacity>
@@ -184,12 +194,14 @@ const styles = StyleSheet.create({
 
   approveButton: {
     backgroundColor: COLORS.primary,
+    borderRadius: 50,
     paddingVertical: 15,
     paddingHorizontal: 45,
   },
 
   rejectButton: {
     backgroundColor: 'red',
+    borderRadius: 50,
     paddingVertical: 15,
     paddingHorizontal: 45,
   },

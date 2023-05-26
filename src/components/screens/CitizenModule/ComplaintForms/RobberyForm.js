@@ -328,9 +328,9 @@ const RobberyForm = ({navigation}) => {
                   </Picker>
                 </View>
 
-                <View style={{flex:1, flexDirection: 'row'}}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
                   {data ? (
-                    <View style={{flex:1, flexDirection:'row', top:6}}>
+                    <View style={{flex: 1, flexDirection: 'row', top: 6}}>
                       {data.map(uri => {
                         if (uri.endsWith('.mp4') || uri.endsWith('.mov')) {
                           return (
@@ -355,7 +355,6 @@ const RobberyForm = ({navigation}) => {
                                 width: 100,
                                 height: 100,
                                 marginBottom: 5,
-                                marginRight: 15,
                               }}
                             />
                           );

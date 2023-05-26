@@ -324,9 +324,9 @@ const TortureForm = ({navigation}) => {
                   </Picker>
                 </View>
 
-                <View style={{flex:1, flexDirection: 'row'}}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
                   {data ? (
-                    <View style={{flex:1, flexDirection:'row', top:6}}>
+                    <View style={{flex: 1, flexDirection: 'row', top: 6}}>
                       {data.map(uri => {
                         if (uri.endsWith('.mp4') || uri.endsWith('.mov')) {
                           return (
@@ -338,7 +338,6 @@ const TortureForm = ({navigation}) => {
                               style={{
                                 width: 200,
                                 height: 200,
-                                marginRight: 15,
                               }}
                             />
                           );

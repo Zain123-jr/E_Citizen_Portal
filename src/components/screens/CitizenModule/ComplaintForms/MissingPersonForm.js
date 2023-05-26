@@ -336,7 +336,6 @@ const MissingPersonForm = ({navigation}) => {
                               style={{
                                 width: 200,
                                 height: 200,
-                                marginRight: 15,
                               }}
                             />
                           );

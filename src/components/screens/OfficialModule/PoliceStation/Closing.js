@@ -73,7 +73,7 @@ const Close = ({navigation}) => {
                   {file.name.endsWith('.mp4') ? (
                     <Video
                       source={{uri: file.downloadUrl}}
-                      style={{width: 120, height: 140, marginRight: 15}}
+                      style={{width: 120, height: 140}}
                       controls
                     />
                   ) : (
@@ -149,6 +149,7 @@ const styles = StyleSheet.create({
 
   approveButton: {
     backgroundColor: COLORS.primary,
+    borderRadius: 50,
     paddingVertical: 15,
     paddingHorizontal: 45,
   },

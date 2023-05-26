@@ -47,7 +47,7 @@ const Rejectcomplaints = () => {
                   {file.name.endsWith('.mp4') ? (
                     <Video
                       source={{uri: file.downloadUrl}}
-                      style={{width: 100, height: 100, marginRight: 15}}
+                      style={{width: 120, height: 140}}
                       controls
                     />
                   ) : (
