@@ -47,7 +47,7 @@ const Splash = ({navigation}) => {
         <View style={styles.content}>
           <Image
             style={styles.image}
-            source={require('../../assets/logo.jpg')}
+            source={require('../../assets/logo.png')}
           />
           <Text style={styles.heading}>E-Citizen Portal</Text>
         </View>

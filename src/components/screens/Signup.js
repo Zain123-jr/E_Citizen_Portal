@@ -70,11 +70,12 @@ const Signup = ({navigation}) => {
           stationid,
         })
         .then(() => {
-          setLoading(true);
           navigation.navigate('Login');
         });
     } catch (error) {
       alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 

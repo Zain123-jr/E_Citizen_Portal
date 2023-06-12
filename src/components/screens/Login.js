@@ -43,9 +43,10 @@ const Login = ({navigation}) => {
       } else if (role === 'policestation') {
         navigation.navigate('PoliceStationHomepage');
       }
-      setLoading(false);
     } catch (error) {
       alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
