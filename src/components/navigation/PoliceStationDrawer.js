@@ -31,25 +31,25 @@ const PoliceStationDrawer = () => {
           ),
           drawerLabelStyle: {marginLeft: -20, fontWeight: '700', fontSize: 16},
 
-          headerRight: () => (
-            <View style={{flexDirection: 'row'}}>
-              <TouchableOpacity style={{left: -20, paddingRight: 20}}>
-                <MaterialCommunityIcons
-                  name="bell-ring-outline"
-                  size={28}
-                  color="#fff"
-                />
-              </TouchableOpacity>
+          // headerRight: () => (
+          //   <View style={{flexDirection: 'row'}}>
+          //     <TouchableOpacity style={{left: -20, paddingRight: 20}}>
+          //       <MaterialCommunityIcons
+          //         name="bell-ring-outline"
+          //         size={28}
+          //         color="#fff"
+          //       />
+          //     </TouchableOpacity>
 
-              <TouchableOpacity style={{left: -20}}>
-                <MaterialCommunityIcons
-                  name="email-outline"
-                  size={28}
-                  color="#fff"
-                />
-              </TouchableOpacity>
-            </View>
-          ),
+          //     <TouchableOpacity style={{left: -20}}>
+          //       <MaterialCommunityIcons
+          //         name="email-outline"
+          //         size={28}
+          //         color="#fff"
+          //       />
+          //     </TouchableOpacity>
+          //   </View>
+          // ),
           headerStyle: {
             height: 100,
             borderTopLeftRadius: 50,
@@ -74,25 +74,25 @@ const PoliceStationDrawer = () => {
           ),
           drawerLabelStyle: {marginLeft: -20, fontWeight: '700', fontSize: 16},
 
-          headerRight: () => (
-            <View style={{flexDirection: 'row'}}>
-              <TouchableOpacity style={{left: -20, paddingRight: 20}}>
-                <MaterialCommunityIcons
-                  name="bell-ring-outline"
-                  size={28}
-                  color="#fff"
-                />
-              </TouchableOpacity>
+          // headerRight: () => (
+          //   <View style={{flexDirection: 'row'}}>
+          //     <TouchableOpacity style={{left: -20, paddingRight: 20}}>
+          //       <MaterialCommunityIcons
+          //         name="bell-ring-outline"
+          //         size={28}
+          //         color="#fff"
+          //       />
+          //     </TouchableOpacity>
 
-              <TouchableOpacity style={{left: -20}}>
-                <MaterialCommunityIcons
-                  name="email-outline"
-                  size={28}
-                  color="#fff"
-                />
-              </TouchableOpacity>
-            </View>
-          ),
+          //     <TouchableOpacity style={{left: -20}}>
+          //       <MaterialCommunityIcons
+          //         name="email-outline"
+          //         size={28}
+          //         color="#fff"
+          //       />
+          //     </TouchableOpacity>
+          //   </View>
+          // ),
           headerStyle: {
             height: 100,
             borderTopLeftRadius: 50,
@@ -117,25 +117,25 @@ const PoliceStationDrawer = () => {
           ),
           drawerLabelStyle: {marginLeft: -20, fontWeight: '700', fontSize: 16},
 
-          headerRight: () => (
-            <View style={{flexDirection: 'row'}}>
-              <TouchableOpacity style={{left: -20, paddingRight: 20}}>
-                <MaterialCommunityIcons
-                  name="bell-ring-outline"
-                  size={28}
-                  color="#fff"
-                />
-              </TouchableOpacity>
+          // headerRight: () => (
+          //   <View style={{flexDirection: 'row'}}>
+          //     <TouchableOpacity style={{left: -20, paddingRight: 20}}>
+          //       <MaterialCommunityIcons
+          //         name="bell-ring-outline"
+          //         size={28}
+          //         color="#fff"
+          //       />
+          //     </TouchableOpacity>
 
-              <TouchableOpacity style={{left: -20}}>
-                <MaterialCommunityIcons
-                  name="email-outline"
-                  size={28}
-                  color="#fff"
-                />
-              </TouchableOpacity>
-            </View>
-          ),
+          //     <TouchableOpacity style={{left: -20}}>
+          //       <MaterialCommunityIcons
+          //         name="email-outline"
+          //         size={28}
+          //         color="#fff"
+          //       />
+          //     </TouchableOpacity>
+          //   </View>
+          // ),
           headerStyle: {
             height: 100,
             borderTopLeftRadius: 50,
